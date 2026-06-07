@@ -27,6 +27,7 @@ vigil/ports/     interfaces: RetrievalIndex, Speaker, CardChannel, Synthesizer
 vigil/adapters/  FakeIndex, MossIndex (stub), LiveKitSpeaker/Channel, MinimaxSynthesizer, logging
 vigil/config.py  env + model IDs (kept out of core)
 agent.py         LiveKit worker — the only place real LiveKit/Minimax-TTS are wired
+token_server.py  tiny aiohttp /token endpoint (signs room JWTs; NOT on the dose path)
 data/            protocols_gold.json (FakeIndex seed AND the gold test set)
 tests/           hermetic E2E + unit (the gate) ; tests/integration/ (opt-in, live)
 ```
@@ -87,6 +88,15 @@ RUN_INTEGRATION=1 .venv/bin/python -m pytest tests/integration -v
 
 # 3) Live mic<->speaker loop (no phone). Creds are in .env; run from agent/:
 .venv/bin/python agent.py console
+
+# 4) Serve a REAL room for the app (console does NOT). `dev` registers the worker and,
+#    with automatic dispatch (no agent_name), auto-joins the client's room:
+.venv/bin/python agent.py dev
+#    The app joins via a token, not by reaching this agent. token_server.py mints a JWT
+#    for room `vigil-demo` (aiohttp + livekit.api, both already installed). Client contract
+#    is in INTEGRATION.md. The agent dials out (no inbound port); the token endpoint is the
+#    only thing the app must reach (laptop LAN IP / ngrok / LiveKit Sandbox).
+.venv/bin/python token_server.py     # GET :8080/token?identity=medic
 ```
 
 Credit hygiene: hermetic tests hit nothing external and are the default gate. Integration tests
