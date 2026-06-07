@@ -1,7 +1,7 @@
 # CLAUDE.md — Vigil
 
 > **Vigil** — a hands-free voice copilot for EMTs: ask for a drug dose or contraindication out loud, hear the exact protocol answer back, hands and eyes stay on the patient.
-> Team repo: github.com/tnahata/vigil ("EMT Voice Copilot").
+> Team repo: github.com/tnahata/vigil ("EMT Voice Copilot"). 
 
 ---
 
