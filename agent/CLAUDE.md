@@ -119,10 +119,18 @@ only run when you opt in, and are intentionally tiny. Don't add live calls to th
   PCM hits LiveKit's raw-sample path and skips the PyAV decoder; the default **MP3** is streamed as
   hex over the Minimax WebSocket and intermittently dies with `av.error.InvalidDataError` / "I/O
   operation on closed file". Don't switch TTS back to mp3 without re-testing the live audio path.
-- **Turn endpointing:** `TURN_MAX_DELAY` (default 6.0s, via `turn_handling.endpointing.max_delay`) is
-  the hard cap on waiting for more speech. Raised above the 3.0s default so a mid-query pause isn't
-  forced closed into fragments ("Vigil, what's the adult" → UNKNOWN). The EOU model still ends fast
-  on a confident finish; this only extends the ceiling when it keeps predicting "not done".
+- **Turn endpointing (live-fixed):** default `TURN_DETECTION=stt` — the turn ends on Deepgram's
+  final transcript (prompt + reliable). The `multilingual` EOU model was observed to never close
+  turns in console mode (it only predicted at shutdown, so `on_user_turn_completed` never fired and
+  nothing was spoken) and it adds latency before a Tier-2 answer starts — it's opt-in now. Endpointing
+  bounds are passed as the direct `min_endpointing_delay`/`max_endpointing_delay` kwargs (NOT the
+  `turn_handling` dict); `TURN_MAX_DELAY` (now 3.0s) is the hard cap. A startup greeting
+  (`STARTUP_GREETING`) is spoken on `session.start()` to confirm the TTS path live.
+- **Tier-2 model (live-fixed):** `MINIMAX_LLM_MODEL=MiniMax-Text-01` (non-reasoning). MiniMax-M3 is a
+  reasoning model: 5–25s and sometimes returns nothing (whole token budget spent inside `<think>`).
+  Text-01 answers the same constrained-RAG query in ~1.5s. The prompt forces ONE ≤25-word sentence,
+  answer-only-what-was-asked, and no spoken citations (the card still carries them). `_strip_reasoning`
+  in the synthesizer stays as a safety net if a reasoning model is ever reselected.
 - **dotenv-timing gotcha (fixed in code):** `agent.py` calls `load_dotenv()` at **import time**
   (anchored to its own dir), not just inside `load_config()`. In `console`/`dev` mode the LiveKit
   CLI checks `LIVEKIT_URL` at worker startup *before* `entrypoint()` runs, so a late load raised
