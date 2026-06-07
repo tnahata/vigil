@@ -101,6 +101,10 @@ def build_tts(cfg: Config):
                 base_url=cfg.minimax_tts_base_url,
                 model=cfg.minimax_tts_model,
                 voice=cfg.minimax_tts_voice,
+                # PCM -> LiveKit's AudioEmitter treats it as raw samples and skips the
+                # PyAV decoder; MP3 over the Minimax WS intermittently raises
+                # av.error.InvalidDataError ("Invalid data found when processing input").
+                audio_format=cfg.minimax_tts_format,
             )
         except Exception as exc:  # noqa: BLE001
             log.warning(
@@ -208,11 +212,14 @@ async def entrypoint(ctx: JobContext) -> None:
     }
     if (vad := _build_vad()) is not None:
         session_kwargs["vad"] = vad
-    # turn_handling={"turn_detection": <model>} is the current API; the bare
-    # turn_detection= kwarg is deprecated (removed in v2.0). When the model isn't
-    # available we omit it entirely so the session auto-selects an endpointing mode.
+    # turn_handling={"turn_detection": <model>, ...} is the current API; the bare
+    # turn_detection= kwarg is deprecated (removed in v2.0). max_delay raises the
+    # hard cap on waiting for more speech so a mid-query pause isn't cut into
+    # fragments. turn_detection is added only when the model loaded (else auto-select).
+    turn_handling = {"endpointing": {"max_delay": cfg.turn_max_delay}}
     if (td := _build_turn_detection()) is not None:
-        session_kwargs["turn_handling"] = {"turn_detection": td}
+        turn_handling["turn_detection"] = td
+    session_kwargs["turn_handling"] = turn_handling
 
     session = AgentSession(**session_kwargs)
     channel = LiveKitChannel(ctx.room)
