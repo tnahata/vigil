@@ -108,6 +108,9 @@ def build_tts(cfg: Config):
                 # PyAV decoder; MP3 over the Minimax WS intermittently raises
                 # av.error.InvalidDataError ("Invalid data found when processing input").
                 audio_format=cfg.minimax_tts_format,
+                # Speak a touch faster -- medics want the dose quickly. Plugin clamps
+                # to [0.5, 2.0] and raises outside it, so keep MINIMAX_TTS_SPEED in range.
+                speed=cfg.minimax_tts_speed,
             )
         except Exception as exc:  # noqa: BLE001
             log.warning(

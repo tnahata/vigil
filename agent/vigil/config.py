@@ -38,6 +38,7 @@ class Config:
     # Raw PCM bypasses the PyAV MP3 decoder in LiveKit's AudioEmitter -- MP3 streaming
     # over the Minimax WebSocket intermittently fails to decode ("Invalid data found").
     minimax_tts_format: str = "pcm"        # "pcm" | "mp3" | "flac" | "wav"
+    minimax_tts_speed: float = 1.25        # playback speed multiplier; plugin range [0.5, 2.0]
     # TTS base host WITHOUT a path -- the plugin appends /v1/t2a_v2 itself. Must NOT
     # carry a trailing /v1 (that's only for the OpenAI-compatible LLM base url).
     minimax_tts_base_url: str = "https://api.minimax.io"
@@ -131,6 +132,7 @@ def load_config() -> Config:
         minimax_tts_model=os.getenv("MINIMAX_TTS_MODEL", "speech-2.8-hd"),
         minimax_tts_voice=os.getenv("MINIMAX_TTS_VOICE", "English_expressive_narrator"),
         minimax_tts_format=os.getenv("MINIMAX_TTS_FORMAT", "pcm"),
+        minimax_tts_speed=float(os.getenv("MINIMAX_TTS_SPEED", "1.25")),
         minimax_tts_base_url=os.getenv("MINIMAX_TTS_BASE_URL", "https://api.minimax.io"),
         minimax_group_id=os.getenv("MINIMAX_GROUP_ID", ""),
         inference_tts_model=os.getenv("INFERENCE_TTS_MODEL", "cartesia/sonic-2"),
