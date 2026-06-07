@@ -6,12 +6,14 @@ model. The AgentSession is built with NO `llm=`, so it never auto-generates spee
 every spoken response is an explicit `session.say()` of either the verbatim Tier-1
 `spoken_form` or the constrained, ground-checked Tier-2 text.
 
-Run a local mic<->speaker loop (no phone needed) once creds are in agent/.env:
+Run a local mic<->speaker loop (no phone needed) with creds in agent/.env:
 
     python agent.py console
 
-NOTE: needs LIVEKIT_API_KEY *and* LIVEKIT_API_SECRET (+ LIVEKIT_URL). The secret is
-still pending in .env, so the live run is wired but not yet executed.
+We react to a COMPLETED user turn via `VigilAgent.on_user_turn_completed`, NOT to
+each raw STT final. The turn-detector model aggregates the whole utterance across
+natural pauses, so "Vigil ... what's the epi dose for anaphylaxis" arrives as one
+transcript instead of being split into fragments that each miss the wake word.
 """
 from __future__ import annotations
 
@@ -36,10 +38,40 @@ from livekit.agents import (
     Agent,
     AgentSession,
     JobContext,
+    StopResponse,
     WorkerOptions,
     cli,
     inference,
 )
+
+# --- Plugin imports MUST happen at module top-level (the main thread). -------------
+# LiveKit plugins call Plugin.register_plugin()/_InferenceRunner.register_runner() at
+# import time, and those raise "must be registered on the main thread" if first
+# imported from the job-runner thread (which is where entrypoint() runs in console/
+# dev mode). Importing here registers them on the main thread; the .load()/() model
+# constructors below are then safe to call inside the worker thread.
+try:
+    from livekit.plugins import silero as _silero
+except Exception as _exc:  # pragma: no cover - optional plugin
+    _silero = None
+    logging.getLogger("vigil.agent").warning("silero_import_failed: %r", _exc)
+
+try:
+    from livekit.plugins.turn_detector.multilingual import (
+        MultilingualModel as _MultilingualModel,
+    )
+except Exception as _exc:  # pragma: no cover - optional plugin
+    _MultilingualModel = None
+    logging.getLogger("vigil.agent").warning("turn_detector_import_failed: %r", _exc)
+
+try:
+    from livekit.plugins import minimax as _minimax
+except Exception:  # pragma: no cover - naming varies by version
+    try:
+        from livekit.plugins import minimax_ai as _minimax
+    except Exception as _exc:
+        _minimax = None
+        logging.getLogger("vigil.agent").warning("minimax_import_failed: %r", _exc)
 
 from vigil.adapters.fake_index import FakeIndex
 from vigil.adapters.livekit_channel import LiveKitChannel
@@ -60,17 +92,12 @@ def build_index(cfg: Config):
 
 
 def build_tts(cfg: Config):
-    """Minimax TTS, falling back to LiveKit inference TTS if it's unavailable
-    (e.g. Minimax requires a group id we don't have)."""
-    if (cfg.tts_provider or "minimax").lower() == "minimax":
+    """Minimax TTS, falling back to LiveKit inference TTS if it's unavailable."""
+    if (cfg.tts_provider or "minimax").lower() == "minimax" and _minimax is not None:
         try:
-            try:
-                from livekit.plugins import minimax as _mm
-            except ImportError:
-                from livekit.plugins import minimax_ai as _mm  # naming varies by version
             # Pass base_url explicitly: the plugin appends /v1/t2a_v2, so it must NOT
             # inherit MINIMAX_BASE_URL (which carries /v1 for the LLM) -> 404 otherwise.
-            return _mm.TTS(
+            return _minimax.TTS(
                 base_url=cfg.minimax_tts_base_url,
                 model=cfg.minimax_tts_model,
                 voice=cfg.minimax_tts_voice,
@@ -98,23 +125,74 @@ def build_synthesizer(cfg: Config):
 
 
 def _build_vad():
+    if _silero is None:
+        return None
     try:
-        from livekit.plugins import silero
-
-        return silero.VAD.load()
+        return _silero.VAD.load()
     except Exception as exc:  # noqa: BLE001
         log.warning("silero_unavailable", extra={"vigil": {"error": repr(exc)}})
         return None
 
 
 def _build_turn_detection():
+    if _MultilingualModel is None:
+        return None
     try:
-        from livekit.plugins.turn_detector.multilingual import MultilingualModel
-
-        return MultilingualModel()
+        return _MultilingualModel()
     except Exception as exc:  # noqa: BLE001
         log.warning("turn_detector_unavailable", extra={"vigil": {"error": repr(exc)}})
         return None
+
+
+class VigilAgent(Agent):
+    """Reacts to a COMPLETED user turn with the deterministic pipeline.
+
+    `on_user_turn_completed` receives the full turn transcript (assembled by the
+    turn detector across pauses). The sync, pure pipeline runs in a thread executor
+    so a multi-second Tier-2 LLM call never blocks the audio event loop; Tier 1
+    stays sub-millisecond. We then `session.say()` the answer and publish the card,
+    and raise StopResponse so the LLM-less session never tries to auto-reply.
+    """
+
+    def __init__(self, *, cfg: Config, index, synthesizer, channel: LiveKitChannel) -> None:
+        super().__init__(
+            instructions=(
+                "You are Vigil, a reactive EMT dose copilot. You never speak "
+                "unprompted. Dose answers are produced deterministically from "
+                "protocol retrieval, not by you."
+            ),
+        )
+        self._cfg = cfg
+        self._index = index
+        self._synthesizer = synthesizer
+        self._channel = channel
+
+    async def on_user_turn_completed(self, turn_ctx, new_message) -> None:  # noqa: ANN001
+        transcript = (new_message.text_content or "").strip()
+        if not transcript:
+            raise StopResponse()
+
+        loop = asyncio.get_running_loop()
+        work = functools.partial(
+            handle_transcript,
+            transcript,
+            index=self._index,
+            synthesizer=self._synthesizer,
+            logger=log,
+            tier2_alpha=self._cfg.tier2_alpha,
+            tier2_top_k=self._cfg.tier2_top_k,
+        )
+        answer = await loop.run_in_executor(None, work)
+
+        if answer is not None:
+            await LiveKitSpeaker(self.session).say(answer.spoken_form)
+            try:
+                await self._channel.publish_card(answer.card)
+            except Exception as exc:  # noqa: BLE001 - a card failure must never block the dose
+                log.warning("card_publish_failed", extra={"vigil": {"error": repr(exc)}})
+
+        # No LLM is configured; stop here so the session doesn't attempt a reply.
+        raise StopResponse()
 
 
 async def entrypoint(ctx: JobContext) -> None:
@@ -130,47 +208,18 @@ async def entrypoint(ctx: JobContext) -> None:
     }
     if (vad := _build_vad()) is not None:
         session_kwargs["vad"] = vad
+    # turn_handling={"turn_detection": <model>} is the current API; the bare
+    # turn_detection= kwarg is deprecated (removed in v2.0). When the model isn't
+    # available we omit it entirely so the session auto-selects an endpointing mode.
     if (td := _build_turn_detection()) is not None:
-        session_kwargs["turn_detection"] = td
+        session_kwargs["turn_handling"] = {"turn_detection": td}
 
     session = AgentSession(**session_kwargs)
-    speaker = LiveKitSpeaker(session)
     channel = LiveKitChannel(ctx.room)
-
-    async def _respond(transcript: str) -> None:
-        loop = asyncio.get_running_loop()
-        # Run the (sync, pure) pipeline off the event loop so a Tier-2 LLM call
-        # never blocks audio. Tier 1 stays sub-millisecond regardless.
-        work = functools.partial(
-            handle_transcript,
-            transcript,
-            index=index,
-            synthesizer=synthesizer,
-            logger=log,
-            tier2_alpha=cfg.tier2_alpha,
-            tier2_top_k=cfg.tier2_top_k,
-        )
-        answer = await loop.run_in_executor(None, work)
-        if answer is None:
-            return  # no wake word -> stay silent (reactive only)
-        await speaker.say(answer.spoken_form)
-        await channel.publish_card(answer.card)
-
-    @session.on("user_input_transcribed")
-    def on_transcribed(ev) -> None:
-        # Final transcripts only. Interim partials (speculative retrieval) deferred.
-        if not getattr(ev, "is_final", False):
-            return
-        asyncio.create_task(_respond(ev.transcript))
+    agent = VigilAgent(cfg=cfg, index=index, synthesizer=synthesizer, channel=channel)
 
     await session.start(
-        agent=Agent(
-            instructions=(
-                "You are Vigil, a reactive EMT dose copilot. You never speak "
-                "unprompted. Dose answers are produced deterministically from "
-                "protocol retrieval, not by you."
-            ),
-        ),
+        agent=agent,
         room=ctx.room,
         # TODO: add noise_cancellation + RoomInputOptions tuning after the live run
         # confirms the installed plugin's API shape.

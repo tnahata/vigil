@@ -40,8 +40,19 @@ constrained prompt → `synthesizer.synthesize()` → grounding guard → `Answe
 default).
 
 **Worker:** `AgentSession` is built with **no `llm=`**, so it never auto-replies — every spoken
-line is an explicit `session.say()` (bypasses the LLM). The sync pipeline runs in a thread
-executor so a multi-second Tier-2 LLM call never blocks audio; Tier 1 stays sub-millisecond.
+line is an explicit `session.say()` (bypasses the LLM). We react in `VigilAgent.on_user_turn_completed`
+(NOT per raw STT final): the turn-detector model aggregates the whole utterance across natural
+pauses, so "Vigil … epi dose for anaphylaxis" arrives as one transcript instead of fragments that
+each miss the wake word. That hook still fires with no LLM (turn detection runs independently); we
+run the pipeline, `say()` the answer, publish the card, then raise `StopResponse`. The sync pipeline
+runs in a thread executor so a multi-second Tier-2 LLM call never blocks audio; Tier 1 stays sub-ms.
+
+**Plugin registration gotcha (load-bearing):** LiveKit plugins (`silero`, `turn_detector`, `minimax`)
+call `register_plugin()`/`register_runner()` at **import time**, which *must* run on the main thread.
+So `agent.py` imports them at module top-level, NOT lazily inside `entrypoint()` (which runs on the
+job-runner thread → `RuntimeError: ... must be registered on the main thread`, then silent fallback
+to no-VAD/no-turn-detector/Cartesia-TTS). The `.load()`/`()` model *constructors* are fine on the
+worker thread, but `MultilingualModel()` needs a live job context, so it's built inside `entrypoint`.
 
 ## How to extend
 
@@ -86,6 +97,10 @@ only run when you opt in, and are intentionally tiny. Don't add live calls to th
 - **Verified live:** Minimax LLM (Tier 2, OpenAI-compatible) + the grounding guard against the
   real model; Minimax TTS voice-out (no Group ID needed); LiveKit creds authenticate and the
   agent worker registers with LiveKit Cloud (`AW_…`). Hermetic gate (32) + opt-in integration green.
+- **Verified startup:** `console` mode builds the AgentSession with silero VAD + multilingual
+  turn detector + Minimax TTS all constructed (no main-thread/`_unavailable` warnings, no
+  deprecation warning) and reaches `session.start()`. Model files pre-downloaded via
+  `python agent.py download-files`. (The full spoken round-trip still needs a human at a mic.)
 - **Ready to run (needs a human at a mic):** `python agent.py console` — the interactive voice loop.
 - **TTS gotcha (fixed in code):** `MINIMAX_TTS_BASE_URL` must be the bare host
   (`https://api.minimax.io`) — the plugin appends `/v1/t2a_v2`. Do NOT reuse `MINIMAX_BASE_URL`
