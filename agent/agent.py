@@ -18,6 +18,19 @@ from __future__ import annotations
 import asyncio
 import functools
 import logging
+import os
+
+# Load agent/.env at import time, BEFORE the LiveKit CLI reads the environment.
+# In `console`/`dev` mode the worker checks LIVEKIT_URL (ws_url) at startup --
+# before our entrypoint() (and thus load_config()'s own load_dotenv()) ever runs --
+# so without this the CLI raises "ws_url is required" even though .env has it.
+# Anchored to this file's directory so it works regardless of the working dir.
+try:
+    from dotenv import load_dotenv
+
+    load_dotenv(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".env"))
+except Exception:  # pragma: no cover - dotenv is optional for pure tests
+    pass
 
 from livekit.agents import (
     Agent,

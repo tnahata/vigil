@@ -74,7 +74,7 @@ already created from it). Secrets live ONLY in `agent/.env` (gitignored; `.gitig
 RUN_INTEGRATION=1 .venv/bin/python -m pytest tests/integration -v
 #    self-skips unless RUN_INTEGRATION=1 + MINIMAX_API_KEY present (loaded from .env)
 
-# 3) Live mic<->speaker loop (no phone). PENDING: needs LIVEKIT_API_SECRET in .env:
+# 3) Live mic<->speaker loop (no phone). Creds are in .env; run from agent/:
 .venv/bin/python agent.py console
 ```
 
@@ -90,5 +90,9 @@ only run when you opt in, and are intentionally tiny. Don't add live calls to th
 - **TTS gotcha (fixed in code):** `MINIMAX_TTS_BASE_URL` must be the bare host
   (`https://api.minimax.io`) — the plugin appends `/v1/t2a_v2`. Do NOT reuse `MINIMAX_BASE_URL`
   (which is `.../v1` for the LLM) or TTS 404s with a doubled `/v1`.
+- **dotenv-timing gotcha (fixed in code):** `agent.py` calls `load_dotenv()` at **import time**
+  (anchored to its own dir), not just inside `load_config()`. In `console`/`dev` mode the LiveKit
+  CLI checks `LIVEKIT_URL` at worker startup *before* `entrypoint()` runs, so a late load raised
+  `ValueError: ws_url is required` even with a correct `.env`. Keep the import-time load.
 - **Deferred:** real `MossIndex` (FakeIndex is the default; Moss creds stored for later), the async
   Moss bridge, noise-cancellation/RoomInputOptions tuning, the `/app` RN client, real-device testing.
