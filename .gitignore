@@ -1,33 +1,43 @@
 # Dependencies
 node_modules/
 
-# Python build artifacts
+# Python
+.venv/
+venv/
 __pycache__/
-*.pyc
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
 
 # Environment — never commit real credentials
 .env
+.env.*
 .env.local
-.env.*.local
+!.env.example
+*.key
+*.pem
+*.secret
 
 # Build output
 dist/
 .next/
 
-# PDFs — source documents stay local
-*.pdf
-
-# Generated pipeline outputs — run the scripts to produce these locally
+# Generated pipeline outputs — run scripts to reproduce locally
 unsiloed-test/parsed_output*.json
 unsiloed-test/chunks.json
 
-# The starter kit is a vendored reference repo, not our code
-moss-hacker-starter/
+# PDFs — source documents stay local
+*.pdf
 
-# Editor / tool settings
+# Vendored reference repo
+moss-hacker-starter/
+.moss/
+
+# Editor / OS
 .claude/
 .DS_Store
 
-# Root-level lockfile (each subproject manages its own)
+# Root-level lockfiles (each subproject manages its own)
 /package-lock.json
 /package.json

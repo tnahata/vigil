@@ -1,0 +1,159 @@
+<h2 class="sr-only">Vigil sequence timing diagram comparing Tier 1 and Tier 2 call paths</h2>
+<style>
+.seq-wrap { padding: 0.5rem 0; }
+.tier-tabs { display: flex; gap: 8px; margin-bottom: 1.5rem; }
+.tier-tabs button { padding: 6px 16px; font-size: 14px; border-radius: var(--border-radius-md); cursor: pointer; transition: all 0.15s; }
+.tier-tabs button.active-t1 { background: #E6F1FB; color: #0C447C; border: 0.5px solid #85B7EB; }
+.tier-tabs button.active-t2 { background: #FAECE7; color: #712B13; border: 0.5px solid #F0997B; }
+.tier-tabs button.inactive { background: transparent; color: var(--color-text-secondary); border: 0.5px solid var(--color-border-tertiary); }
+.cols { display: grid; grid-template-columns: 70px 1fr 1fr 1fr 1fr 1fr; gap: 0; margin-bottom: 4px; }
+.col-h { font-size: 12px; font-weight: 500; text-align: center; padding: 6px 2px; color: var(--color-text-secondary); }
+.col-h.first { text-align: right; padding-right: 8px; }
+.lines { display: grid; grid-template-columns: 70px 1fr 1fr 1fr 1fr 1fr; gap: 0; position: relative; }
+.lifeline { border-right: 0.5px dashed var(--color-border-tertiary); height: 100%; position: absolute; top: 0; }
+.step-row { display: grid; grid-template-columns: 70px 1fr 1fr 1fr 1fr 1fr; gap: 0; align-items: center; min-height: 44px; position: relative; }
+.time-label { font-size: 11px; color: var(--color-text-tertiary); text-align: right; padding-right: 8px; font-family: var(--font-mono); }
+.arrow-container { position: relative; display: flex; align-items: center; height: 36px; }
+.arrow-bar { height: 2px; position: absolute; display: flex; align-items: center; }
+.arrow-bar .label { font-size: 12px; white-space: nowrap; position: absolute; top: -16px; left: 50%; transform: translateX(-50%); }
+.arrow-bar .head { position: absolute; right: -1px; width: 0; height: 0; border-top: 5px solid transparent; border-bottom: 5px solid transparent; }
+.arrow-bar .head.right { border-left: 7px solid; }
+.arrow-bar .head.left { border-right: 7px solid; left: -1px; right: auto; }
+.self-box { margin: 0 auto; border: 0.5px solid; border-radius: var(--border-radius-md); padding: 3px 10px; font-size: 12px; text-align: center; }
+.sep { grid-column: 1 / -1; height: 1px; background: var(--color-border-tertiary); margin: 4px 0; opacity: 0.4; }
+.net-calls { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; padding: 6px 14px; border-radius: var(--border-radius-md); margin-top: 12px; }
+.t1-color { background: #378ADD; }
+.t2-color { background: #D85A30; }
+.t1-fill { background: #E6F1FB; color: #0C447C; }
+.t2-fill { background: #FAECE7; color: #712B13; }
+.t1-border { border-color: #85B7EB; color: #0C447C; }
+.t2-border { border-color: #F0997B; color: #712B13; }
+.internal-fill { background: #E1F5EE; color: #085041; border-color: #5DCAA5; }
+.amber-bg { background: #BA7517; }
+.gray-bg { background: var(--color-border-secondary); }
+.cumulative { font-size: 11px; font-family: var(--font-mono); color: var(--color-text-tertiary); position: absolute; right: 4px; top: 50%; transform: translateY(-50%); }
+</style>
+
+<div class="seq-wrap">
+  <div class="tier-tabs">
+    <button id="btn-t1" class="active-t1" onclick="showTier(1)">Tier 1 — dose lookup</button>
+    <button id="btn-t2" class="inactive" onclick="showTier(2)">Tier 2 — soft synthesis</button>
+  </div>
+
+  <div class="cols">
+    <div class="col-h first">Time</div>
+    <div class="col-h"><i class="ti ti-device-mobile" style="font-size:16px;vertical-align:-2px" aria-hidden="true"></i> Device</div>
+    <div class="col-h"><i class="ti ti-cloud" style="font-size:16px;vertical-align:-2px" aria-hidden="true"></i> LiveKit</div>
+    <div class="col-h"><i class="ti ti-cpu" style="font-size:16px;vertical-align:-2px" aria-hidden="true"></i> Agent</div>
+    <div class="col-h"><i class="ti ti-database" style="font-size:16px;vertical-align:-2px" aria-hidden="true"></i> Moss</div>
+    <div class="col-h"><i class="ti ti-bolt" style="font-size:16px;vertical-align:-2px" aria-hidden="true"></i> Minimax</div>
+  </div>
+
+  <div id="tier-content"></div>
+
+  <div id="summary" style="margin-top: 16px;"></div>
+</div>
+
+<script>
+const tier1Steps = [
+  { time: "0 ms", type: "arrow", from: 1, to: 2, label: "Audio stream (WebRTC)", color: "gray-bg", labelColor: "var(--color-text-secondary)" },
+  { time: "", type: "arrow", from: 2, to: 3, label: "Transcript event (STT)", color: "gray-bg", labelColor: "var(--color-text-secondary)" },
+  { type: "sep" },
+  { time: "~300 ms", type: "self", col: 3, label: "Wake-word + alias + route", cls: "internal-fill" },
+  { time: "", type: "arrow", from: 3, to: 4, label: "Keyword query (α=0)", color: "t1-color", labelColor: "#0C447C" },
+  { time: "+<10 ms", type: "arrow", from: 4, to: 3, label: "Verbatim protocol chunk", color: "t1-color", labelColor: "#0C447C", reverse: true },
+  { type: "sep" },
+  { time: "", type: "self", col: 3, label: "Build spoken_form + card", cls: "internal-fill" },
+  { time: "", type: "arrow", from: 3, to: 5, label: "TTS request (spoken_form)", color: "amber-bg", labelColor: "#633806" },
+  { time: "+~200 ms", type: "arrow", from: 5, to: 3, label: "Audio bytes", color: "amber-bg", labelColor: "#633806", reverse: true },
+  { type: "sep" },
+  { time: "", type: "arrow", from: 3, to: 2, label: "Audio track + data channel", color: "gray-bg", labelColor: "var(--color-text-secondary)", reverse: true },
+  { time: "~600 ms", type: "arrow", from: 2, to: 1, label: "Plays audio, renders card", color: "gray-bg", labelColor: "var(--color-text-secondary)", reverse: true },
+];
+
+const tier2Steps = [
+  { time: "0 ms", type: "arrow", from: 1, to: 2, label: "Audio stream (WebRTC)", color: "gray-bg", labelColor: "var(--color-text-secondary)" },
+  { time: "", type: "arrow", from: 2, to: 3, label: "Transcript event (STT)", color: "gray-bg", labelColor: "var(--color-text-secondary)" },
+  { type: "sep" },
+  { time: "~300 ms", type: "self", col: 3, label: "Wake-word + alias + route", cls: "internal-fill" },
+  { time: "", type: "arrow", from: 3, to: 4, label: "Hybrid query (α≈0.6)", color: "t2-color", labelColor: "#712B13" },
+  { time: "+<10 ms", type: "arrow", from: 4, to: 3, label: "Ranked chunks", color: "t2-color", labelColor: "#712B13", reverse: true },
+  { type: "sep" },
+  { time: "", type: "self", col: 3, label: "PII redact on chunks", cls: "t2-fill" },
+  { time: "", type: "arrow", from: 3, to: 5, label: "LLM call (grounded on chunks)", color: "t2-color", labelColor: "#712B13" },
+  { time: "+~800 ms", type: "arrow", from: 5, to: 3, label: "Constrained response", color: "t2-color", labelColor: "#712B13", reverse: true },
+  { type: "sep" },
+  { time: "", type: "self", col: 3, label: "Build spoken_form + card", cls: "internal-fill" },
+  { time: "", type: "arrow", from: 3, to: 5, label: "TTS request (spoken_form)", color: "amber-bg", labelColor: "#633806" },
+  { time: "+~200 ms", type: "arrow", from: 5, to: 3, label: "Audio bytes", color: "amber-bg", labelColor: "#633806", reverse: true },
+  { type: "sep" },
+  { time: "", type: "arrow", from: 3, to: 2, label: "Audio track + data channel", color: "gray-bg", labelColor: "var(--color-text-secondary)", reverse: true },
+  { time: "~1400 ms", type: "arrow", from: 2, to: 1, label: "Plays audio, renders card", color: "gray-bg", labelColor: "var(--color-text-secondary)", reverse: true },
+];
+
+function renderSteps(steps) {
+  let html = '';
+  steps.forEach(s => {
+    if (s.type === 'sep') {
+      html += '<div class="step-row"><div class="sep"></div></div>';
+      return;
+    }
+    html += '<div class="step-row">';
+    html += '<div class="time-label">' + (s.time || '') + '</div>';
+    if (s.type === 'self') {
+      for (let i = 1; i < s.col; i++) html += '<div></div>';
+      html += '<div style="display:flex;align-items:center;justify-content:center;"><div class="self-box ' + s.cls + '">' + s.label + '</div></div>';
+      for (let i = s.col; i < 5; i++) html += '<div></div>';
+    } else {
+      let lo = Math.min(s.from, s.to);
+      let hi = Math.max(s.from, s.to);
+      for (let i = 1; i < lo; i++) html += '<div></div>';
+      let span = hi - lo + 1;
+      let isReverse = s.reverse;
+      html += '<div style="grid-column: span ' + span + '; position:relative; height:36px; display:flex; align-items:center;">';
+      let leftPct = '10%';
+      let rightPct = '10%';
+      html += '<div class="arrow-bar" style="left:' + leftPct + '; right:' + rightPct + ';">';
+      html += '<div style="position:absolute;top:0;left:0;right:0;height:2px;background:currentColor;" class="' + s.color + '"></div>';
+      html += '<div class="label" style="color:' + s.labelColor + ';">' + s.label + '</div>';
+      if (!isReverse) {
+        html += '<div class="head right" style="border-left-color:inherit;top:-4px;"></div>';
+      } else {
+        html += '<div class="head left" style="border-right-color:inherit;top:-4px;"></div>';
+      }
+      html += '</div></div>';
+      for (let i = hi; i < 5; i++) html += '<div></div>';
+    }
+    html += '</div>';
+  });
+  return html;
+}
+
+function showTier(n) {
+  const b1 = document.getElementById('btn-t1');
+  const b2 = document.getElementById('btn-t2');
+  const content = document.getElementById('tier-content');
+  const summary = document.getElementById('summary');
+  if (n === 1) {
+    b1.className = 'active-t1';
+    b2.className = 'inactive';
+    content.innerHTML = renderSteps(tier1Steps);
+    summary.innerHTML = '<div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;">' +
+      '<span class="net-calls t1-fill" style="border:0.5px solid #85B7EB;"><i class="ti ti-arrows-exchange" style="font-size:14px" aria-hidden="true"></i> 1 network call (TTS only)</span>' +
+      '<span class="net-calls internal-fill" style="border:0.5px solid #5DCAA5;"><i class="ti ti-clock" style="font-size:14px" aria-hidden="true"></i> ~600 ms total</span>' +
+      '<span class="net-calls" style="background:#FCEBEB;color:#791F1F;border:0.5px solid #F09595;"><i class="ti ti-shield-check" style="font-size:14px" aria-hidden="true"></i> 0 LLM calls</span>' +
+      '</div>';
+  } else {
+    b1.className = 'inactive';
+    b2.className = 'active-t2';
+    content.innerHTML = renderSteps(tier2Steps);
+    summary.innerHTML = '<div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;">' +
+      '<span class="net-calls t2-fill" style="border:0.5px solid #F0997B;"><i class="ti ti-arrows-exchange" style="font-size:14px" aria-hidden="true"></i> 2 network calls (LLM + TTS)</span>' +
+      '<span class="net-calls internal-fill" style="border:0.5px solid #5DCAA5;"><i class="ti ti-clock" style="font-size:14px" aria-hidden="true"></i> ~1400 ms total</span>' +
+      '<span class="net-calls" style="background:#FAEEDA;color:#633806;border:0.5px solid #FAC775;"><i class="ti ti-brain" style="font-size:14px" aria-hidden="true"></i> 1 LLM call (grounded)</span>' +
+      '</div>';
+  }
+}
+
+showTier(1);
+</script>
