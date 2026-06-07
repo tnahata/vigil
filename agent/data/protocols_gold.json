@@ -1,0 +1,57 @@
+[
+  {
+    "doc_id": "epi_adult_anaphylaxis",
+    "drug": "epinephrine",
+    "population": "adult",
+    "indication": "anaphylaxis",
+    "dose_value": "0.3 mg",
+    "text": "Epinephrine (1 mg/mL) 0.3 mg IM, lateral thigh; may repeat every 5 to 15 minutes. [PLACEHOLDER -- verify against source protocol PDF]",
+    "spoken_form": "Epinephrine, zero point three milligrams, intramuscular, in the lateral thigh. May repeat every five to fifteen minutes.",
+    "protocol_id": "PROTO-AdultAnaphylaxis-2.1",
+    "metadata": {"route": "IM", "verify": true}
+  },
+  {
+    "doc_id": "epi_peds_anaphylaxis",
+    "drug": "epinephrine",
+    "population": "pediatric",
+    "indication": "anaphylaxis",
+    "dose_value": "0.01 mg/kg (max 0.3 mg)",
+    "text": "Epinephrine (1 mg/mL) 0.01 mg/kg IM, maximum single dose 0.3 mg. [PLACEHOLDER -- verify against source protocol PDF]",
+    "spoken_form": "Epinephrine, zero point zero one milligrams per kilogram, intramuscular, maximum single dose zero point three milligrams.",
+    "protocol_id": "PROTO-PedsAnaphylaxis-2.1",
+    "metadata": {"route": "IM", "weight_based": true, "verify": true}
+  },
+  {
+    "doc_id": "epi_adult_cardiac_arrest",
+    "drug": "epinephrine",
+    "population": "adult",
+    "indication": "cardiac_arrest",
+    "dose_value": "1 mg",
+    "text": "Epinephrine (0.1 mg/mL) 1 mg IV/IO every 3 to 5 minutes during arrest. [PLACEHOLDER -- verify against source protocol PDF]",
+    "spoken_form": "Epinephrine, one milligram, I V or I O, every three to five minutes.",
+    "protocol_id": "PROTO-AdultCardiacArrest-1.4",
+    "metadata": {"route": "IV/IO", "verify": true}
+  },
+  {
+    "doc_id": "naloxone_adult_opioid",
+    "drug": "naloxone",
+    "population": "adult",
+    "indication": "opioid_overdose",
+    "dose_value": "0.4-2 mg",
+    "text": "Naloxone 0.4 to 2 mg IN/IM/IV; titrate to adequate respirations. [PLACEHOLDER -- verify against source protocol PDF]",
+    "spoken_form": "Naloxone, zero point four to two milligrams, intranasal, intramuscular, or I V. Titrate to breathing.",
+    "protocol_id": "PROTO-AdultOpioid-3.0",
+    "metadata": {"route": "IN/IM/IV", "verify": true}
+  },
+  {
+    "doc_id": "dextrose_adult_hypoglycemia",
+    "drug": "dextrose",
+    "population": "adult",
+    "indication": "hypoglycemia",
+    "dose_value": "25 g (D10 250 mL)",
+    "text": "Dextrose D10W 250 mL (25 g) IV for symptomatic hypoglycemia. [PLACEHOLDER -- verify against source protocol PDF]",
+    "spoken_form": "Dextrose, twenty five grams, as D ten, two hundred fifty milliliters, I V.",
+    "protocol_id": "PROTO-AdultHypoglycemia-1.2",
+    "metadata": {"route": "IV", "verify": true}
+  }
+]
