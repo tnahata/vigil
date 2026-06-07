@@ -1,27 +1,43 @@
 # Dependencies
 node_modules/
 
-# Expo
-app/.expo/
-app/ios/
-app/android/
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
 
-# Build artifacts
-*.jsbundle
-*.hbc
+# Environment — never commit real credentials
+.env
+.env.*
+.env.local
+!.env.example
+*.key
+*.pem
+*.secret
 
-# macOS
+# Build output
+dist/
+.next/
+
+# Generated pipeline outputs — run scripts to reproduce locally
+unsiloed-test/parsed_output*.json
+unsiloed-test/chunks.json
+
+# PDFs — source documents stay local
+*.pdf
+
+# Vendored reference repo
+moss-hacker-starter/
+.moss/
+
+# Editor / OS
+.claude/
 .DS_Store
 
-# IDE
-.vscode/
-.idea/
-
-# Environment
-.env
-.env.local
-.env.*.local
-
-# npm
-npm-debug.log*
-package-lock.json
+# Root-level lockfiles (each subproject manages its own)
+/package-lock.json
+/package.json

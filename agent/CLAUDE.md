@@ -119,13 +119,77 @@ only run when you opt in, and are intentionally tiny. Don't add live calls to th
   PCM hits LiveKit's raw-sample path and skips the PyAV decoder; the default **MP3** is streamed as
   hex over the Minimax WebSocket and intermittently dies with `av.error.InvalidDataError` / "I/O
   operation on closed file". Don't switch TTS back to mp3 without re-testing the live audio path.
-- **Turn endpointing:** `TURN_MAX_DELAY` (default 6.0s, via `turn_handling.endpointing.max_delay`) is
-  the hard cap on waiting for more speech. Raised above the 3.0s default so a mid-query pause isn't
-  forced closed into fragments ("Vigil, what's the adult" → UNKNOWN). The EOU model still ends fast
-  on a confident finish; this only extends the ceiling when it keeps predicting "not done".
+- **Turn endpointing (live-fixed):** default `TURN_DETECTION=stt` — the turn ends on Deepgram's
+  final transcript (prompt + reliable). The `multilingual` EOU model was observed to never close
+  turns in console mode (it only predicted at shutdown, so `on_user_turn_completed` never fired and
+  nothing was spoken) and it adds latency before a Tier-2 answer starts — it's opt-in now. Endpointing
+  bounds are passed as the direct `min_endpointing_delay`/`max_endpointing_delay` kwargs (NOT the
+  `turn_handling` dict); `TURN_MAX_DELAY` (now 3.0s) is the hard cap. A startup greeting
+  (`STARTUP_GREETING`) is spoken on `session.start()` to confirm the TTS path live.
+- **Wake state machine (live-fixed — the "time it perfectly" flakiness):** STT endpointing splits
+  the wake word from the question into separate turns ("Vigil" <pause> "how much epi"), so the wake
+  turn was empty (→ spurious "Not in protocol") and the query turn missed the wake word (→ dropped).
+  Fix: `VigilAgent` keeps a **sticky listening window** (`WAKE_WINDOW_SECONDS`, default 8s) opened by
+  "Vigil"; turns within it CONTINUE the buffered query without repeating the wake word, and the
+  stitched buffer is re-routed each turn. The pure gate `core/dialog.query_has_substance` (intent OR a
+  known drug) decides *answer now vs. keep listening*, so bare "Vigil"/half-formed turns stay silent
+  instead of blurting a miss — while "how much rocuronium" still reports "not in protocol" (intent
+  present). STT is also relaxed (`MIN_ENDPOINTING_DELAY=0.8`, Deepgram `STT_ENDPOINTING_MS=200`) so
+  fewer turns split at the source and the cosmetic `flushing vad` warning quiets down. VAD stays on
+  (interruption handling); the warning never dropped audio/text.
+- **Clarification reply robustness (live-fixed):** a pending clarification **persists until answered**
+  — it is NOT tied to the wake-window timer (a 3-option question can take longer to speak + hear back
+  than the window; tying them dropped the reply). The next turn is the REPLY iff it names no drug
+  (`dialog.turn_is_fresh_query`): a bare indication ("stable VT", with or without the wake word) is
+  the reply; a turn that NAMES a drug ("what dosage of atropine") is a fresh question that abandons the
+  clarification and routes anew — so a stale clarification can't swallow the next query. `core/disambig`
+  scores only the indications' DISTINGUISHING tokens (tokens shared by every candidate, e.g. "VT", are
+  excluded) and falls back to an ordinal/cardinal position word ("the first one" / "number two") when
+  STT mangles the symptom word ("stable VT" → "Abel VT"). An ambiguous/whiffed reply still
+  safe-falls-back — never guesses a dose.
+- **Tier-2 routing precedence + breadth (live-fixed):** two routing bugs seen live. (1) "what dosage
+  of atropine **should I give**" was hijacked to Tier-2 because `should i give` was a Tier-2 cue matched
+  FIRST → the LLM answered "Based on unstable bradycardia…". (2) "**should I use** atropine **if** the
+  patient has an MI" (a judgment question) fell through to Tier-1 and asked a pointless dose
+  clarification. Fix in `router.classify`: an explicit dose **noun** (`dose(s)`/`dosage(s)`/`how much`/
+  `mg`/… — note the plurals) + a drug is checked BEFORE Tier-2 and wins outright, so a dose question is
+  never diverted to the LLM regardless of phrasing; dose **verbs** (`give/push/administer`) are weaker
+  and do NOT outrank a judgment cue. Tier-2 cues broadened (consider / precaution / side effect /
+  adverse / risk / `should i (give|use|administer|push)` / "what should I know" / "tell me about") so
+  judgment questions reach synthesis. Guarded by `test_dose_question_with_should_i_give_stays_tier1`,
+  `test_should_i_use_judgment_routes_tier2`, and `test_dose_queries_never_diverted_to_tier2`.
+- **Tier-2 model (live-fixed):** `MINIMAX_LLM_MODEL=MiniMax-Text-01` (non-reasoning). MiniMax-M3 is a
+  reasoning model: 5–25s and sometimes returns nothing (whole token budget spent inside `<think>`).
+  Text-01 answers the same constrained-RAG query in ~1.5s. The prompt forces ONE ≤25-word sentence,
+  answer-only-what-was-asked, and no spoken citations (the card still carries them). `_strip_reasoning`
+  in the synthesizer stays as a safety net if a reasoning model is ever reselected.
 - **dotenv-timing gotcha (fixed in code):** `agent.py` calls `load_dotenv()` at **import time**
   (anchored to its own dir), not just inside `load_config()`. In `console`/`dev` mode the LiveKit
   CLI checks `LIVEKIT_URL` at worker startup *before* `entrypoint()` runs, so a late load raised
   `ValueError: ws_url is required` even with a correct `.env`. Keep the import-time load.
-- **Deferred:** real `MossIndex` (FakeIndex is the default; Moss creds stored for later), the async
-  Moss bridge, noise-cancellation/RoomInputOptions tuning, the `/app` RN client, real-device testing.
+- **Moss retrieval WIRED & verified live:** the agent queries the real in-process index
+  `vigil-protocol` (88 chunks, 26 drugs, built by `moss-test/create_index.py` from
+  `data/chunks.json`) when `RETRIEVAL_BACKEND=moss`. `MossIndex` (`adapters/moss_index.py`) bridges
+  Moss's async client to the sync port via a persistent client + a daemon event-loop thread:
+  `load_index` once (~1.4 s), then in-process queries at **3–6 ms**. Shutdown is clean (the loop
+  thread is joined at `atexit` — without it the native core aborts with "mutex lock failed").
+  `Doc.from_chunk` is the single chunk→Doc mapping (`patient_type→population`,
+  `value_machine→dose_value`, `value_spoken→spoken_form`, `source+page→citation`), used by BOTH
+  `MossIndex` and the chunks-seeded `FakeIndex`, so the hermetic gate exercises the real schema.
+- **Hermetic gate vs Moss ranking — don't conflate:** `pytest tests` (40, green) proves
+  routing + alias + schema plumbing + verbatim-copy + grounding + purity, but the FakeIndex keyword
+  scorer does NOT replicate Moss BM25. Moss's ordering is validated only by the opt-in
+  `RUN_MOSS=1 pytest tests/integration/test_moss_parity.py` (green).
+- **Tier-1 multi-dose disambiguation (`core/disambig.py`):** 16 (drug, population) pairs have >1 dose
+  separated only by indication (atropine adult: bradycardia 1 mg vs organophosphate 2 mg). Tier-1
+  now retrieves `top_k=5` and either resolves by indication or asks ONE clarifying question (named
+  indications, never a dose number); the reply is resolved once (never re-asked). The full
+  transcript is sent to Moss (the reference `moss-test/query.py` queries by drug name only and so
+  returns the wrong indication's dose — fixed here). Cross-turn pending state lives on `VigilAgent`.
+- **Role gating (`core/roles.py`):** Tier-1 doses are gated by `provider_role` (from the auth
+  profile; `PROVIDER_ROLE`, default `PARAMEDIC`). Authorized → dose verbatim; conditional → dose +
+  caveat; not-authorized → withholds the number. The dose number is never altered.
+- **Known gaps (don't overclaim):** 6 dose chunks have empty `value_spoken` (ketamine/aspirin/
+  buprenorphine/nitroglycerin peds, sodium-bicarb adult) → safe fallback, no guess. Concentration
+  collision: bare "epi" → `EPINEPHRINE (1:1,000)` (anaphylaxis), not the `1:10,000` cardiac dose.
+- **Deferred:** noise-cancellation/RoomInputOptions tuning, the `/app` RN client, real-device testing.

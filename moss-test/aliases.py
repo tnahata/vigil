@@ -1,22 +1,21 @@
-"""Drug alias normalization -- the make-or-break detail for Tier 1.
+"""Drug alias normalization for Vigil Tier-1 retrieval.
 
-Exact keyword retrieval whiffs on synonyms ("adrenaline" vs "epinephrine",
-"epi", brand names). We map every spoken variant to ONE canonical name BEFORE
-retrieval so a filtered exact lookup can hit.
+Maps spoken synonyms, brand names, and abbreviations to the canonical drug
+strings stored in the Moss index metadata `drug` field.  Without this step,
+exact-keyword queries miss on pronunciation variants ("epi" vs "epinephrine")
+and the Tier-1 100%-accuracy gate fails on phrasing, not retrieval.
 
-The canonical names here MUST match the `drug` metadata field in the Moss index
-(built from data/chunks.json) byte-for-byte -- they are the UPPERCASE protocol
-names (e.g. "EPINEPHRINE (1:1,000)"), because Tier-1 filters with `drug $eq
-<canonical>`. A lowercase/abbreviated mismatch makes every dose query miss.
-
-Pure: stdlib only (re). No external imports -- enforced by test_core_purity.
+Usage:
+    canonical = normalize_drug("epi")          # "EPINEPHRINE (1:1,000)"
+    canonical = extract_drug_from_query(query) # first canonical match or None
 """
+
 from __future__ import annotations
 
 import re
 
-# Lowercased spoken synonym -> canonical drug name (exactly as stored in the
-# index `drug` metadata). Multi-word keys are matched whole, longest-first.
+# Canonical drug names must match the `drug` field in chunks.json exactly.
+# Keys are lowercased synonyms; values are the canonical name.
 DRUG_ALIASES: dict[str, str] = {
     # ACETAMINOPHEN
     "acetaminophen": "ACETAMINOPHEN (IV)",
@@ -78,7 +77,7 @@ DRUG_ALIASES: dict[str, str] = {
     "epinephrine 1:1000": "EPINEPHRINE (1:1,000)",
     "epi 1:1000": "EPINEPHRINE (1:1,000)",
     "epipen": "EPINEPHRINE (1:1,000)",
-    # EPINEPHRINE (1:10,000) -- cardiac arrest dose
+    # EPINEPHRINE (1:10,000) — cardiac arrest dose
     "epinephrine 1:10000": "EPINEPHRINE (1:10,000)",
     "epi 1:10000": "EPINEPHRINE (1:10,000)",
     "epinephrine cardiac": "EPINEPHRINE (1:10,000)",
@@ -95,10 +94,6 @@ DRUG_ALIASES: dict[str, str] = {
     "ipratropium": "IPRATROPIUM BROMIDE",
     "ipratropium bromide": "IPRATROPIUM BROMIDE",
     "atrovent": "IPRATROPIUM BROMIDE",
-    # KETAMINE (in the data, but absent from the original alias map -> unreachable)
-    "ketamine": "KETAMINE",
-    "ketalar": "KETAMINE",
-    "ket": "KETAMINE",
     # LIDOCAINE
     "lidocaine": "LIDOCAINE",
     "lido": "LIDOCAINE",
@@ -137,56 +132,22 @@ DRUG_ALIASES: dict[str, str] = {
     "cyklokapron": "TRANEXAMIC ACID",
 }
 
-# Back-compat aliases for the previous module's public names.
-ALIASES: dict[str, str] = DRUG_ALIASES
-CANONICAL_DRUGS: set[str] = set(DRUG_ALIASES.values())
-
-# Try multi-word / longer aliases first so "tranexamic acid" wins over a bare
-# word and "epinephrine 1:10000" wins over "epinephrine".
-_SORTED_ALIASES = sorted(DRUG_ALIASES, key=len, reverse=True)
-
-# STT often glues a drug name to a following intent word ("epi dose" -> "epidose").
-# These compounds whiff on whole-word alias + dose-intent matching, so a real query
-# routes to UNKNOWN on phrasing, not retrieval. We split them back apart, but ONLY
-# when BOTH halves are recognized -- so "epidural"/"episode" (a drug-alias prefix +
-# an UNknown suffix) are never touched. Only single-token aliases can glue.
-_DOSE_SUFFIXES = ("dose", "dosage", "dosing", "drip", "bolus", "push")
-_SINGLE_TOKEN_ALIASES = [a for a in _SORTED_ALIASES if " " not in a]
-_ALIAS_ALT = "|".join(re.escape(a) for a in _SINGLE_TOKEN_ALIASES)
-_GLUED_RE = re.compile(
-    r"\b(" + _ALIAS_ALT + r")(" + "|".join(_DOSE_SUFFIXES) + r")\b",
-    re.IGNORECASE,
-)
+# Sorted longest-first so multi-word aliases match before single words.
+_SORTED_ALIASES = sorted(DRUG_ALIASES.keys(), key=len, reverse=True)
 
 
-def split_glued_terms(query: str) -> str:
-    """Insert a space in glued <drug-alias><dose-word> compounds from STT.
-
-    Safe by construction: only fires when the prefix is a known alias AND the
-    suffix is a known dose-intent word, so non-drug words are left untouched.
-    """
-    if not query:
-        return query
-    return _GLUED_RE.sub(lambda m: f"{m.group(1)} {m.group(2)}", query)
-
-
-def normalize_drug(token: str | None) -> str | None:
-    """Map a drug term (single word or known multi-word alias) to its canonical
-    name, or None if unknown."""
-    if not token:
-        return None
-    return DRUG_ALIASES.get(token.strip().lower())
+def normalize_drug(term: str) -> str | None:
+    """Return the canonical drug name for a synonym, or None if unknown."""
+    return DRUG_ALIASES.get(term.lower().strip())
 
 
 def find_drug_span(query: str) -> tuple[str, int] | None:
     """Return (canonical_name, match_start_index) for the first drug alias found.
 
     Aliases are tried longest-first so multi-word names win over their single
-    words. The start index lets a caller resolve population by proximity to the
-    actual drug mention. Returns None if no alias is present.
+    words. The start index lets the caller resolve population by proximity to
+    the actual drug mention. Returns None if no alias is present.
     """
-    if not query:
-        return None
     q = query.lower()
     for alias in _SORTED_ALIASES:
         m = re.search(r"\b" + re.escape(alias) + r"\b", q)
@@ -195,11 +156,7 @@ def find_drug_span(query: str) -> tuple[str, int] | None:
     return None
 
 
-def extract_drug(query: str) -> str | None:
-    """Scan a free-text query for a recognizable drug; canonical name or None.
-
-    Uses longest-alias-first whole-word matching so multi-word names and
-    concentration-qualified variants ("epi 1:10000") resolve correctly.
-    """
+def extract_drug_from_query(query: str) -> str | None:
+    """Scan a query string for any known drug alias and return its canonical name."""
     span = find_drug_span(query)
     return span[0] if span else None

@@ -13,10 +13,15 @@ def test_unknown_drug_returns_safe_fallback(run):
     assert ans.card["found"] is False
 
 
-def test_known_drug_wrong_population_returns_fallback(run):
-    # naloxone is adult-only in the gold set; a peds query has no row
-    ans = run("Vigil, what's the pediatric naloxone dose for opioid overdose")
-    assert ans is not None and ans.found is False
+def test_pediatric_query_never_returns_adult_dose(run):
+    # Every protocol drug has both populations, so the safety property is
+    # isolation: a pediatric query must surface the PEDIATRIC chunk, never the
+    # adult dose (a wrong-population dose can be fatal).
+    ans = run("Vigil, what's the pediatric epinephrine dose for anaphylaxis")
+    assert ans is not None
+    if ans.found:
+        assert ans.card["population"] == "pediatric"
+        assert ans.doc_id == "epinephrine-11000-anaphylaxis-pediatric-0"
 
 
 def test_injected_index_error_degrades_safely():
