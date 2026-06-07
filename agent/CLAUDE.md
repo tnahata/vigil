@@ -127,5 +127,29 @@ only run when you opt in, and are intentionally tiny. Don't add live calls to th
   (anchored to its own dir), not just inside `load_config()`. In `console`/`dev` mode the LiveKit
   CLI checks `LIVEKIT_URL` at worker startup *before* `entrypoint()` runs, so a late load raised
   `ValueError: ws_url is required` even with a correct `.env`. Keep the import-time load.
-- **Deferred:** real `MossIndex` (FakeIndex is the default; Moss creds stored for later), the async
-  Moss bridge, noise-cancellation/RoomInputOptions tuning, the `/app` RN client, real-device testing.
+- **Moss retrieval WIRED & verified live:** the agent queries the real in-process index
+  `vigil-protocol` (88 chunks, 26 drugs, built by `moss-test/create_index.py` from
+  `data/chunks.json`) when `RETRIEVAL_BACKEND=moss`. `MossIndex` (`adapters/moss_index.py`) bridges
+  Moss's async client to the sync port via a persistent client + a daemon event-loop thread:
+  `load_index` once (~1.4 s), then in-process queries at **3–6 ms**. Shutdown is clean (the loop
+  thread is joined at `atexit` — without it the native core aborts with "mutex lock failed").
+  `Doc.from_chunk` is the single chunk→Doc mapping (`patient_type→population`,
+  `value_machine→dose_value`, `value_spoken→spoken_form`, `source+page→citation`), used by BOTH
+  `MossIndex` and the chunks-seeded `FakeIndex`, so the hermetic gate exercises the real schema.
+- **Hermetic gate vs Moss ranking — don't conflate:** `pytest tests` (40, green) proves
+  routing + alias + schema plumbing + verbatim-copy + grounding + purity, but the FakeIndex keyword
+  scorer does NOT replicate Moss BM25. Moss's ordering is validated only by the opt-in
+  `RUN_MOSS=1 pytest tests/integration/test_moss_parity.py` (green).
+- **Tier-1 multi-dose disambiguation (`core/disambig.py`):** 16 (drug, population) pairs have >1 dose
+  separated only by indication (atropine adult: bradycardia 1 mg vs organophosphate 2 mg). Tier-1
+  now retrieves `top_k=5` and either resolves by indication or asks ONE clarifying question (named
+  indications, never a dose number); the reply is resolved once (never re-asked). The full
+  transcript is sent to Moss (the reference `moss-test/query.py` queries by drug name only and so
+  returns the wrong indication's dose — fixed here). Cross-turn pending state lives on `VigilAgent`.
+- **Role gating (`core/roles.py`):** Tier-1 doses are gated by `provider_role` (from the auth
+  profile; `PROVIDER_ROLE`, default `PARAMEDIC`). Authorized → dose verbatim; conditional → dose +
+  caveat; not-authorized → withholds the number. The dose number is never altered.
+- **Known gaps (don't overclaim):** 6 dose chunks have empty `value_spoken` (ketamine/aspirin/
+  buprenorphine/nitroglycerin peds, sodium-bicarb adult) → safe fallback, no guess. Concentration
+  collision: bare "epi" → `EPINEPHRINE (1:1,000)` (anaphylaxis), not the `1:10,000` cardiac dose.
+- **Deferred:** noise-cancellation/RoomInputOptions tuning, the `/app` RN client, real-device testing.

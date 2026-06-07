@@ -1,0 +1,1410 @@
+[
+  {
+    "id": "acetaminophen-iv-acute-pain-adult-0",
+    "text": "ACETAMINOPHEN (IV), acute pain, adult: Acetaminophen 1,000 mg IV over 15 min. Class: Analgesic, antipyretic. Mechanism: Mechanism of action unclear; may work peripherally to block pain impulse generation; may also inhibit prostaglandin synthesis in CNS. Contraindications: Severe acute liver disease; Known or suspected total dose exceeding 4,000 mg in a 24-hour period<2 years of age; Pregnancy with pain from active labor. Adverse effects: Nausea/vomiting; Skin rash; Itching; Overdose can cause hepatotoxicity. Notes: Remember to consider non-pharmacologic pain treatments, e.g., place in position of comfort, apply ice packs/splints PRN, and verbal reassurance. If patient refuses or has contraindications to acetaminophen, may treat as moderate pain with fentanyl or morphine.",
+    "metadata": {
+      "drug": "ACETAMINOPHEN (IV)",
+      "indication": "acute pain",
+      "patient_type": "adult",
+      "record_type": "dose",
+      "route": "IV",
+      "value_machine": "Acetaminophen 1,000 mg IV over 15 min",
+      "value_spoken": "one thousand milligrams",
+      "source": "CoSD-EMS-P-115-2025",
+      "page": "2",
+      "confidence": "0.9"
+    }
+  },
+  {
+    "id": "acetaminophen-iv-acute-pain-pediatric-0",
+    "text": "ACETAMINOPHEN (IV), acute pain, pediatric (weight-based): Acetaminophen IV per drug chart in 100 ml of NS over 15 min. Class: Analgesic, antipyretic. Mechanism: Mechanism of action unclear; may work peripherally to block pain impulse generation; may also inhibit prostaglandin synthesis in CNS. Contraindications: Severe acute liver disease; Known or suspected total dose exceeding 4,000 mg in a 24-hour period<2 years of age; Pregnancy with pain from active labor. Adverse effects: Nausea/vomiting; Skin rash; Itching; Overdose can cause hepatotoxicity. Notes: Remember to consider non-pharmacologic pain treatments, e.g., place in position of comfort, apply ice packs/splints PRN, and verbal reassurance. If patient refuses or has contraindications to acetaminophen, may treat as moderate pain with fentanyl or morphine.",
+    "metadata": {
+      "drug": "ACETAMINOPHEN (IV)",
+      "indication": "acute pain",
+      "patient_type": "pediatric",
+      "record_type": "dose_weight_based",
+      "route": "IV",
+      "value_machine": "Acetaminophen IV per drug chart in 100 ml of NS over 15 min",
+      "value_spoken": "weight-based \u2014 see drug chart",
+      "source": "CoSD-EMS-P-115-2025",
+      "page": "2",
+      "confidence": "0.9"
+    }
+  },
+  {
+    "id": "acetaminophen-iv-contraindications",
+    "text": "ACETAMINOPHEN (IV) contraindications: Severe acute liver disease; Known or suspected total dose exceeding 4,000 mg in a 24-hour period<2 years of age; Pregnancy with pain from active labor. Class: Analgesic, antipyretic.",
+    "metadata": {
+      "drug": "ACETAMINOPHEN (IV)",
+      "indication": "contraindication",
+      "patient_type": "all",
+      "record_type": "contraindication",
+      "route": null,
+      "value_machine": "Severe acute liver disease; Known or suspected total dose exceeding 4,000 mg in a 24-hour period<2 years of age; Pregnancy with pain from active labor",
+      "value_spoken": null,
+      "source": "CoSD-EMS-P-115-2025",
+      "page": "2",
+      "confidence": "0.9"
+    }
+  },
+  {
+    "id": "activated-charcoal-overdose-and-poisoning-adult-0",
+    "text": "ACTIVATED CHARCOAL, overdose and poisoning, adult: Activated charcoal 50 gm PO. Class: Antidote. Mechanism: Adsorbs a variety of drugs and chemicals (e.g., physical binding of a molecule to the surface of charcoal particles); desorption of bound particles may occur unless the ratio of charcoal to toxin is extremely high. Contraindications: Caustic agents, hydrocarbons, or liquid ingestions (e.g., alcohols). Adverse effects: Nausea/vomiting. Notes: Due to risk of charcoal aspiration, do not administer activated charcoal to a patient anticipated to have a decline in mental status over the next 30-60 minutes. Does not effectively bind to or adsorb certain ions like metals (iron, lithium, sodium), electrolytes (potassium, magnesium), and acids/alkalis. Authorized to administer activated charcoal on standing order, if recommended by Poison Control Center. The 24-hour toll-free telephone number to Poison Control Center is (800) 222-1222.Shake vigorously before use because separation occurs while it is stored.",
+    "metadata": {
+      "drug": "ACTIVATED CHARCOAL",
+      "indication": "overdose and poisoning",
+      "patient_type": "adult",
+      "record_type": "dose",
+      "route": "PO",
+      "value_machine": "Activated charcoal 50 gm PO",
+      "value_spoken": "fifty grams",
+      "source": "CoSD-EMS-P-115-2025",
+      "page": "3",
+      "confidence": "0.78"
+    }
+  },
+  {
+    "id": "activated-charcoal-overdose-and-poisoning-pediatric-0",
+    "text": "ACTIVATED CHARCOAL, overdose and poisoning, pediatric (weight-based): Activated charcoal per drug chart PO. Class: Antidote. Mechanism: Adsorbs a variety of drugs and chemicals (e.g., physical binding of a molecule to the surface of charcoal particles); desorption of bound particles may occur unless the ratio of charcoal to toxin is extremely high. Contraindications: Caustic agents, hydrocarbons, or liquid ingestions (e.g., alcohols). Adverse effects: Nausea/vomiting. Notes: Due to risk of charcoal aspiration, do not administer activated charcoal to a patient anticipated to have a decline in mental status over the next 30-60 minutes. Does not effectively bind to or adsorb certain ions like metals (iron, lithium, sodium), electrolytes (potassium, magnesium), and acids/alkalis. Authorized to administer activated charcoal on standing order, if recommended by Poison Control Center. The 24-hour toll-free telephone number to Poison Control Center is (800) 222-1222.Shake vigorously before use because separation occurs while it is stored.",
+    "metadata": {
+      "drug": "ACTIVATED CHARCOAL",
+      "indication": "overdose and poisoning",
+      "patient_type": "pediatric",
+      "record_type": "dose_weight_based",
+      "route": "PO",
+      "value_machine": "Activated charcoal per drug chart PO",
+      "value_spoken": "weight-based \u2014 see drug chart",
+      "source": "CoSD-EMS-P-115-2025",
+      "page": "3",
+      "confidence": "0.78"
+    }
+  },
+  {
+    "id": "activated-charcoal-contraindications",
+    "text": "ACTIVATED CHARCOAL contraindications: Caustic agents, hydrocarbons, or liquid ingestions (e.g., alcohols). Class: Antidote.",
+    "metadata": {
+      "drug": "ACTIVATED CHARCOAL",
+      "indication": "contraindication",
+      "patient_type": "all",
+      "record_type": "contraindication",
+      "route": null,
+      "value_machine": "Caustic agents, hydrocarbons, or liquid ingestions (e.g., alcohols)",
+      "value_spoken": null,
+      "source": "CoSD-EMS-P-115-2025",
+      "page": "3",
+      "confidence": "0.78"
+    }
+  },
+  {
+    "id": "adenosine-supraventricular-tachycardia-svt-adult-0",
+    "text": "ADENOSINE, supraventricular tachycardia (SVT), adult: Adenosine 6 mg rapid IV/IO followed by 20 mL NS rapid IV/IOIf no conversion, adenosine 12 mg rapid IV/IO followed by 20 mL NS rapid IV/IO, MR x1. Class: Antidysrhythmic. Mechanism: Slows conduction through the AV node and interrupts AV reentry pathways as well as conduction through the SA nodes. Contraindications: Second- or third-degree AV block (without pacemaker); Sick sinus syndrome. Adverse effects: Flushing; Sweating; Dizziness; Nervousness; Hypotension. Notes: For stable patients, use Valsalva maneuver prior to administration.",
+    "metadata": {
+      "drug": "ADENOSINE",
+      "indication": "supraventricular tachycardia (SVT)",
+      "patient_type": "adult",
+      "record_type": "dose",
+      "route": "IO, IV",
+      "value_machine": "Adenosine 6 mg rapid IV/IO followed by 20 mL NS rapid IV/IOIf no conversion, adenosine 12 mg rapid IV/IO followed by 20 mL NS rapid IV/IO, MR x1",
+      "value_spoken": "six milligrams",
+      "source": "CoSD-EMS-P-115-2025",
+      "page": "4",
+      "confidence": "0.82"
+    }
+  },
+  {
+    "id": "adenosine-supraventricular-tachycardia-svt-pediatric-0",
+    "text": "ADENOSINE, supraventricular tachycardia (SVT), pediatric (weight-based): Adenosine per drug chart rapid IV/IO, followed with 20 mL NS rapid IV/IO, MR x2. Class: Antidysrhythmic. Mechanism: Slows conduction through the AV node and interrupts AV reentry pathways as well as conduction through the SA nodes. Contraindications: Second- or third-degree AV block (without pacemaker); Sick sinus syndrome. Adverse effects: Flushing; Sweating; Dizziness; Nervousness; Hypotension. Notes: For stable patients, use Valsalva maneuver prior to administration.",
+    "metadata": {
+      "drug": "ADENOSINE",
+      "indication": "supraventricular tachycardia (SVT)",
+      "patient_type": "pediatric",
+      "record_type": "dose_weight_based",
+      "route": "IO, IV",
+      "value_machine": "Adenosine per drug chart rapid IV/IO, followed with 20 mL NS rapid IV/IO, MR x2",
+      "value_spoken": "weight-based \u2014 see drug chart",
+      "source": "CoSD-EMS-P-115-2025",
+      "page": "4",
+      "confidence": "0.82"
+    }
+  },
+  {
+    "id": "adenosine-contraindications",
+    "text": "ADENOSINE contraindications: Second- or third-degree AV block (without pacemaker); Sick sinus syndrome. Class: Antidysrhythmic.",
+    "metadata": {
+      "drug": "ADENOSINE",
+      "indication": "contraindication",
+      "patient_type": "all",
+      "record_type": "contraindication",
+      "route": null,
+      "value_machine": "Second- or third-degree AV block (without pacemaker); Sick sinus syndrome",
+      "value_spoken": null,
+      "source": "CoSD-EMS-P-115-2025",
+      "page": "4",
+      "confidence": "0.82"
+    }
+  },
+  {
+    "id": "albuterol-levalbuterol-respiratory-distress-non-cardiac-adult-0",
+    "text": "ALBUTEROL / LEVALBUTEROL, respiratory distress (non-cardiac, adult: anaphylaxis, and burns), albuterol/levalbuterol 6 mL via nebulizer, MR. Class: Beta-2 receptor agonist. Mechanism: Albuterol: Selective beta-2 adrenergic agonist that causes relaxation of smooth muscles in the bronchial tree, decreasing airway resistance, facilitating mucous drainage and increasing vital capacity; shifts potassium intracellular; has mild beta-1 activity that may increase heart rate. Levalbuterol: Relaxes bronchial smooth muscle by action on beta-2 receptors; less likely to cause tachycardia than albuterol. Contraindications: <6 years of age (levalbuterol only). Adverse effects: Tremors; Headache; Nervousness; Dizziness; Dry mouth Dysrhythmias. Notes: Ineffective in croup and should be avoided. Pediatric patients between 2-6 years of age may be more prone to adverse effects. Do not assume patients have administered their own drug properly.",
+    "metadata": {
+      "drug": "ALBUTEROL / LEVALBUTEROL",
+      "indication": "respiratory distress (non-cardiac",
+      "patient_type": "adult",
+      "record_type": "dose",
+      "route": null,
+      "value_machine": "anaphylaxis, and burns), albuterol/levalbuterol 6 mL via nebulizer, MR",
+      "value_spoken": "six milliliters",
+      "source": "CoSD-EMS-P-115-2025",
+      "page": "5",
+      "confidence": "0.73"
+    }
+  },
+  {
+    "id": "albuterol-levalbuterol-suspected-hyperkalemia-and-specific-crush-injuries-adult-1",
+    "text": "ALBUTEROL / LEVALBUTEROL, suspected hyperkalemia and specific crush injuries, adult: continuous albuterol/levalbuterol 6 mL via nebulizer. Class: Beta-2 receptor agonist. Mechanism: Albuterol: Selective beta-2 adrenergic agonist that causes relaxation of smooth muscles in the bronchial tree, decreasing airway resistance, facilitating mucous drainage and increasing vital capacity; shifts potassium intracellular; has mild beta-1 activity that may increase heart rate. Levalbuterol: Relaxes bronchial smooth muscle by action on beta-2 receptors; less likely to cause tachycardia than albuterol. Contraindications: <6 years of age (levalbuterol only). Adverse effects: Tremors; Headache; Nervousness; Dizziness; Dry mouth Dysrhythmias. Notes: Ineffective in croup and should be avoided. Pediatric patients between 2-6 years of age may be more prone to adverse effects. Do not assume patients have administered their own drug properly.",
+    "metadata": {
+      "drug": "ALBUTEROL / LEVALBUTEROL",
+      "indication": "suspected hyperkalemia and specific crush injuries",
+      "patient_type": "adult",
+      "record_type": "dose",
+      "route": null,
+      "value_machine": "continuous albuterol/levalbuterol 6 mL via nebulizer",
+      "value_spoken": "six milliliters",
+      "source": "CoSD-EMS-P-115-2025",
+      "page": "5",
+      "confidence": "0.73"
+    }
+  },
+  {
+    "id": "albuterol-levalbuterol-respiratory-distress-non-cardiac-pediatric-0",
+    "text": "ALBUTEROL / LEVALBUTEROL, respiratory distress (non-cardiac, pediatric (weight-based): anaphylaxis, and burns), albuterol/levalbuterol per drug chart via nebulizer, MR. Class: Beta-2 receptor agonist. Mechanism: Albuterol: Selective beta-2 adrenergic agonist that causes relaxation of smooth muscles in the bronchial tree, decreasing airway resistance, facilitating mucous drainage and increasing vital capacity; shifts potassium intracellular; has mild beta-1 activity that may increase heart rate. Levalbuterol: Relaxes bronchial smooth muscle by action on beta-2 receptors; less likely to cause tachycardia than albuterol. Contraindications: <6 years of age (levalbuterol only). Adverse effects: Tremors; Headache; Nervousness; Dizziness; Dry mouth Dysrhythmias. Notes: Ineffective in croup and should be avoided. Pediatric patients between 2-6 years of age may be more prone to adverse effects. Do not assume patients have administered their own drug properly.",
+    "metadata": {
+      "drug": "ALBUTEROL / LEVALBUTEROL",
+      "indication": "respiratory distress (non-cardiac",
+      "patient_type": "pediatric",
+      "record_type": "dose_weight_based",
+      "route": null,
+      "value_machine": "anaphylaxis, and burns), albuterol/levalbuterol per drug chart via nebulizer, MR",
+      "value_spoken": "weight-based \u2014 see drug chart",
+      "source": "CoSD-EMS-P-115-2025",
+      "page": "5",
+      "confidence": "0.73"
+    }
+  },
+  {
+    "id": "albuterol-levalbuterol-suspected-hyperkalemia-and-specific-crush-injuries-pediatric-1",
+    "text": "ALBUTEROL / LEVALBUTEROL, suspected hyperkalemia and specific crush injuries, pediatric (weight-based): continuous albuterol/levalbuterol per drug chart via nebulizer. Class: Beta-2 receptor agonist. Mechanism: Albuterol: Selective beta-2 adrenergic agonist that causes relaxation of smooth muscles in the bronchial tree, decreasing airway resistance, facilitating mucous drainage and increasing vital capacity; shifts potassium intracellular; has mild beta-1 activity that may increase heart rate. Levalbuterol: Relaxes bronchial smooth muscle by action on beta-2 receptors; less likely to cause tachycardia than albuterol. Contraindications: <6 years of age (levalbuterol only). Adverse effects: Tremors; Headache; Nervousness; Dizziness; Dry mouth Dysrhythmias. Notes: Ineffective in croup and should be avoided. Pediatric patients between 2-6 years of age may be more prone to adverse effects. Do not assume patients have administered their own drug properly.",
+    "metadata": {
+      "drug": "ALBUTEROL / LEVALBUTEROL",
+      "indication": "suspected hyperkalemia and specific crush injuries",
+      "patient_type": "pediatric",
+      "record_type": "dose_weight_based",
+      "route": null,
+      "value_machine": "continuous albuterol/levalbuterol per drug chart via nebulizer",
+      "value_spoken": "weight-based \u2014 see drug chart",
+      "source": "CoSD-EMS-P-115-2025",
+      "page": "5",
+      "confidence": "0.73"
+    }
+  },
+  {
+    "id": "albuterol-levalbuterol-contraindications",
+    "text": "ALBUTEROL / LEVALBUTEROL contraindications: <6 years of age (levalbuterol only). Class: Beta-2 receptor agonist.",
+    "metadata": {
+      "drug": "ALBUTEROL / LEVALBUTEROL",
+      "indication": "contraindication",
+      "patient_type": "all",
+      "record_type": "contraindication",
+      "route": null,
+      "value_machine": "<6 years of age (levalbuterol only)",
+      "value_spoken": null,
+      "source": "CoSD-EMS-P-115-2025",
+      "page": "5",
+      "confidence": "0.73"
+    }
+  },
+  {
+    "id": "amiodarone-stable-vt-adult-0",
+    "text": "AMIODARONE, stable VT, adult: amiodarone 150 mg in 100 mL of NS over 10 min IV/IO, MR x1 in 10 min. Class: Antidysrhythmic. Mechanism: Class III antidysrhythmic agent that inhibits adrenergic stimulation; affects sodium, potassium, and calcium channels; markedly prolongs action potential and repolarization; decreases AV conduction and sinus node function. Adverse effects: Hypotension; Worsening of dysrhythmias; Prolonged QT interval; Bradycardia AV block; Dizziness. Notes: If patient is in unstable ventricular tachycardia, synchronized cardioversion should be performed first. Monitor the patient for hypotension and increasing PR and QT intervals. Risk factors for acute hypotension are patients >65 years of age with a history of myocardial infarction. Closely monitor heart rate, blood pressure, and cardiac rhythm during and after administration. Do not infuse with Ringer's lactate solution.",
+    "metadata": {
+      "drug": "AMIODARONE",
+      "indication": "stable VT",
+      "patient_type": "adult",
+      "record_type": "dose",
+      "route": "IO, IV",
+      "value_machine": "amiodarone 150 mg in 100 mL of NS over 10 min IV/IO, MR x1 in 10 min",
+      "value_spoken": "one hundred fifty milligrams",
+      "source": "CoSD-EMS-P-115-2025",
+      "page": "6",
+      "confidence": "0.91"
+    }
+  },
+  {
+    "id": "amiodarone-persistent-vfpulseless-vt-after-3-defibrillation-attempts-adult-1",
+    "text": "AMIODARONE, persistent VF/pulseless VT after 3 defibrillation attempts, adult: amiodarone 300 mg IV/IO, MR 150 mg q3-5 min (max 450 mg). Class: Antidysrhythmic. Mechanism: Class III antidysrhythmic agent that inhibits adrenergic stimulation; affects sodium, potassium, and calcium channels; markedly prolongs action potential and repolarization; decreases AV conduction and sinus node function. Adverse effects: Hypotension; Worsening of dysrhythmias; Prolonged QT interval; Bradycardia AV block; Dizziness. Notes: If patient is in unstable ventricular tachycardia, synchronized cardioversion should be performed first. Monitor the patient for hypotension and increasing PR and QT intervals. Risk factors for acute hypotension are patients >65 years of age with a history of myocardial infarction. Closely monitor heart rate, blood pressure, and cardiac rhythm during and after administration. Do not infuse with Ringer's lactate solution.",
+    "metadata": {
+      "drug": "AMIODARONE",
+      "indication": "persistent VF/pulseless VT after 3 defibrillation attempts",
+      "patient_type": "adult",
+      "record_type": "dose",
+      "route": "IO, IV",
+      "value_machine": "amiodarone 300 mg IV/IO, MR 150 mg q3-5 min (max 450 mg)",
+      "value_spoken": "three hundred milligrams",
+      "source": "CoSD-EMS-P-115-2025",
+      "page": "6",
+      "confidence": "0.91"
+    }
+  },
+  {
+    "id": "amiodarone-reportedwitnessed-aicd-firing-2-adult-2",
+    "text": "AMIODARONE, reported/witnessed AICD firing \u22652, adult: amiodarone 150 mg in 100 mL of NS over 10 min IV/IO, MR x1 in 10 min. Class: Antidysrhythmic. Mechanism: Class III antidysrhythmic agent that inhibits adrenergic stimulation; affects sodium, potassium, and calcium channels; markedly prolongs action potential and repolarization; decreases AV conduction and sinus node function. Adverse effects: Hypotension; Worsening of dysrhythmias; Prolonged QT interval; Bradycardia AV block; Dizziness. Notes: If patient is in unstable ventricular tachycardia, synchronized cardioversion should be performed first. Monitor the patient for hypotension and increasing PR and QT intervals. Risk factors for acute hypotension are patients >65 years of age with a history of myocardial infarction. Closely monitor heart rate, blood pressure, and cardiac rhythm during and after administration. Do not infuse with Ringer's lactate solution.",
+    "metadata": {
+      "drug": "AMIODARONE",
+      "indication": "reported/witnessed AICD firing \u22652",
+      "patient_type": "adult",
+      "record_type": "dose",
+      "route": "IO, IV",
+      "value_machine": "amiodarone 150 mg in 100 mL of NS over 10 min IV/IO, MR x1 in 10 min",
+      "value_spoken": "one hundred fifty milligrams",
+      "source": "CoSD-EMS-P-115-2025",
+      "page": "6",
+      "confidence": "0.91"
+    }
+  },
+  {
+    "id": "amiodarone-stable-vt-pediatric-0",
+    "text": "AMIODARONE, stable VT, pediatric (weight-based): amiodarone per drug chart BHPO. Class: Antidysrhythmic. Mechanism: Class III antidysrhythmic agent that inhibits adrenergic stimulation; affects sodium, potassium, and calcium channels; markedly prolongs action potential and repolarization; decreases AV conduction and sinus node function. Adverse effects: Hypotension; Worsening of dysrhythmias; Prolonged QT interval; Bradycardia AV block; Dizziness. Notes: If patient is in unstable ventricular tachycardia, synchronized cardioversion should be performed first. Monitor the patient for hypotension and increasing PR and QT intervals. Risk factors for acute hypotension are patients >65 years of age with a history of myocardial infarction. Closely monitor heart rate, blood pressure, and cardiac rhythm during and after administration. Do not infuse with Ringer's lactate solution.",
+    "metadata": {
+      "drug": "AMIODARONE",
+      "indication": "stable VT",
+      "patient_type": "pediatric",
+      "record_type": "dose_weight_based",
+      "route": null,
+      "value_machine": "amiodarone per drug chart BHPO",
+      "value_spoken": "weight-based \u2014 see drug chart",
+      "source": "CoSD-EMS-P-115-2025",
+      "page": "6",
+      "confidence": "0.91"
+    }
+  },
+  {
+    "id": "amiodarone-persistent-vfpulseless-vt-after-3-defibrillation-attempts-pediatric-1",
+    "text": "AMIODARONE, persistent VF/pulseless VT after 3 defibrillation attempts, pediatric (weight-based): amiodarone per drug chart IV/IO, MR per drug chart x2. Class: Antidysrhythmic. Mechanism: Class III antidysrhythmic agent that inhibits adrenergic stimulation; affects sodium, potassium, and calcium channels; markedly prolongs action potential and repolarization; decreases AV conduction and sinus node function. Adverse effects: Hypotension; Worsening of dysrhythmias; Prolonged QT interval; Bradycardia AV block; Dizziness. Notes: If patient is in unstable ventricular tachycardia, synchronized cardioversion should be performed first. Monitor the patient for hypotension and increasing PR and QT intervals. Risk factors for acute hypotension are patients >65 years of age with a history of myocardial infarction. Closely monitor heart rate, blood pressure, and cardiac rhythm during and after administration. Do not infuse with Ringer's lactate solution.",
+    "metadata": {
+      "drug": "AMIODARONE",
+      "indication": "persistent VF/pulseless VT after 3 defibrillation attempts",
+      "patient_type": "pediatric",
+      "record_type": "dose_weight_based",
+      "route": "IO, IV",
+      "value_machine": "amiodarone per drug chart IV/IO, MR per drug chart x2",
+      "value_spoken": "weight-based \u2014 see drug chart",
+      "source": "CoSD-EMS-P-115-2025",
+      "page": "6",
+      "confidence": "0.91"
+    }
+  },
+  {
+    "id": "amiodarone-reportedwitnessed-aicd-firing-2-pediatric-2",
+    "text": "AMIODARONE, reported/witnessed AICD firing \u22652, pediatric (weight-based): amiodarone per drug chart, MR BHPO. Class: Antidysrhythmic. Mechanism: Class III antidysrhythmic agent that inhibits adrenergic stimulation; affects sodium, potassium, and calcium channels; markedly prolongs action potential and repolarization; decreases AV conduction and sinus node function. Adverse effects: Hypotension; Worsening of dysrhythmias; Prolonged QT interval; Bradycardia AV block; Dizziness. Notes: If patient is in unstable ventricular tachycardia, synchronized cardioversion should be performed first. Monitor the patient for hypotension and increasing PR and QT intervals. Risk factors for acute hypotension are patients >65 years of age with a history of myocardial infarction. Closely monitor heart rate, blood pressure, and cardiac rhythm during and after administration. Do not infuse with Ringer's lactate solution.",
+    "metadata": {
+      "drug": "AMIODARONE",
+      "indication": "reported/witnessed AICD firing \u22652",
+      "patient_type": "pediatric",
+      "record_type": "dose_weight_based",
+      "route": null,
+      "value_machine": "amiodarone per drug chart, MR BHPO",
+      "value_spoken": "weight-based \u2014 see drug chart",
+      "source": "CoSD-EMS-P-115-2025",
+      "page": "6",
+      "confidence": "0.91"
+    }
+  },
+  {
+    "id": "aspirin-acute-coronary-syndrome-adult-0",
+    "text": "ASPIRIN, acute coronary syndrome, adult: Aspirin 324 mg chewable PO. Class: Antiplatelet agent, non-steroidal anti-inflammatory drug (NSAID). Mechanism: Inhibits platelet aggregation and inhibits synthesis of prostaglandin by cyclooxygenase; has antipyretic and analgesic activity. Adverse effects: GI bleeding; Epigastric pain; Nausea/vomiting. Notes: EMT: Authorized to assist patient to self-medicate own prescribed aspirin up to a maximum dose of 325 mg. Administer aspirin even if discomfort/pain has resolved.",
+    "metadata": {
+      "drug": "ASPIRIN",
+      "indication": "acute coronary syndrome",
+      "patient_type": "adult",
+      "record_type": "dose",
+      "route": "PO",
+      "value_machine": "Aspirin 324 mg chewable PO",
+      "value_spoken": "three hundred twenty-four milligrams",
+      "source": "CoSD-EMS-P-115-2025",
+      "page": "7",
+      "confidence": "0.86"
+    }
+  },
+  {
+    "id": "aspirin-acute-coronary-syndrome-pediatric-0",
+    "text": "ASPIRIN, acute coronary syndrome, pediatric: Not indicated for use in pediatrics. Class: Antiplatelet agent, non-steroidal anti-inflammatory drug (NSAID). Mechanism: Inhibits platelet aggregation and inhibits synthesis of prostaglandin by cyclooxygenase; has antipyretic and analgesic activity. Adverse effects: GI bleeding; Epigastric pain; Nausea/vomiting. Notes: EMT: Authorized to assist patient to self-medicate own prescribed aspirin up to a maximum dose of 325 mg. Administer aspirin even if discomfort/pain has resolved.",
+    "metadata": {
+      "drug": "ASPIRIN",
+      "indication": "acute coronary syndrome",
+      "patient_type": "pediatric",
+      "record_type": "dose",
+      "route": null,
+      "value_machine": "Not indicated for use in pediatrics",
+      "value_spoken": null,
+      "source": "CoSD-EMS-P-115-2025",
+      "page": "7",
+      "confidence": "0.86"
+    }
+  },
+  {
+    "id": "atropine-unstable-bradycardia-adult-0",
+    "text": "ATROPINE, unstable bradycardia, adult: atropine 1 mg IV/IO, MR q3-5 min to max 3 mg. Class: Anticholinergic, toxicity antidote. Mechanism: Blocks the action of acetylcholine at parasympathetic sites in smooth muscle, secretory glands, and the CNS; increases cardiac output, dries secretions; reverses the muscarinic effects of cholinergic poisoning. Adverse effects: Drowsiness; Confusion; Headache; Palpitations; Dysrhythmias. Notes: May omit atropine in bradycardic patients unlikely to have clinical benefit (e.g., heart transplant patients, second-degree type II, or third-degree heart block).Use cautiously if myocardial infarction or ischemia is suspected, as atropine will increase myocardial oxygen demand, which may worsen the infarct. In organophosphate poisoning, titrate atropine to SLUDGE/BBB signs/symptoms, not to tachycardia.",
+    "metadata": {
+      "drug": "ATROPINE",
+      "indication": "unstable bradycardia",
+      "patient_type": "adult",
+      "record_type": "dose",
+      "route": "IO, IV",
+      "value_machine": "atropine 1 mg IV/IO, MR q3-5 min to max 3 mg",
+      "value_spoken": "one milligram",
+      "source": "CoSD-EMS-P-115-2025",
+      "page": "8",
+      "confidence": "0.89"
+    }
+  },
+  {
+    "id": "atropine-symptomatic-organophosphate-poisoning-adult-1",
+    "text": "ATROPINE, symptomatic organophosphate poisoning, adult: atropine 2 mg IV/IO. For continued signs/symptoms of SLUDGE/BBB, double prior atropine dose IV/IO q3-5 min. Class: Anticholinergic, toxicity antidote. Mechanism: Blocks the action of acetylcholine at parasympathetic sites in smooth muscle, secretory glands, and the CNS; increases cardiac output, dries secretions; reverses the muscarinic effects of cholinergic poisoning. Adverse effects: Drowsiness; Confusion; Headache; Palpitations; Dysrhythmias. Notes: May omit atropine in bradycardic patients unlikely to have clinical benefit (e.g., heart transplant patients, second-degree type II, or third-degree heart block).Use cautiously if myocardial infarction or ischemia is suspected, as atropine will increase myocardial oxygen demand, which may worsen the infarct. In organophosphate poisoning, titrate atropine to SLUDGE/BBB signs/symptoms, not to tachycardia.",
+    "metadata": {
+      "drug": "ATROPINE",
+      "indication": "symptomatic organophosphate poisoning",
+      "patient_type": "adult",
+      "record_type": "dose",
+      "route": "IO, IV",
+      "value_machine": "atropine 2 mg IV/IO. For continued signs/symptoms of SLUDGE/BBB, double prior atropine dose IV/IO q3-5 min",
+      "value_spoken": "two milligrams",
+      "source": "CoSD-EMS-P-115-2025",
+      "page": "8",
+      "confidence": "0.89"
+    }
+  },
+  {
+    "id": "atropine-unstable-bradycardia-after-3-doses-of-epinephrine-pediatric-0",
+    "text": "ATROPINE, unstable bradycardia after 3 doses of epinephrine, pediatric (weight-based): atropine per drug chart IV/IO, MR x1 in 5 min. Class: Anticholinergic, toxicity antidote. Mechanism: Blocks the action of acetylcholine at parasympathetic sites in smooth muscle, secretory glands, and the CNS; increases cardiac output, dries secretions; reverses the muscarinic effects of cholinergic poisoning. Adverse effects: Drowsiness; Confusion; Headache; Palpitations; Dysrhythmias. Notes: May omit atropine in bradycardic patients unlikely to have clinical benefit (e.g., heart transplant patients, second-degree type II, or third-degree heart block).Use cautiously if myocardial infarction or ischemia is suspected, as atropine will increase myocardial oxygen demand, which may worsen the infarct. In organophosphate poisoning, titrate atropine to SLUDGE/BBB signs/symptoms, not to tachycardia.",
+    "metadata": {
+      "drug": "ATROPINE",
+      "indication": "unstable bradycardia after 3 doses of epinephrine",
+      "patient_type": "pediatric",
+      "record_type": "dose_weight_based",
+      "route": "IO, IV",
+      "value_machine": "atropine per drug chart IV/IO, MR x1 in 5 min",
+      "value_spoken": "weight-based \u2014 see drug chart",
+      "source": "CoSD-EMS-P-115-2025",
+      "page": "8",
+      "confidence": "0.89"
+    }
+  },
+  {
+    "id": "atropine-symptomatic-organophosphate-poisoning-pediatric-1",
+    "text": "ATROPINE, symptomatic organophosphate poisoning, pediatric (weight-based): atropine per drug chart IV/IO. For continued signs/symptoms of SLUDGE/BBB, double prior atropine dose IV/IO q3-5 min. Class: Anticholinergic, toxicity antidote. Mechanism: Blocks the action of acetylcholine at parasympathetic sites in smooth muscle, secretory glands, and the CNS; increases cardiac output, dries secretions; reverses the muscarinic effects of cholinergic poisoning. Adverse effects: Drowsiness; Confusion; Headache; Palpitations; Dysrhythmias. Notes: May omit atropine in bradycardic patients unlikely to have clinical benefit (e.g., heart transplant patients, second-degree type II, or third-degree heart block).Use cautiously if myocardial infarction or ischemia is suspected, as atropine will increase myocardial oxygen demand, which may worsen the infarct. In organophosphate poisoning, titrate atropine to SLUDGE/BBB signs/symptoms, not to tachycardia.",
+    "metadata": {
+      "drug": "ATROPINE",
+      "indication": "symptomatic organophosphate poisoning",
+      "patient_type": "pediatric",
+      "record_type": "dose_weight_based",
+      "route": "IO, IV",
+      "value_machine": "atropine per drug chart IV/IO. For continued signs/symptoms of SLUDGE/BBB, double prior atropine dose IV/IO q3-5 min",
+      "value_spoken": "weight-based \u2014 see drug chart",
+      "source": "CoSD-EMS-P-115-2025",
+      "page": "8",
+      "confidence": "0.89"
+    }
+  },
+  {
+    "id": "buprenorphine-naloxone-opioid-withdrawal-and-opioid-use-disorder-adult-0",
+    "text": "BUPRENORPHINE-NALOXONE, opioid withdrawal and opioid use disorder, adult: Buprenorphine-naloxone (Suboxone\u00ae) 16 mg/4 mg SL BHO (opioid withdrawal base). Class: Buprenorphine: analgesic, opioid antagonist, opioid partial agonistNaloxone: opioid reversal agent. Mechanism: Exerts its analgesic effect via high affinity binding to mu-opioid receptors in the CNS; displays partial mu agonist and weak kappa antagonist activity. Naloxone is a competitive opioid antagonist. Contraindications: Any methadone use within the last 10 days; Lack of opioid withdrawal signs or symptoms; Severe medical illness (e.g., sepsis, respiratory distress); Altered mental status<16 years of age. Adverse effects: Diaphoresis; Abdominal pain; Nausea; Headache; Withdrawal syndrome. Notes: Use of buprenorphine-naloxone is only authorized for agencies participating in the Buprenorphine Pilot Program. Sharp Grossmont Hospital and Palomar Medical Center \u2013 Escondido are approved opioid withdrawal bases. For patients with overdoses reversed by naloxone, calculate a COWS score and consider administration. Calculate a COWS score before and after administration.",
+    "metadata": {
+      "drug": "BUPRENORPHINE-NALOXONE",
+      "indication": "opioid withdrawal and opioid use disorder",
+      "patient_type": "adult",
+      "record_type": "dose",
+      "route": "SL",
+      "value_machine": "Buprenorphine-naloxone (Suboxone\u00ae) 16 mg/4 mg SL BHO (opioid withdrawal base)",
+      "value_spoken": "four milligrams",
+      "source": "CoSD-EMS-P-115-2025",
+      "page": "9",
+      "confidence": "0.86"
+    }
+  },
+  {
+    "id": "buprenorphine-naloxone-continued-symptoms-adult-1",
+    "text": "BUPRENORPHINE-NALOXONE, continued symptoms, adult: repeat with buprenorphine-naloxone (Suboxone\u00ae) 8 mg/2 mg SL to a max of 24 mg/6 mg. Class: Buprenorphine: analgesic, opioid antagonist, opioid partial agonistNaloxone: opioid reversal agent. Mechanism: Exerts its analgesic effect via high affinity binding to mu-opioid receptors in the CNS; displays partial mu agonist and weak kappa antagonist activity. Naloxone is a competitive opioid antagonist. Contraindications: Any methadone use within the last 10 days; Lack of opioid withdrawal signs or symptoms; Severe medical illness (e.g., sepsis, respiratory distress); Altered mental status<16 years of age. Adverse effects: Diaphoresis; Abdominal pain; Nausea; Headache; Withdrawal syndrome. Notes: Use of buprenorphine-naloxone is only authorized for agencies participating in the Buprenorphine Pilot Program. Sharp Grossmont Hospital and Palomar Medical Center \u2013 Escondido are approved opioid withdrawal bases. For patients with overdoses reversed by naloxone, calculate a COWS score and consider administration. Calculate a COWS score before and after administration.",
+    "metadata": {
+      "drug": "BUPRENORPHINE-NALOXONE",
+      "indication": "continued symptoms",
+      "patient_type": "adult",
+      "record_type": "dose",
+      "route": "SL",
+      "value_machine": "repeat with buprenorphine-naloxone (Suboxone\u00ae) 8 mg/2 mg SL to a max of 24 mg/6 mg",
+      "value_spoken": "two milligrams",
+      "source": "CoSD-EMS-P-115-2025",
+      "page": "9",
+      "confidence": "0.86"
+    }
+  },
+  {
+    "id": "buprenorphine-naloxone-opioid-withdrawal-and-opioid-use-disorder-pediatric-0",
+    "text": "BUPRENORPHINE-NALOXONE, opioid withdrawal and opioid use disorder, pediatric: Not indicated for use in pediatrics. Class: Buprenorphine: analgesic, opioid antagonist, opioid partial agonistNaloxone: opioid reversal agent. Mechanism: Exerts its analgesic effect via high affinity binding to mu-opioid receptors in the CNS; displays partial mu agonist and weak kappa antagonist activity. Naloxone is a competitive opioid antagonist. Contraindications: Any methadone use within the last 10 days; Lack of opioid withdrawal signs or symptoms; Severe medical illness (e.g., sepsis, respiratory distress); Altered mental status<16 years of age. Adverse effects: Diaphoresis; Abdominal pain; Nausea; Headache; Withdrawal syndrome. Notes: Use of buprenorphine-naloxone is only authorized for agencies participating in the Buprenorphine Pilot Program. Sharp Grossmont Hospital and Palomar Medical Center \u2013 Escondido are approved opioid withdrawal bases. For patients with overdoses reversed by naloxone, calculate a COWS score and consider administration. Calculate a COWS score before and after administration.",
+    "metadata": {
+      "drug": "BUPRENORPHINE-NALOXONE",
+      "indication": "opioid withdrawal and opioid use disorder",
+      "patient_type": "pediatric",
+      "record_type": "dose",
+      "route": null,
+      "value_machine": "Not indicated for use in pediatrics",
+      "value_spoken": null,
+      "source": "CoSD-EMS-P-115-2025",
+      "page": "9",
+      "confidence": "0.86"
+    }
+  },
+  {
+    "id": "buprenorphine-naloxone-contraindications",
+    "text": "BUPRENORPHINE-NALOXONE contraindications: Any methadone use within the last 10 days; Lack of opioid withdrawal signs or symptoms; Severe medical illness (e.g., sepsis, respiratory distress); Altered mental status<16 years of age. Class: Buprenorphine: analgesic, opioid antagonist, opioid partial agonistNaloxone: opioid reversal agent.",
+    "metadata": {
+      "drug": "BUPRENORPHINE-NALOXONE",
+      "indication": "contraindication",
+      "patient_type": "all",
+      "record_type": "contraindication",
+      "route": null,
+      "value_machine": "Any methadone use within the last 10 days; Lack of opioid withdrawal signs or symptoms; Severe medical illness (e.g., sepsis, respiratory distress); Altered mental status<16 years of age",
+      "value_spoken": null,
+      "source": "CoSD-EMS-P-115-2025",
+      "page": "9",
+      "confidence": "0.86"
+    }
+  },
+  {
+    "id": "calcium-chloride-pea-with-suspected-hyperkalemia-adult-0",
+    "text": "CALCIUM CHLORIDE, PEA with suspected hyperkalemia, adult: CaCl2 1 gm IV/IO. Class: Electrolyte, antidote. Mechanism: Essential regulator for the excitation threshold of nerves and muscles; causes significant increase in myocardial contractility and ventricular automaticity. Antidote for some electrolyte imbalances and calcium channel and/or beta blocker toxicity. Adverse effects: Syncope; Bradycardia; Asystole; Hypotension Nausea/vomiting; Metallic taste with rapid injection. Notes: Confirm IV is patent prior to administration, as extravasation causes severe tissue necrosis.",
+    "metadata": {
+      "drug": "CALCIUM CHLORIDE",
+      "indication": "PEA with suspected hyperkalemia",
+      "patient_type": "adult",
+      "record_type": "dose",
+      "route": "IO, IV",
+      "value_machine": "CaCl2 1 gm IV/IO",
+      "value_spoken": "one gram",
+      "source": "CoSD-EMS-P-115-2025",
+      "page": "10",
+      "confidence": "0.93"
+    }
+  },
+  {
+    "id": "calcium-chloride-suspected-hyperkalemia-adult-1",
+    "text": "CALCIUM CHLORIDE, suspected hyperkalemia, adult: if widened QRS complex, immediately administer CaCl2 1 gm IV/IO. Class: Electrolyte, antidote. Mechanism: Essential regulator for the excitation threshold of nerves and muscles; causes significant increase in myocardial contractility and ventricular automaticity. Antidote for some electrolyte imbalances and calcium channel and/or beta blocker toxicity. Adverse effects: Syncope; Bradycardia; Asystole; Hypotension Nausea/vomiting; Metallic taste with rapid injection. Notes: Confirm IV is patent prior to administration, as extravasation causes severe tissue necrosis.",
+    "metadata": {
+      "drug": "CALCIUM CHLORIDE",
+      "indication": "suspected hyperkalemia",
+      "patient_type": "adult",
+      "record_type": "dose",
+      "route": "IO, IV",
+      "value_machine": "if widened QRS complex, immediately administer CaCl2 1 gm IV/IO",
+      "value_spoken": "one gram",
+      "source": "CoSD-EMS-P-115-2025",
+      "page": "10",
+      "confidence": "0.93"
+    }
+  },
+  {
+    "id": "calcium-chloride-suspected-calcium-channel-blocker-od-adult-2",
+    "text": "CALCIUM CHLORIDE, suspected calcium channel blocker OD, adult: CaCl2 1 gm IV/IO. Class: Electrolyte, antidote. Mechanism: Essential regulator for the excitation threshold of nerves and muscles; causes significant increase in myocardial contractility and ventricular automaticity. Antidote for some electrolyte imbalances and calcium channel and/or beta blocker toxicity. Adverse effects: Syncope; Bradycardia; Asystole; Hypotension Nausea/vomiting; Metallic taste with rapid injection. Notes: Confirm IV is patent prior to administration, as extravasation causes severe tissue necrosis.",
+    "metadata": {
+      "drug": "CALCIUM CHLORIDE",
+      "indication": "suspected calcium channel blocker OD",
+      "patient_type": "adult",
+      "record_type": "dose",
+      "route": "IO, IV",
+      "value_machine": "CaCl2 1 gm IV/IO",
+      "value_spoken": "one gram",
+      "source": "CoSD-EMS-P-115-2025",
+      "page": "10",
+      "confidence": "0.93"
+    }
+  },
+  {
+    "id": "calcium-chloride-specific-crush-injuries-adult-3",
+    "text": "CALCIUM CHLORIDE, specific crush injuries, adult: CaCl2 1 gm IV/IO over 30 sec. Class: Electrolyte, antidote. Mechanism: Essential regulator for the excitation threshold of nerves and muscles; causes significant increase in myocardial contractility and ventricular automaticity. Antidote for some electrolyte imbalances and calcium channel and/or beta blocker toxicity. Adverse effects: Syncope; Bradycardia; Asystole; Hypotension Nausea/vomiting; Metallic taste with rapid injection. Notes: Confirm IV is patent prior to administration, as extravasation causes severe tissue necrosis.",
+    "metadata": {
+      "drug": "CALCIUM CHLORIDE",
+      "indication": "specific crush injuries",
+      "patient_type": "adult",
+      "record_type": "dose",
+      "route": "IO, IV",
+      "value_machine": "CaCl2 1 gm IV/IO over 30 sec",
+      "value_spoken": "one gram",
+      "source": "CoSD-EMS-P-115-2025",
+      "page": "10",
+      "confidence": "0.93"
+    }
+  },
+  {
+    "id": "calcium-chloride-pea-with-suspected-hyperkalemia-pediatric-0",
+    "text": "CALCIUM CHLORIDE, PEA with suspected hyperkalemia, pediatric (weight-based): CaCl2 per drug chart IV/IO, MR x1 in 5 min for continued ECG findings consistent with hyperkalemia. Class: Electrolyte, antidote. Mechanism: Essential regulator for the excitation threshold of nerves and muscles; causes significant increase in myocardial contractility and ventricular automaticity. Antidote for some electrolyte imbalances and calcium channel and/or beta blocker toxicity. Adverse effects: Syncope; Bradycardia; Asystole; Hypotension Nausea/vomiting; Metallic taste with rapid injection. Notes: Confirm IV is patent prior to administration, as extravasation causes severe tissue necrosis.",
+    "metadata": {
+      "drug": "CALCIUM CHLORIDE",
+      "indication": "PEA with suspected hyperkalemia",
+      "patient_type": "pediatric",
+      "record_type": "dose_weight_based",
+      "route": "IO, IV",
+      "value_machine": "CaCl2 per drug chart IV/IO, MR x1 in 5 min for continued ECG findings consistent with hyperkalemia",
+      "value_spoken": "weight-based \u2014 see drug chart",
+      "source": "CoSD-EMS-P-115-2025",
+      "page": "10",
+      "confidence": "0.93"
+    }
+  },
+  {
+    "id": "calcium-chloride-specific-crush-injuries-pediatric-1",
+    "text": "CALCIUM CHLORIDE, specific crush injuries, pediatric (weight-based): CaCl2 IV/IO over 30 sec per drug chart, MR x1 in 5 min for continued ECG findings consistent with hyperkalemia. Class: Electrolyte, antidote. Mechanism: Essential regulator for the excitation threshold of nerves and muscles; causes significant increase in myocardial contractility and ventricular automaticity. Antidote for some electrolyte imbalances and calcium channel and/or beta blocker toxicity. Adverse effects: Syncope; Bradycardia; Asystole; Hypotension Nausea/vomiting; Metallic taste with rapid injection. Notes: Confirm IV is patent prior to administration, as extravasation causes severe tissue necrosis.",
+    "metadata": {
+      "drug": "CALCIUM CHLORIDE",
+      "indication": "specific crush injuries",
+      "patient_type": "pediatric",
+      "record_type": "dose_weight_based",
+      "route": "IO, IV",
+      "value_machine": "CaCl2 IV/IO over 30 sec per drug chart, MR x1 in 5 min for continued ECG findings consistent with hyperkalemia",
+      "value_spoken": "weight-based \u2014 see drug chart",
+      "source": "CoSD-EMS-P-115-2025",
+      "page": "10",
+      "confidence": "0.93"
+    }
+  },
+  {
+    "id": "dextrose-hypoglycemia-adult-0",
+    "text": "DEXTROSE, hypoglycemia, adult: Dextrose 25 gm IV if BS <60 mg/dLIf patient remains symptomatic and BS remains <60 mg/dL, MR. Class: Glucose-elevating agent. Mechanism: Main form of glucose used by the body to create energy; elevates serum blood glucose levels. Adverse effects: Warmth, pain, burning, or phlebitis from IV infusion. Notes: Confirm IV is patent prior to administration, as extravasation causes severe tissue necrosis.",
+    "metadata": {
+      "drug": "DEXTROSE",
+      "indication": "hypoglycemia",
+      "patient_type": "adult",
+      "record_type": "dose",
+      "route": "IV",
+      "value_machine": "Dextrose 25 gm IV if BS <60 mg/dLIf patient remains symptomatic and BS remains <60 mg/dL, MR",
+      "value_spoken": "twenty-five grams",
+      "source": "CoSD-EMS-P-115-2025",
+      "page": "11",
+      "confidence": "0.86"
+    }
+  },
+  {
+    "id": "dextrose-hypoglycemia-pediatric-0",
+    "text": "DEXTROSE, hypoglycemia, pediatric (weight-based): D10 per drug chart IV if BS <60 mg/dL (<45 mg/dL for neonate)If patient remains symptomatic and BS remains <60 mg/dL (<45 mg/dL for neonate), MR. Class: Glucose-elevating agent. Mechanism: Main form of glucose used by the body to create energy; elevates serum blood glucose levels. Adverse effects: Warmth, pain, burning, or phlebitis from IV infusion. Notes: Confirm IV is patent prior to administration, as extravasation causes severe tissue necrosis.",
+    "metadata": {
+      "drug": "DEXTROSE",
+      "indication": "hypoglycemia",
+      "patient_type": "pediatric",
+      "record_type": "dose_weight_based",
+      "route": "IV",
+      "value_machine": "D10 per drug chart IV if BS <60 mg/dL (<45 mg/dL for neonate)If patient remains symptomatic and BS remains <60 mg/dL (<45 mg/dL for neonate), MR",
+      "value_spoken": "weight-based \u2014 see drug chart",
+      "source": "CoSD-EMS-P-115-2025",
+      "page": "11",
+      "confidence": "0.86"
+    }
+  },
+  {
+    "id": "diphenhydramine-allergic-reactions-and-extrapyramidal-reactions-adult-0",
+    "text": "DIPHENHYDRAMINE, allergic reactions and extrapyramidal reactions, adult: Diphenhydramine 50 mg IV/IM. Class: Antihistamine. Mechanism: H1 (histamine) receptor antagonist; works on effector cells in respiratory tract, blood vessels, and GI smooth muscle; also has anticholinergic properties. Adverse effects: Drowsiness; Sedation; Seizures; Dizziness; Headache. Notes: Administer slow IV.Epinephrine is the most important immediate treatment for anaphylaxis and should be administered as soon as anaphylaxis is recognized.",
+    "metadata": {
+      "drug": "DIPHENHYDRAMINE",
+      "indication": "allergic reactions and extrapyramidal reactions",
+      "patient_type": "adult",
+      "record_type": "dose",
+      "route": "IM, IV",
+      "value_machine": "Diphenhydramine 50 mg IV/IM",
+      "value_spoken": "fifty milligrams",
+      "source": "CoSD-EMS-P-115-2025",
+      "page": "12",
+      "confidence": "0.89"
+    }
+  },
+  {
+    "id": "diphenhydramine-allergic-reactions-and-extrapyramidal-reactions-pediatric-0",
+    "text": "DIPHENHYDRAMINE, allergic reactions and extrapyramidal reactions, pediatric (weight-based): Diphenhydramine per drug chart IV/IM. Class: Antihistamine. Mechanism: H1 (histamine) receptor antagonist; works on effector cells in respiratory tract, blood vessels, and GI smooth muscle; also has anticholinergic properties. Adverse effects: Drowsiness; Sedation; Seizures; Dizziness; Headache. Notes: Administer slow IV.Epinephrine is the most important immediate treatment for anaphylaxis and should be administered as soon as anaphylaxis is recognized.",
+    "metadata": {
+      "drug": "DIPHENHYDRAMINE",
+      "indication": "allergic reactions and extrapyramidal reactions",
+      "patient_type": "pediatric",
+      "record_type": "dose_weight_based",
+      "route": "IM, IV",
+      "value_machine": "Diphenhydramine per drug chart IV/IM",
+      "value_spoken": "weight-based \u2014 see drug chart",
+      "source": "CoSD-EMS-P-115-2025",
+      "page": "12",
+      "confidence": "0.89"
+    }
+  },
+  {
+    "id": "epinephrine-11000-anaphylaxis-adult-0",
+    "text": "EPINEPHRINE (1:1,000), anaphylaxis, adult: Epinephrine 1:1,000 (1 mg/mL) 0.5 mg IM, MR x2 q5 min. Class: Alpha/beta adrenergic agonist. Mechanism: A naturally occurring catecholamine that acts directly on alpha- and beta-adrenergic receptors. It is the most potent activator of alpha receptors, vasoconstricting the aorta and peripheral vasculature. Adverse effects: Nervousness/restlessness; Headache; Chest pain Tremors; Dysrhythmias; Nausea/vomiting Hypertension.",
+    "metadata": {
+      "drug": "EPINEPHRINE (1:1,000)",
+      "indication": "anaphylaxis",
+      "patient_type": "adult",
+      "record_type": "dose",
+      "route": "IM",
+      "value_machine": "Epinephrine 1:1,000 (1 mg/mL) 0.5 mg IM, MR x2 q5 min",
+      "value_spoken": "zero point five milligrams",
+      "source": "CoSD-EMS-P-115-2025",
+      "page": "13",
+      "confidence": "0.8"
+    }
+  },
+  {
+    "id": "epinephrine-11000-anaphylaxis-pediatric-0",
+    "text": "EPINEPHRINE (1:1,000), anaphylaxis, pediatric (weight-based): IM: 1:1,000 per drug chart IM, MR x2 q5 minNebulized: 1:1,000 per drug chart (combined with 3 mL normal saline) via nebulizer, MR x1. Class: Alpha/beta adrenergic agonist. Mechanism: A naturally occurring catecholamine that acts directly on alpha- and beta-adrenergic receptors. It is the most potent activator of alpha receptors, vasoconstricting the aorta and peripheral vasculature. Adverse effects: Nervousness/restlessness; Headache; Chest pain Tremors; Dysrhythmias; Nausea/vomiting Hypertension.",
+    "metadata": {
+      "drug": "EPINEPHRINE (1:1,000)",
+      "indication": "anaphylaxis",
+      "patient_type": "pediatric",
+      "record_type": "dose_weight_based",
+      "route": "IM",
+      "value_machine": "IM: 1:1,000 per drug chart IM, MR x2 q5 minNebulized: 1:1,000 per drug chart (combined with 3 mL normal saline) via nebulizer, MR x1",
+      "value_spoken": "weight-based \u2014 see drug chart",
+      "source": "CoSD-EMS-P-115-2025",
+      "page": "13",
+      "confidence": "0.8"
+    }
+  },
+  {
+    "id": "epinephrine-110000-cardiac-arrest-adult-0",
+    "text": "EPINEPHRINE (1:10,000), cardiac arrest, adult: epinephrine 1:10,000 1 mg IV/IO q3-5 min. Class: Alpha/beta adrenergic agonist. Mechanism: A naturally occurring catecholamine that acts directly on alpha- and beta-adrenergic receptors. It is the most potent activator of alpha receptors, vasoconstricting the aorta and peripheral vasculature. Notes: During CPR, epinephrine is administered to increase systemic vasomotor tone, thereby increasing diastolic blood pressure and coronary perfusion pressure.",
+    "metadata": {
+      "drug": "EPINEPHRINE (1:10,000)",
+      "indication": "cardiac arrest",
+      "patient_type": "adult",
+      "record_type": "dose",
+      "route": "IO, IV",
+      "value_machine": "epinephrine 1:10,000 1 mg IV/IO q3-5 min",
+      "value_spoken": "one milligram",
+      "source": "CoSD-EMS-P-115-2025",
+      "page": "14",
+      "confidence": "0.81"
+    }
+  },
+  {
+    "id": "epinephrine-110000-vf-and-pulseless-vt-adult-1",
+    "text": "EPINEPHRINE (1:10,000), VF and pulseless VT, adult: epinephrine 1:10,000 1 mg IV/IO q3-5 min, begin after second defibrillation. Class: Alpha/beta adrenergic agonist. Mechanism: A naturally occurring catecholamine that acts directly on alpha- and beta-adrenergic receptors. It is the most potent activator of alpha receptors, vasoconstricting the aorta and peripheral vasculature. Notes: During CPR, epinephrine is administered to increase systemic vasomotor tone, thereby increasing diastolic blood pressure and coronary perfusion pressure.",
+    "metadata": {
+      "drug": "EPINEPHRINE (1:10,000)",
+      "indication": "VF and pulseless VT",
+      "patient_type": "adult",
+      "record_type": "dose",
+      "route": "IO, IV",
+      "value_machine": "epinephrine 1:10,000 1 mg IV/IO q3-5 min, begin after second defibrillation",
+      "value_spoken": "one milligram",
+      "source": "CoSD-EMS-P-115-2025",
+      "page": "14",
+      "confidence": "0.81"
+    }
+  },
+  {
+    "id": "epinephrine-110000-cardiac-arrest-with-hypothermia-adult-2",
+    "text": "EPINEPHRINE (1:10,000), cardiac arrest with hypothermia, adult: epinephrine 1:10,000 1 mg IV/IO x1. Class: Alpha/beta adrenergic agonist. Mechanism: A naturally occurring catecholamine that acts directly on alpha- and beta-adrenergic receptors. It is the most potent activator of alpha receptors, vasoconstricting the aorta and peripheral vasculature. Notes: During CPR, epinephrine is administered to increase systemic vasomotor tone, thereby increasing diastolic blood pressure and coronary perfusion pressure.",
+    "metadata": {
+      "drug": "EPINEPHRINE (1:10,000)",
+      "indication": "cardiac arrest with hypothermia",
+      "patient_type": "adult",
+      "record_type": "dose",
+      "route": "IO, IV",
+      "value_machine": "epinephrine 1:10,000 1 mg IV/IO x1",
+      "value_spoken": "one milligram",
+      "source": "CoSD-EMS-P-115-2025",
+      "page": "14",
+      "confidence": "0.81"
+    }
+  },
+  {
+    "id": "epinephrine-110000-cardiac-arrest-or-newborn-with-hr-60-pediatric-0",
+    "text": "EPINEPHRINE (1:10,000), cardiac arrest or newborn with HR <60, pediatric (weight-based): epinephrine 1:10,000 per drug chart IV/IO q3-5 min. Class: Alpha/beta adrenergic agonist. Mechanism: A naturally occurring catecholamine that acts directly on alpha- and beta-adrenergic receptors. It is the most potent activator of alpha receptors, vasoconstricting the aorta and peripheral vasculature. Notes: During CPR, epinephrine is administered to increase systemic vasomotor tone, thereby increasing diastolic blood pressure and coronary perfusion pressure.",
+    "metadata": {
+      "drug": "EPINEPHRINE (1:10,000)",
+      "indication": "cardiac arrest or newborn with HR <60",
+      "patient_type": "pediatric",
+      "record_type": "dose_weight_based",
+      "route": "IO, IV",
+      "value_machine": "epinephrine 1:10,000 per drug chart IV/IO q3-5 min",
+      "value_spoken": "weight-based \u2014 see drug chart",
+      "source": "CoSD-EMS-P-115-2025",
+      "page": "14",
+      "confidence": "0.81"
+    }
+  },
+  {
+    "id": "epinephrine-110000-vf-and-pulseless-vt-pediatric-1",
+    "text": "EPINEPHRINE (1:10,000), VF and pulseless VT, pediatric (weight-based): epinephrine 1:10,000 per drug chart IV/IO q3-5 min, begin after second defibrillation. Class: Alpha/beta adrenergic agonist. Mechanism: A naturally occurring catecholamine that acts directly on alpha- and beta-adrenergic receptors. It is the most potent activator of alpha receptors, vasoconstricting the aorta and peripheral vasculature. Notes: During CPR, epinephrine is administered to increase systemic vasomotor tone, thereby increasing diastolic blood pressure and coronary perfusion pressure.",
+    "metadata": {
+      "drug": "EPINEPHRINE (1:10,000)",
+      "indication": "VF and pulseless VT",
+      "patient_type": "pediatric",
+      "record_type": "dose_weight_based",
+      "route": "IO, IV",
+      "value_machine": "epinephrine 1:10,000 per drug chart IV/IO q3-5 min, begin after second defibrillation",
+      "value_spoken": "weight-based \u2014 see drug chart",
+      "source": "CoSD-EMS-P-115-2025",
+      "page": "14",
+      "confidence": "0.81"
+    }
+  },
+  {
+    "id": "epinephrine-110000-cardiac-arrest-with-hypothermia-pediatric-2",
+    "text": "EPINEPHRINE (1:10,000), cardiac arrest with hypothermia, pediatric (weight-based): epinephrine 1:10,000 per drug chart IV/IO x1. Class: Alpha/beta adrenergic agonist. Mechanism: A naturally occurring catecholamine that acts directly on alpha- and beta-adrenergic receptors. It is the most potent activator of alpha receptors, vasoconstricting the aorta and peripheral vasculature. Notes: During CPR, epinephrine is administered to increase systemic vasomotor tone, thereby increasing diastolic blood pressure and coronary perfusion pressure.",
+    "metadata": {
+      "drug": "EPINEPHRINE (1:10,000)",
+      "indication": "cardiac arrest with hypothermia",
+      "patient_type": "pediatric",
+      "record_type": "dose_weight_based",
+      "route": "IO, IV",
+      "value_machine": "epinephrine 1:10,000 per drug chart IV/IO x1",
+      "value_spoken": "weight-based \u2014 see drug chart",
+      "source": "CoSD-EMS-P-115-2025",
+      "page": "14",
+      "confidence": "0.81"
+    }
+  },
+  {
+    "id": "epinephrine-110000-unstable-bradycardia-pediatric-3",
+    "text": "EPINEPHRINE (1:10,000), unstable bradycardia, pediatric (weight-based): epinephrine 1:10,000 per drug chart IV/IO, MR x2 q3-5 minutes. MR q3-5 minutes BHO. Class: Alpha/beta adrenergic agonist. Mechanism: A naturally occurring catecholamine that acts directly on alpha- and beta-adrenergic receptors. It is the most potent activator of alpha receptors, vasoconstricting the aorta and peripheral vasculature. Notes: During CPR, epinephrine is administered to increase systemic vasomotor tone, thereby increasing diastolic blood pressure and coronary perfusion pressure.",
+    "metadata": {
+      "drug": "EPINEPHRINE (1:10,000)",
+      "indication": "unstable bradycardia",
+      "patient_type": "pediatric",
+      "record_type": "dose_weight_based",
+      "route": "IO, IV",
+      "value_machine": "epinephrine 1:10,000 per drug chart IV/IO, MR x2 q3-5 minutes. MR q3-5 minutes BHO",
+      "value_spoken": "weight-based \u2014 see drug chart",
+      "source": "CoSD-EMS-P-115-2025",
+      "page": "14",
+      "confidence": "0.81"
+    }
+  },
+  {
+    "id": "epinephrine-1100000-severe-anaphylaxis-and-shock-adult-0",
+    "text": "EPINEPHRINE (1:100,000), severe anaphylaxis and shock, adult: Push-dose epinephrine 1:100,000 (0.01 mg/mL) 1 mL IV/IO, MR q3 min, titrate to SBP \u226590 mmHg. Class: Alpha/beta adrenergic agonist. Mechanism: A naturally occurring catecholamine that acts directly on alpha- and beta-adrenergic receptors. It is the most potent activator of alpha receptors, vasoconstricting the aorta and peripheral vasculature. Adverse effects: Nervousness/restlessness; Headache; Chest pain; Tremors; Dysrhythmias. Notes: Administer slowly via IV and titrate to adequate perfusion. Patients with anaphylaxis unresponsive to IM epinephrine and aggressive fluid resuscitation may benefit from push-dose epinephrine.",
+    "metadata": {
+      "drug": "EPINEPHRINE (1:100,000)",
+      "indication": "severe anaphylaxis and shock",
+      "patient_type": "adult",
+      "record_type": "dose",
+      "route": "IO, IV",
+      "value_machine": "Push-dose epinephrine 1:100,000 (0.01 mg/mL) 1 mL IV/IO, MR q3 min, titrate to SBP \u226590 mmHg",
+      "value_spoken": "one milliliter",
+      "source": "CoSD-EMS-P-115-2025",
+      "page": "15",
+      "confidence": "0.9"
+    }
+  },
+  {
+    "id": "epinephrine-1100000-severe-anaphylaxis-and-shock-pediatric-0",
+    "text": "EPINEPHRINE (1:100,000), severe anaphylaxis and shock, pediatric (weight-based): Push-dose epinephrine 1:100,000 (0.01 mg/mL) per drug chart IV/IO, MR q3 min, titrate to adequate perfusion. Class: Alpha/beta adrenergic agonist. Mechanism: A naturally occurring catecholamine that acts directly on alpha- and beta-adrenergic receptors. It is the most potent activator of alpha receptors, vasoconstricting the aorta and peripheral vasculature. Adverse effects: Nervousness/restlessness; Headache; Chest pain; Tremors; Dysrhythmias. Notes: Administer slowly via IV and titrate to adequate perfusion. Patients with anaphylaxis unresponsive to IM epinephrine and aggressive fluid resuscitation may benefit from push-dose epinephrine.",
+    "metadata": {
+      "drug": "EPINEPHRINE (1:100,000)",
+      "indication": "severe anaphylaxis and shock",
+      "patient_type": "pediatric",
+      "record_type": "dose_weight_based",
+      "route": "IO, IV",
+      "value_machine": "Push-dose epinephrine 1:100,000 (0.01 mg/mL) per drug chart IV/IO, MR q3 min, titrate to adequate perfusion",
+      "value_spoken": "weight-based \u2014 see drug chart",
+      "source": "CoSD-EMS-P-115-2025",
+      "page": "15",
+      "confidence": "0.9"
+    }
+  },
+  {
+    "id": "fentanyl-acute-pain-adult-0",
+    "text": "FENTANYL, acute pain, adult: IV: Fentanyl up to 100 mcg IV. MR up to 50 mcg IV q5 min x2. Maximum total dose 200 mcg IVIN: Up to 50 mcg IN q15 min x2. 3rd dose fentanyl up to 50 mcg IN. Class: Synthetic opioid, opioid analgesic. Mechanism: Opioid agonist-analgesic; inhibits ascending pain pathways, thus altering pain perception; increases pain threshold; produces analgesia, respiratory depression, and sedation. Contraindications: Pregnancy with pain from active labor. Adverse effects: Confusion; Paradoxical excitation; Delirium; Sedation/drowsiness; CNS depression Respiratory depression. Notes: Remember to consider non-pharmacologic pain treatments, e.g., place in position of comfort, apply ice packs/splints PRN, and verbal reassurance. Closely monitor respiratory status (including capnography) after administration. An initial dose of 100 mcg IV or 50 mcg IN is well tolerated in most adults. In opioid-naive or elderly patients, start with a lower dose.",
+    "metadata": {
+      "drug": "FENTANYL",
+      "indication": "acute pain",
+      "patient_type": "adult",
+      "record_type": "dose",
+      "route": "IN, IV",
+      "value_machine": "IV: Fentanyl up to 100 mcg IV. MR up to 50 mcg IV q5 min x2. Maximum total dose 200 mcg IVIN: Up to 50 mcg IN q15 min x2. 3rd dose fentanyl up to 50 mcg IN",
+      "value_spoken": "one hundred micrograms",
+      "source": "CoSD-EMS-P-115-2025",
+      "page": "16",
+      "confidence": "0.92"
+    }
+  },
+  {
+    "id": "fentanyl-acute-pain-pediatric-0",
+    "text": "FENTANYL, acute pain, pediatric (weight-based): IV: <10 kg: Fentanyl IV per drug chart. MR at half initial IV dose BHO \u226510 kg: Fentanyl IV per drug chart. MR at half initial IV dose IN: <10 kg: Fentanyl IN per drug chart. MR at initial IN dose BHO \u226510 kg: Fentanyl IN per drug chart. MR at initial IN dose. Class: Synthetic opioid, opioid analgesic. Mechanism: Opioid agonist-analgesic; inhibits ascending pain pathways, thus altering pain perception; increases pain threshold; produces analgesia, respiratory depression, and sedation. Contraindications: Pregnancy with pain from active labor. Adverse effects: Confusion; Paradoxical excitation; Delirium; Sedation/drowsiness; CNS depression Respiratory depression. Notes: Remember to consider non-pharmacologic pain treatments, e.g., place in position of comfort, apply ice packs/splints PRN, and verbal reassurance. Closely monitor respiratory status (including capnography) after administration. An initial dose of 100 mcg IV or 50 mcg IN is well tolerated in most adults. In opioid-naive or elderly patients, start with a lower dose.",
+    "metadata": {
+      "drug": "FENTANYL",
+      "indication": "acute pain",
+      "patient_type": "pediatric",
+      "record_type": "dose_weight_based",
+      "route": "IN, IV",
+      "value_machine": "IV: <10 kg: Fentanyl IV per drug chart. MR at half initial IV dose BHO \u226510 kg: Fentanyl IV per drug chart. MR at half initial IV dose IN: <10 kg: Fentanyl IN per drug chart. MR at initial IN dose BHO \u226510 kg: Fentanyl IN per drug chart. MR at initial IN dose",
+      "value_spoken": "weight-based \u2014 see drug chart",
+      "source": "CoSD-EMS-P-115-2025",
+      "page": "16",
+      "confidence": "0.92"
+    }
+  },
+  {
+    "id": "fentanyl-contraindications",
+    "text": "FENTANYL contraindications: Pregnancy with pain from active labor. Class: Synthetic opioid, opioid analgesic.",
+    "metadata": {
+      "drug": "FENTANYL",
+      "indication": "contraindication",
+      "patient_type": "all",
+      "record_type": "contraindication",
+      "route": null,
+      "value_machine": "Pregnancy with pain from active labor",
+      "value_spoken": null,
+      "source": "CoSD-EMS-P-115-2025",
+      "page": "16",
+      "confidence": "0.92"
+    }
+  },
+  {
+    "id": "glucagon-hypoglycemia-adult-0",
+    "text": "GLUCAGON, hypoglycemia, adult: glucagon 1 mL IM. Class: Glucose-elevating agent, antidote. Mechanism: A hormone naturally produced by pancreatic alpha cells of the islets of Langerhans. Causes breakdown of glycogen (stored in the liver) to glucose and inhibits the synthesis of glycogen from glucose. Adverse effects: Dizziness; Headache; Hypotension; Tachycardia; Nausea/vomiting. Notes: AEMT: Authorized to administer via IM only. Use mixture immediately after reconstitution of dry powder. Patient usually awakens from hypoglycemic coma in 5-20 minutes after glucagon injection.",
+    "metadata": {
+      "drug": "GLUCAGON",
+      "indication": "hypoglycemia",
+      "patient_type": "adult",
+      "record_type": "dose",
+      "route": "IM",
+      "value_machine": "glucagon 1 mL IM",
+      "value_spoken": "one milliliter",
+      "source": "CoSD-EMS-P-115-2025",
+      "page": "17",
+      "confidence": "0.91"
+    }
+  },
+  {
+    "id": "glucagon-beta-blocker-overdose-adult-1",
+    "text": "GLUCAGON, beta blocker overdose, adult: glucagon 1-5 mg IV, MR 5-10 min, for a total of 10 mg. Class: Glucose-elevating agent, antidote. Mechanism: A hormone naturally produced by pancreatic alpha cells of the islets of Langerhans. Causes breakdown of glycogen (stored in the liver) to glucose and inhibits the synthesis of glycogen from glucose. Adverse effects: Dizziness; Headache; Hypotension; Tachycardia; Nausea/vomiting. Notes: AEMT: Authorized to administer via IM only. Use mixture immediately after reconstitution of dry powder. Patient usually awakens from hypoglycemic coma in 5-20 minutes after glucagon injection.",
+    "metadata": {
+      "drug": "GLUCAGON",
+      "indication": "beta blocker overdose",
+      "patient_type": "adult",
+      "record_type": "dose",
+      "route": "IV",
+      "value_machine": "glucagon 1-5 mg IV, MR 5-10 min, for a total of 10 mg",
+      "value_spoken": "five milligrams",
+      "source": "CoSD-EMS-P-115-2025",
+      "page": "17",
+      "confidence": "0.91"
+    }
+  },
+  {
+    "id": "glucagon-hypoglycemia-and-beta-blocker-overdose-with-cardiac-effects-pediatric-0",
+    "text": "GLUCAGON, hypoglycemia and beta blocker overdose with cardiac effects, pediatric (weight-based): Glucagon per drug chart IM. Class: Glucose-elevating agent, antidote. Mechanism: A hormone naturally produced by pancreatic alpha cells of the islets of Langerhans. Causes breakdown of glycogen (stored in the liver) to glucose and inhibits the synthesis of glycogen from glucose. Adverse effects: Dizziness; Headache; Hypotension; Tachycardia; Nausea/vomiting. Notes: AEMT: Authorized to administer via IM only. Use mixture immediately after reconstitution of dry powder. Patient usually awakens from hypoglycemic coma in 5-20 minutes after glucagon injection.",
+    "metadata": {
+      "drug": "GLUCAGON",
+      "indication": "hypoglycemia and beta blocker overdose with cardiac effects",
+      "patient_type": "pediatric",
+      "record_type": "dose_weight_based",
+      "route": "IM",
+      "value_machine": "Glucagon per drug chart IM",
+      "value_spoken": "weight-based \u2014 see drug chart",
+      "source": "CoSD-EMS-P-115-2025",
+      "page": "17",
+      "confidence": "0.91"
+    }
+  },
+  {
+    "id": "ipratropium-bromide-respiratory-distress-non-cardiac-adult-0",
+    "text": "IPRATROPIUM BROMIDE, respiratory distress (non-cardiac), adult: Ipratropium bromide 2.5 mL 0.02% via nebulizer added to first dose of albuterol/levalbuterol. Class: Anticholinergic. Mechanism: Anticholinergic (parasympatholytic) agent; inhibits vagally mediated reflexes by antagonizing acetylcholine action; prevents increase in intracellular calcium concentration that is caused by interaction of acetylcholine with muscarinic receptors on bronchial smooth muscle. Adverse effects: Headache; Dizziness; Nervousness; Tremors; Dyspnea. Notes: If concerned about aerosolized infectious exposure, substitute with MDI, if available. Patients may need to be instructed on proper use of the MDI.",
+    "metadata": {
+      "drug": "IPRATROPIUM BROMIDE",
+      "indication": "respiratory distress (non-cardiac)",
+      "patient_type": "adult",
+      "record_type": "dose",
+      "route": null,
+      "value_machine": "Ipratropium bromide 2.5 mL 0.02% via nebulizer added to first dose of albuterol/levalbuterol",
+      "value_spoken": "two point five milliliters",
+      "source": "CoSD-EMS-P-115-2025",
+      "page": "18",
+      "confidence": "0.9"
+    }
+  },
+  {
+    "id": "ipratropium-bromide-respiratory-distress-non-cardiac-pediatric-0",
+    "text": "IPRATROPIUM BROMIDE, respiratory distress (non-cardiac), pediatric (weight-based): Ipratropium bromide per drug chart via nebulizer added to first dose of albuterol/levalbuterol. Class: Anticholinergic. Mechanism: Anticholinergic (parasympatholytic) agent; inhibits vagally mediated reflexes by antagonizing acetylcholine action; prevents increase in intracellular calcium concentration that is caused by interaction of acetylcholine with muscarinic receptors on bronchial smooth muscle. Adverse effects: Headache; Dizziness; Nervousness; Tremors; Dyspnea. Notes: If concerned about aerosolized infectious exposure, substitute with MDI, if available. Patients may need to be instructed on proper use of the MDI.",
+    "metadata": {
+      "drug": "IPRATROPIUM BROMIDE",
+      "indication": "respiratory distress (non-cardiac)",
+      "patient_type": "pediatric",
+      "record_type": "dose_weight_based",
+      "route": null,
+      "value_machine": "Ipratropium bromide per drug chart via nebulizer added to first dose of albuterol/levalbuterol",
+      "value_spoken": "weight-based \u2014 see drug chart",
+      "source": "CoSD-EMS-P-115-2025",
+      "page": "18",
+      "confidence": "0.9"
+    }
+  },
+  {
+    "id": "ketamine-acute-pain-adult-0",
+    "text": "KETAMINE, acute pain, adult: IV: 0.3 mg/kg in 100 mL of NS over 10 min IV. Maximum for any IV dose is 30 mg. MR x1 in 15 min if pain remains moderate or severe. IN: 0.5 mg/kg IN (50 mg/mL concentration). Maximum for any IN dose is 50 mg. MR x1 in 15 min if pain remains moderate or severe. Class: Analgesic (in sub-dissociative doses). Mechanism: Dissociative anesthetic; produces a cataleptic-like state in which the patient is dissociated from the surrounding environment by direct action on the cortex and limbic system; noncompetitive NMDA receptor antagonist that blocks glutamate; low (sub-dissociative) doses produce analgesia. Contraindications: Sedation; Use of dissociative dose ranges; Pregnancy with pain from active labor. Adverse effects: Hypertension; Hallucinations; Nausea/vomiting; Nystagmus; Bronchodilation. Notes: Not authorized for sedation. Not authorized for use in dissociative dose ranges.",
+    "metadata": {
+      "drug": "KETAMINE",
+      "indication": "acute pain",
+      "patient_type": "adult",
+      "record_type": "dose",
+      "route": "IN, IV",
+      "value_machine": "IV: 0.3 mg/kg in 100 mL of NS over 10 min IV. Maximum for any IV dose is 30 mg. MR x1 in 15 min if pain remains moderate or severe.IN: 0.5 mg/kg IN (50 mg/mL concentration). Maximum for any IN dose is 50 mg. MR x1 in 15 min if pain remains moderate or severe",
+      "value_spoken": "zero point three milligrams per kilogram",
+      "source": "CoSD-EMS-P-115-2025",
+      "page": "19",
+      "confidence": "0.91"
+    }
+  },
+  {
+    "id": "ketamine-acute-pain-pediatric-0",
+    "text": "KETAMINE, acute pain, pediatric: Not indicated for use in pediatrics. Class: Analgesic (in sub-dissociative doses). Mechanism: Dissociative anesthetic; produces a cataleptic-like state in which the patient is dissociated from the surrounding environment by direct action on the cortex and limbic system; noncompetitive NMDA receptor antagonist that blocks glutamate; low (sub-dissociative) doses produce analgesia. Contraindications: Sedation; Use of dissociative dose ranges; Pregnancy with pain from active labor. Adverse effects: Hypertension; Hallucinations; Nausea/vomiting; Nystagmus; Bronchodilation. Notes: Not authorized for sedation. Not authorized for use in dissociative dose ranges.",
+    "metadata": {
+      "drug": "KETAMINE",
+      "indication": "acute pain",
+      "patient_type": "pediatric",
+      "record_type": "dose",
+      "route": null,
+      "value_machine": "Not indicated for use in pediatrics",
+      "value_spoken": null,
+      "source": "CoSD-EMS-P-115-2025",
+      "page": "19",
+      "confidence": "0.91"
+    }
+  },
+  {
+    "id": "ketamine-contraindications",
+    "text": "KETAMINE contraindications: Sedation; Use of dissociative dose ranges; Pregnancy with pain from active labor. Class: Analgesic (in sub-dissociative doses).",
+    "metadata": {
+      "drug": "KETAMINE",
+      "indication": "contraindication",
+      "patient_type": "all",
+      "record_type": "contraindication",
+      "route": null,
+      "value_machine": "Sedation; Use of dissociative dose ranges; Pregnancy with pain from active labor",
+      "value_spoken": null,
+      "source": "CoSD-EMS-P-115-2025",
+      "page": "19",
+      "confidence": "0.91"
+    }
+  },
+  {
+    "id": "lidocaine-stable-vt-adult-0",
+    "text": "LIDOCAINE, stable VT, adult: persistent VF/pulseless VT after 3 defibrillation attempts, and reported/witnessed AICD firing \u22652, lidocaine 1.5 mg/kg IV/IO, MR at 0.5 mg/kg IV/IO q5 min to max 3 mg/kg. Class: Antidysrhythmic, anesthetic. Mechanism: Class 1b antidysrhythmic; combines with fast sodium channels and thereby inhibits recovery after repolarization, resulting in decreasing myocardial excitability and conduction velocity. Contraindications: Cardiac pre-excitation syndromes, e.g., Wolff-Parkinson-White (WPW) syndrome, Lown-Ganong-Levine (LGL) syndrome. Adverse effects: Drowsiness; Confusion; Seizures; Slurred speech Hypotension; Dysrhythmias. Notes: If patient is in unstable ventricular tachycardia, synchronized cardioversion should be performed first. Adult doses should be given in increments rounded (up or down) to the nearest 20 mg amount. Lidocaine jelly may be applied to an ET tube for intubation or on a nasopharyngeal airway.",
+    "metadata": {
+      "drug": "LIDOCAINE",
+      "indication": "stable VT",
+      "patient_type": "adult",
+      "record_type": "dose",
+      "route": "IO, IV",
+      "value_machine": "persistent VF/pulseless VT after 3 defibrillation attempts, and reported/witnessed AICD firing \u22652, lidocaine 1.5 mg/kg IV/IO, MR at 0.5 mg/kg IV/IO q5 min to max 3 mg/kg",
+      "value_spoken": "one point five milligrams per kilogram",
+      "source": "CoSD-EMS-P-115-2025",
+      "page": "20",
+      "confidence": "0.92"
+    }
+  },
+  {
+    "id": "lidocaine-io-procedure-in-conscious-adult-patients-adult-1",
+    "text": "LIDOCAINE, IO procedure in conscious adult patients, adult: slowly infuse lidocaine 40 mg IO prior to fluid/medication administration. Class: Antidysrhythmic, anesthetic. Mechanism: Class 1b antidysrhythmic; combines with fast sodium channels and thereby inhibits recovery after repolarization, resulting in decreasing myocardial excitability and conduction velocity. Contraindications: Cardiac pre-excitation syndromes, e.g., Wolff-Parkinson-White (WPW) syndrome, Lown-Ganong-Levine (LGL) syndrome. Adverse effects: Drowsiness; Confusion; Seizures; Slurred speech Hypotension; Dysrhythmias. Notes: If patient is in unstable ventricular tachycardia, synchronized cardioversion should be performed first. Adult doses should be given in increments rounded (up or down) to the nearest 20 mg amount. Lidocaine jelly may be applied to an ET tube for intubation or on a nasopharyngeal airway.",
+    "metadata": {
+      "drug": "LIDOCAINE",
+      "indication": "IO procedure in conscious adult patients",
+      "patient_type": "adult",
+      "record_type": "dose",
+      "route": "IO",
+      "value_machine": "slowly infuse lidocaine 40 mg IO prior to fluid/medication administration",
+      "value_spoken": "forty milligrams",
+      "source": "CoSD-EMS-P-115-2025",
+      "page": "20",
+      "confidence": "0.92"
+    }
+  },
+  {
+    "id": "lidocaine-stable-vt-pediatric-0",
+    "text": "LIDOCAINE, stable VT, pediatric (weight-based): lidocaine per drug chart BHPO. Class: Antidysrhythmic, anesthetic. Mechanism: Class 1b antidysrhythmic; combines with fast sodium channels and thereby inhibits recovery after repolarization, resulting in decreasing myocardial excitability and conduction velocity. Contraindications: Cardiac pre-excitation syndromes, e.g., Wolff-Parkinson-White (WPW) syndrome, Lown-Ganong-Levine (LGL) syndrome. Adverse effects: Drowsiness; Confusion; Seizures; Slurred speech Hypotension; Dysrhythmias. Notes: If patient is in unstable ventricular tachycardia, synchronized cardioversion should be performed first. Adult doses should be given in increments rounded (up or down) to the nearest 20 mg amount. Lidocaine jelly may be applied to an ET tube for intubation or on a nasopharyngeal airway.",
+    "metadata": {
+      "drug": "LIDOCAINE",
+      "indication": "stable VT",
+      "patient_type": "pediatric",
+      "record_type": "dose_weight_based",
+      "route": null,
+      "value_machine": "lidocaine per drug chart BHPO",
+      "value_spoken": "weight-based \u2014 see drug chart",
+      "source": "CoSD-EMS-P-115-2025",
+      "page": "20",
+      "confidence": "0.92"
+    }
+  },
+  {
+    "id": "lidocaine-persistent-vfpulseless-vt-after-3-defibrillation-attempts-pediatric-1",
+    "text": "LIDOCAINE, persistent VF/pulseless VT after 3 defibrillation attempts, pediatric (weight-based): lidocaine per drug chart IV/IO, MR per drug chart x1 q5 min. Class: Antidysrhythmic, anesthetic. Mechanism: Class 1b antidysrhythmic; combines with fast sodium channels and thereby inhibits recovery after repolarization, resulting in decreasing myocardial excitability and conduction velocity. Contraindications: Cardiac pre-excitation syndromes, e.g., Wolff-Parkinson-White (WPW) syndrome, Lown-Ganong-Levine (LGL) syndrome. Adverse effects: Drowsiness; Confusion; Seizures; Slurred speech Hypotension; Dysrhythmias. Notes: If patient is in unstable ventricular tachycardia, synchronized cardioversion should be performed first. Adult doses should be given in increments rounded (up or down) to the nearest 20 mg amount. Lidocaine jelly may be applied to an ET tube for intubation or on a nasopharyngeal airway.",
+    "metadata": {
+      "drug": "LIDOCAINE",
+      "indication": "persistent VF/pulseless VT after 3 defibrillation attempts",
+      "patient_type": "pediatric",
+      "record_type": "dose_weight_based",
+      "route": "IO, IV",
+      "value_machine": "lidocaine per drug chart IV/IO, MR per drug chart x1 q5 min",
+      "value_spoken": "weight-based \u2014 see drug chart",
+      "source": "CoSD-EMS-P-115-2025",
+      "page": "20",
+      "confidence": "0.92"
+    }
+  },
+  {
+    "id": "lidocaine-reportedwitnessed-aicd-firing-2-pediatric-2",
+    "text": "LIDOCAINE, reported/witnessed AICD firing \u22652, pediatric (weight-based): lidocaine per drug chart, MR BHPO. Class: Antidysrhythmic, anesthetic. Mechanism: Class 1b antidysrhythmic; combines with fast sodium channels and thereby inhibits recovery after repolarization, resulting in decreasing myocardial excitability and conduction velocity. Contraindications: Cardiac pre-excitation syndromes, e.g., Wolff-Parkinson-White (WPW) syndrome, Lown-Ganong-Levine (LGL) syndrome. Adverse effects: Drowsiness; Confusion; Seizures; Slurred speech Hypotension; Dysrhythmias. Notes: If patient is in unstable ventricular tachycardia, synchronized cardioversion should be performed first. Adult doses should be given in increments rounded (up or down) to the nearest 20 mg amount. Lidocaine jelly may be applied to an ET tube for intubation or on a nasopharyngeal airway.",
+    "metadata": {
+      "drug": "LIDOCAINE",
+      "indication": "reported/witnessed AICD firing \u22652",
+      "patient_type": "pediatric",
+      "record_type": "dose_weight_based",
+      "route": null,
+      "value_machine": "lidocaine per drug chart, MR BHPO",
+      "value_spoken": "weight-based \u2014 see drug chart",
+      "source": "CoSD-EMS-P-115-2025",
+      "page": "20",
+      "confidence": "0.92"
+    }
+  },
+  {
+    "id": "lidocaine-contraindications",
+    "text": "LIDOCAINE contraindications: Cardiac pre-excitation syndromes, e.g., Wolff-Parkinson-White (WPW) syndrome, Lown-Ganong-Levine (LGL) syndrome. Class: Antidysrhythmic, anesthetic.",
+    "metadata": {
+      "drug": "LIDOCAINE",
+      "indication": "contraindication",
+      "patient_type": "all",
+      "record_type": "contraindication",
+      "route": null,
+      "value_machine": "Cardiac pre-excitation syndromes, e.g., Wolff-Parkinson-White (WPW) syndrome, Lown-Ganong-Levine (LGL) syndrome",
+      "value_spoken": null,
+      "source": "CoSD-EMS-P-115-2025",
+      "page": "20",
+      "confidence": "0.92"
+    }
+  },
+  {
+    "id": "midazolam-seizures-and-eclampsia-sedation-pre-cardioversionpre-pacing-unable-to-tolerate-cpap-intubated-patients-with-agitation-adult-0",
+    "text": "MIDAZOLAM, seizures and eclampsia, sedation pre-cardioversion/pre-pacing, unable to tolerate CPAP, intubated patients with agitation, adult: Seizure Patients \u226540 kg: midazolam 10 mg IM Patients <40 kg: midazolam 0.2 mg/kg IM If vascular access present, midazolam 0.2 mg/kg IV/IO to max dose of 5 mg, MR x1 in 10 min. Max 10 mg total, d/c if seizure stops Eclampsia Midazolam IN/IM/IV/IO to a max dose of 5 mg (d/c if seizure stops), MR x1 in 10 min. Max 10 mg total Sedation pre-cardioversion/pre-pacing Midazolam 1-5 mg IV/IO Unable to tolerate CPAP Midazolam 0.5-1 mg IM/IN/IV Intubated with agitation Midazolam 2-5 mg IM/IN/IV/IO, MR x1 in 5-10 min Behavioral Midazolam 5 mg IM/IN/IV, MR x1 in 5-10 min. Class: Anticonvulsant, antianxiety agent, anxiolytics, benzodiazepines. Mechanism: Binds to receptors at multiple sites within the CNS; potentiates GABA receptor system which produces anxiolytic, anticonvulsant, muscle relaxant, and amnesic effects. Adverse effects: Respiratory depression or apnea; Nausea/vomiting; Hypotension; Headache. Notes: Closely monitor respiratory status (including capnography) and cardiac function after administration. Sedation prior to cardioversion is recommended.",
+    "metadata": {
+      "drug": "MIDAZOLAM",
+      "indication": "seizures and eclampsia, sedation pre-cardioversion/pre-pacing, unable to tolerate CPAP, intubated patients with agitation",
+      "patient_type": "adult",
+      "record_type": "dose",
+      "route": "IM, IN, IO, IV",
+      "value_machine": "Seizure Patients \u226540 kg: midazolam 10 mg IM Patients <40 kg: midazolam 0.2 mg/kg IM If vascular access present, midazolam 0.2 mg/kg IV/IO to max dose of 5 mg, MR x1 in 10 min. Max 10 mg total, d/c if seizure stops Eclampsia Midazolam IN/IM/IV/IO to a max dose of 5 mg (d/c if seizure stops), MR x1 in 10 min. Max 10 mg total Sedation pre-cardioversion/pre-pacing Midazolam 1-5 mg IV/IO Unable to tolerate CPAP Midazolam 0.5-1 mg IM/IN/IV Intubated with agitation Midazolam 2-5 mg IM/IN/IV/IO, MR x1 in 5-10 min Behavioral Midazolam 5 mg IM/IN/IV, MR x1 in 5-10 min",
+      "value_spoken": "zero point two milligrams per kilogram",
+      "source": "CoSD-EMS-P-115-2025",
+      "page": "21",
+      "confidence": "0.91"
+    }
+  },
+  {
+    "id": "midazolam-seizures-and-eclampsia-sedation-pre-cardioversionpre-pacing-unable-to-tolerate-cpap-intubated-patients-with-agitation-pediatric-0",
+    "text": "MIDAZOLAM, seizures and eclampsia, sedation pre-cardioversion/pre-pacing, unable to tolerate CPAP, intubated patients with agitation, pediatric (weight-based): Seizure Midazolam IM per drug chart If vascular access present, midazolam IV/IO per drug chart, MR x1 in 10 min Sedation pre-cardioversion/pre-pacing Midazolam per drug chart IV/IO Behavioral Midazolam per drug chart IM/IN/IV, MR x1 in 10 min. Class: Anticonvulsant, antianxiety agent, anxiolytics, benzodiazepines. Mechanism: Binds to receptors at multiple sites within the CNS; potentiates GABA receptor system which produces anxiolytic, anticonvulsant, muscle relaxant, and amnesic effects. Adverse effects: Respiratory depression or apnea; Nausea/vomiting; Hypotension; Headache. Notes: Closely monitor respiratory status (including capnography) and cardiac function after administration. Sedation prior to cardioversion is recommended.",
+    "metadata": {
+      "drug": "MIDAZOLAM",
+      "indication": "seizures and eclampsia, sedation pre-cardioversion/pre-pacing, unable to tolerate CPAP, intubated patients with agitation",
+      "patient_type": "pediatric",
+      "record_type": "dose_weight_based",
+      "route": "IM, IN, IO, IV",
+      "value_machine": "Seizure Midazolam IM per drug chart If vascular access present, midazolam IV/IO per drug chart, MR x1 in 10 min Sedation pre-cardioversion/pre-pacing Midazolam per drug chart IV/IO Behavioral Midazolam per drug chart IM/IN/IV, MR x1 in 10 min",
+      "value_spoken": "weight-based \u2014 see drug chart",
+      "source": "CoSD-EMS-P-115-2025",
+      "page": "21",
+      "confidence": "0.91"
+    }
+  },
+  {
+    "id": "morphine-acute-pain-adult-0",
+    "text": "MORPHINE, acute pain, adult: IV: Up to 0.1 mg/kg IV. MR in 5 min at half initial IV dose. MR in additional 5 min at half initial IV doseIM: Up to 0.1 mg/kg IM. MR in 15 min at half initial IM dose. MR in additional 15 min at half initial IM dose. Class: Opioid analgesic. Mechanism: Opioid agonist-analgesic; inhibits ascending pain pathways, thus altering pain perception; increases pain threshold; produces analgesia, respiratory depression, and sedation. Contraindications: Pregnancy with pain from active labor. Adverse effects: Confusion; Sedation; Headache; CNS depression; Respiratory depression or apnea. Notes: Remember to consider non-pharmacologic pain treatments, e.g., place in position of comfort, apply ice packs/splints PRN, and verbal reassurance. Closely monitor respiratory status (including capnography) after administration.",
+    "metadata": {
+      "drug": "MORPHINE",
+      "indication": "acute pain",
+      "patient_type": "adult",
+      "record_type": "dose",
+      "route": "IM, IV",
+      "value_machine": "IV: Up to 0.1 mg/kg IV. MR in 5 min at half initial IV dose. MR in additional 5 min at half initial IV doseIM: Up to 0.1 mg/kg IM. MR in 15 min at half initial IM dose. MR in additional 15 min at half initial IM dose",
+      "value_spoken": "zero point one milligrams per kilogram",
+      "source": "CoSD-EMS-P-115-2025",
+      "page": "22",
+      "confidence": "0.95"
+    }
+  },
+  {
+    "id": "morphine-acute-pain-pediatric-0",
+    "text": "MORPHINE, acute pain, pediatric (weight-based): Morphine IV/IM per drug chart. Class: Opioid analgesic. Mechanism: Opioid agonist-analgesic; inhibits ascending pain pathways, thus altering pain perception; increases pain threshold; produces analgesia, respiratory depression, and sedation. Contraindications: Pregnancy with pain from active labor. Adverse effects: Confusion; Sedation; Headache; CNS depression; Respiratory depression or apnea. Notes: Remember to consider non-pharmacologic pain treatments, e.g., place in position of comfort, apply ice packs/splints PRN, and verbal reassurance. Closely monitor respiratory status (including capnography) after administration.",
+    "metadata": {
+      "drug": "MORPHINE",
+      "indication": "acute pain",
+      "patient_type": "pediatric",
+      "record_type": "dose_weight_based",
+      "route": "IM, IV",
+      "value_machine": "Morphine IV/IM per drug chart",
+      "value_spoken": "weight-based \u2014 see drug chart",
+      "source": "CoSD-EMS-P-115-2025",
+      "page": "22",
+      "confidence": "0.95"
+    }
+  },
+  {
+    "id": "morphine-contraindications",
+    "text": "MORPHINE contraindications: Pregnancy with pain from active labor. Class: Opioid analgesic.",
+    "metadata": {
+      "drug": "MORPHINE",
+      "indication": "contraindication",
+      "patient_type": "all",
+      "record_type": "contraindication",
+      "route": null,
+      "value_machine": "Pregnancy with pain from active labor",
+      "value_spoken": null,
+      "source": "CoSD-EMS-P-115-2025",
+      "page": "22",
+      "confidence": "0.95"
+    }
+  },
+  {
+    "id": "naloxone-reversal-of-acute-opioid-toxicity-adult-0",
+    "text": "NALOXONE, Reversal of acute opioid toxicity, adult: Naloxone 2 mg IN/IM/IV, MR. Class: Opioid reversal agent. Mechanism: Competitive inhibitor of opioid receptors in the brain. Reverses the respiratory depression associated with opioid overdose. Adverse effects: Restlessness; Seizures; Dyspnea; Pulmonary edema; Hypotension with rapid administration Hypertension. Notes: EMT: Authorized to administer via IN only. AEMT: Authorized to administer via IN/IM only. Not authorized in cardiac arrest. Titrate IV dose to maintain adequate respiratory drive; use only enough to reverse respiratory depression. Duration of opioid effects may exceed that of naloxone; closely monitor patient's respiratory status. Naloxone may precipitate acute withdrawal symptoms or acute pulmonary edema when given to patients with opioid use disorder. Administration can result in the sudden onset of opiate withdrawal (agitation, tachycardia, pulmonary edema, nausea, vomiting, and, in neonates, seizures).",
+    "metadata": {
+      "drug": "NALOXONE",
+      "indication": "Reversal of acute opioid toxicity",
+      "patient_type": "adult",
+      "record_type": "dose",
+      "route": "IM, IN, IV",
+      "value_machine": "Naloxone 2 mg IN/IM/IV, MR",
+      "value_spoken": "two milligrams",
+      "source": "CoSD-EMS-P-115-2025",
+      "page": "23",
+      "confidence": "0.78"
+    }
+  },
+  {
+    "id": "naloxone-reversal-of-acute-opioid-toxicity-pediatric-0",
+    "text": "NALOXONE, Reversal of acute opioid toxicity, pediatric (weight-based): Naloxone per drug chart IN/IV/IM, MR. Class: Opioid reversal agent. Mechanism: Competitive inhibitor of opioid receptors in the brain. Reverses the respiratory depression associated with opioid overdose. Adverse effects: Restlessness; Seizures; Dyspnea; Pulmonary edema; Hypotension with rapid administration Hypertension. Notes: EMT: Authorized to administer via IN only. AEMT: Authorized to administer via IN/IM only. Not authorized in cardiac arrest. Titrate IV dose to maintain adequate respiratory drive; use only enough to reverse respiratory depression. Duration of opioid effects may exceed that of naloxone; closely monitor patient's respiratory status. Naloxone may precipitate acute withdrawal symptoms or acute pulmonary edema when given to patients with opioid use disorder. Administration can result in the sudden onset of opiate withdrawal (agitation, tachycardia, pulmonary edema, nausea, vomiting, and, in neonates, seizures).",
+    "metadata": {
+      "drug": "NALOXONE",
+      "indication": "Reversal of acute opioid toxicity",
+      "patient_type": "pediatric",
+      "record_type": "dose_weight_based",
+      "route": "IM, IN, IV",
+      "value_machine": "Naloxone per drug chart IN/IV/IM, MR",
+      "value_spoken": "weight-based \u2014 see drug chart",
+      "source": "CoSD-EMS-P-115-2025",
+      "page": "23",
+      "confidence": "0.78"
+    }
+  },
+  {
+    "id": "naloxone-opioid-dependent-patients-pediatric-1",
+    "text": "NALOXONE, opioid-dependent patients, pediatric (weight-based): dilute and titrate slowly per drug chart. Class: Opioid reversal agent. Mechanism: Competitive inhibitor of opioid receptors in the brain. Reverses the respiratory depression associated with opioid overdose. Adverse effects: Restlessness; Seizures; Dyspnea; Pulmonary edema; Hypotension with rapid administration Hypertension. Notes: EMT: Authorized to administer via IN only. AEMT: Authorized to administer via IN/IM only. Not authorized in cardiac arrest. Titrate IV dose to maintain adequate respiratory drive; use only enough to reverse respiratory depression. Duration of opioid effects may exceed that of naloxone; closely monitor patient's respiratory status. Naloxone may precipitate acute withdrawal symptoms or acute pulmonary edema when given to patients with opioid use disorder. Administration can result in the sudden onset of opiate withdrawal (agitation, tachycardia, pulmonary edema, nausea, vomiting, and, in neonates, seizures).",
+    "metadata": {
+      "drug": "NALOXONE",
+      "indication": "opioid-dependent patients",
+      "patient_type": "pediatric",
+      "record_type": "dose_weight_based",
+      "route": null,
+      "value_machine": "dilute and titrate slowly per drug chart",
+      "value_spoken": "weight-based \u2014 see drug chart",
+      "source": "CoSD-EMS-P-115-2025",
+      "page": "23",
+      "confidence": "0.78"
+    }
+  },
+  {
+    "id": "nitroglycerin-discomfortpain-of-cardiac-origin-if-sbp-100-mmhg-adult-0",
+    "text": "NITROGLYCERIN, discomfort/pain of cardiac origin if SBP \u2265100 mmHg, adult: NTG 0.4 mg SL, MR q3-5 min. Class: Nitrate, anti-anginal. Mechanism: Nitrate enters vascular smooth muscle and is converted to nitric oxide leading to vasodilation. Relaxes smooth muscle via dose-dependent dilation of arterial and venous beds: reduces both preload, afterload, and myocardial oxygen demand. Contraindications: Use of erectile dysfunction or pulmonary hypertension medications within last 48 hours; Suspected intracranial bleed. Adverse effects: Headache; Dizziness; Weakness; Reflex tachycardia; Syncope Hypotension. Notes: EMT: Authorized to assist patient to self-medicate own prescribed NTG only. Examples of erectile dysfunction medications include sildenafil (Viagra), tadalafil (Cialis) and vardenafil (Levitra).Examples of pulmonary hypertension medications include sildenafil (Revatio) and epoprostenol sodium (Flolan, Veletri).Nitroglycerin is used primarily to provide pain relief from anginal chest discomfort. Assess the patient and document vital signs, including pain scale, before and after each administration.",
+    "metadata": {
+      "drug": "NITROGLYCERIN",
+      "indication": "discomfort/pain of cardiac origin if SBP \u2265100 mmHg",
+      "patient_type": "adult",
+      "record_type": "dose",
+      "route": "SL",
+      "value_machine": "NTG 0.4 mg SL, MR q3-5 min",
+      "value_spoken": "zero point four milligrams",
+      "source": "CoSD-EMS-P-115-2025",
+      "page": "24",
+      "confidence": "0.86"
+    }
+  },
+  {
+    "id": "nitroglycerin-chf-if-systolic-bp-100-but-150-ntg-04-mg-sl-adult-1",
+    "text": "NITROGLYCERIN, CHF If systolic BP \u2265100 but <150: NTG 0.4 mg SL, adult: MR q3-5 min If systolic BP \u2265150: NTG 0.8 mg SL, MR q3-5 min. Class: Nitrate, anti-anginal. Mechanism: Nitrate enters vascular smooth muscle and is converted to nitric oxide leading to vasodilation. Relaxes smooth muscle via dose-dependent dilation of arterial and venous beds: reduces both preload, afterload, and myocardial oxygen demand. Contraindications: Use of erectile dysfunction or pulmonary hypertension medications within last 48 hours; Suspected intracranial bleed. Adverse effects: Headache; Dizziness; Weakness; Reflex tachycardia; Syncope Hypotension. Notes: EMT: Authorized to assist patient to self-medicate own prescribed NTG only. Examples of erectile dysfunction medications include sildenafil (Viagra), tadalafil (Cialis) and vardenafil (Levitra).Examples of pulmonary hypertension medications include sildenafil (Revatio) and epoprostenol sodium (Flolan, Veletri).Nitroglycerin is used primarily to provide pain relief from anginal chest discomfort. Assess the patient and document vital signs, including pain scale, before and after each administration.",
+    "metadata": {
+      "drug": "NITROGLYCERIN",
+      "indication": "CHF If systolic BP \u2265100 but <150: NTG 0.4 mg SL",
+      "patient_type": "adult",
+      "record_type": "dose",
+      "route": "SL",
+      "value_machine": "MR q3-5 min If systolic BP \u2265150: NTG 0.8 mg SL, MR q3-5 min",
+      "value_spoken": "zero point eight milligrams",
+      "source": "CoSD-EMS-P-115-2025",
+      "page": "24",
+      "confidence": "0.86"
+    }
+  },
+  {
+    "id": "nitroglycerin-discomfortpain-of-cardiac-origin-and-acute-pulmonary-edema-pediatric-0",
+    "text": "NITROGLYCERIN, discomfort/pain of cardiac origin and acute pulmonary edema, pediatric: Not indicated for use in pediatrics. Class: Nitrate, anti-anginal. Mechanism: Nitrate enters vascular smooth muscle and is converted to nitric oxide leading to vasodilation. Relaxes smooth muscle via dose-dependent dilation of arterial and venous beds: reduces both preload, afterload, and myocardial oxygen demand. Contraindications: Use of erectile dysfunction or pulmonary hypertension medications within last 48 hours; Suspected intracranial bleed. Adverse effects: Headache; Dizziness; Weakness; Reflex tachycardia; Syncope Hypotension. Notes: EMT: Authorized to assist patient to self-medicate own prescribed NTG only. Examples of erectile dysfunction medications include sildenafil (Viagra), tadalafil (Cialis) and vardenafil (Levitra).Examples of pulmonary hypertension medications include sildenafil (Revatio) and epoprostenol sodium (Flolan, Veletri).Nitroglycerin is used primarily to provide pain relief from anginal chest discomfort. Assess the patient and document vital signs, including pain scale, before and after each administration.",
+    "metadata": {
+      "drug": "NITROGLYCERIN",
+      "indication": "discomfort/pain of cardiac origin and acute pulmonary edema",
+      "patient_type": "pediatric",
+      "record_type": "dose",
+      "route": null,
+      "value_machine": "Not indicated for use in pediatrics",
+      "value_spoken": null,
+      "source": "CoSD-EMS-P-115-2025",
+      "page": "24",
+      "confidence": "0.86"
+    }
+  },
+  {
+    "id": "nitroglycerin-contraindications",
+    "text": "NITROGLYCERIN contraindications: Use of erectile dysfunction or pulmonary hypertension medications within last 48 hours; Suspected intracranial bleed. Class: Nitrate, anti-anginal.",
+    "metadata": {
+      "drug": "NITROGLYCERIN",
+      "indication": "contraindication",
+      "patient_type": "all",
+      "record_type": "contraindication",
+      "route": null,
+      "value_machine": "Use of erectile dysfunction or pulmonary hypertension medications within last 48 hours; Suspected intracranial bleed",
+      "value_spoken": null,
+      "source": "CoSD-EMS-P-115-2025",
+      "page": "24",
+      "confidence": "0.86"
+    }
+  },
+  {
+    "id": "ondansetron-nausea-or-vomiting-adult-0",
+    "text": "ONDANSETRON, nausea or vomiting, adult: Ondansetron 4 mg IV/IM/ODT, MR x1 in 10 min. Class: Antiemetic, selective 5-HT3 antagonist. Mechanism: Mechanism of action unclear; believed to function via serotonin antagonism at central and/or peripheral receptors. Serotonin receptors of the 5-HT3 type are present both peripherally on vagal nerve terminals and centrally in the chemoreceptor trigger zone of the area of the medullary structure that controls vomiting. Contraindications: Known or suspected long QT syndrome<6 months of age. Notes: ECG changes include dose-dependent QT prolongation and ST-segment depression. May cause serotonin syndrome if co-administered with selective serotonin reuptake inhibitors (SSRIs), e.g., fluoxetine, sertraline, citalopram, escitalopram, paroxetine.",
+    "metadata": {
+      "drug": "ONDANSETRON",
+      "indication": "nausea or vomiting",
+      "patient_type": "adult",
+      "record_type": "dose",
+      "route": "IM, IV",
+      "value_machine": "Ondansetron 4 mg IV/IM/ODT, MR x1 in 10 min",
+      "value_spoken": "four milligrams",
+      "source": "CoSD-EMS-P-115-2025",
+      "page": "25",
+      "confidence": "0.9"
+    }
+  },
+  {
+    "id": "ondansetron-nausea-or-vomiting-pediatric-0",
+    "text": "ONDANSETRON, nausea or vomiting, pediatric (weight-based): Ondansetron IV/IM/ODT per drug chart. Class: Antiemetic, selective 5-HT3 antagonist. Mechanism: Mechanism of action unclear; believed to function via serotonin antagonism at central and/or peripheral receptors. Serotonin receptors of the 5-HT3 type are present both peripherally on vagal nerve terminals and centrally in the chemoreceptor trigger zone of the area of the medullary structure that controls vomiting. Contraindications: Known or suspected long QT syndrome<6 months of age. Notes: ECG changes include dose-dependent QT prolongation and ST-segment depression. May cause serotonin syndrome if co-administered with selective serotonin reuptake inhibitors (SSRIs), e.g., fluoxetine, sertraline, citalopram, escitalopram, paroxetine.",
+    "metadata": {
+      "drug": "ONDANSETRON",
+      "indication": "nausea or vomiting",
+      "patient_type": "pediatric",
+      "record_type": "dose_weight_based",
+      "route": "IM, IV",
+      "value_machine": "Ondansetron IV/IM/ODT per drug chart",
+      "value_spoken": "weight-based \u2014 see drug chart",
+      "source": "CoSD-EMS-P-115-2025",
+      "page": "25",
+      "confidence": "0.9"
+    }
+  },
+  {
+    "id": "ondansetron-contraindications",
+    "text": "ONDANSETRON contraindications: Known or suspected long QT syndrome<6 months of age. Class: Antiemetic, selective 5-HT3 antagonist.",
+    "metadata": {
+      "drug": "ONDANSETRON",
+      "indication": "contraindication",
+      "patient_type": "all",
+      "record_type": "contraindication",
+      "route": null,
+      "value_machine": "Known or suspected long QT syndrome<6 months of age",
+      "value_spoken": null,
+      "source": "CoSD-EMS-P-115-2025",
+      "page": "25",
+      "confidence": "0.9"
+    }
+  },
+  {
+    "id": "sodium-bicarbonate-hyperkalemia-tricyclic-antidepressant-overdose-adult-0",
+    "text": "SODIUM BICARBONATE, hyperkalemia, tricyclic antidepressant overdose, adult: NaHCO3 1 mEq/kg IV/IO. Class: Alkalizing agent, antidote. Mechanism: Increases blood and urinary pH by neutralizing hydrogen ion concentration. Adverse effects: Electrolyte imbalance; Pulmonary edema (secondary to sodium overload); Tremors; Twitching; Seizures (caused by alkalosis). Notes: Monitor the patient closely for signs and symptoms of fluid overload.",
+    "metadata": {
+      "drug": "SODIUM BICARBONATE",
+      "indication": "hyperkalemia, tricyclic antidepressant overdose",
+      "patient_type": "adult",
+      "record_type": "dose",
+      "route": "IO, IV",
+      "value_machine": "NaHCO3 1 mEq/kg IV/IO",
+      "value_spoken": null,
+      "source": "CoSD-EMS-P-115-2025",
+      "page": "26",
+      "confidence": "0.86"
+    }
+  },
+  {
+    "id": "sodium-bicarbonate-hyperkalemia-tricyclic-antidepressant-overdose-pediatric-0",
+    "text": "SODIUM BICARBONATE, hyperkalemia, tricyclic antidepressant overdose, pediatric (weight-based): NaHCO3 per drug chart IV/IO. Class: Alkalizing agent, antidote. Mechanism: Increases blood and urinary pH by neutralizing hydrogen ion concentration. Adverse effects: Electrolyte imbalance; Pulmonary edema (secondary to sodium overload); Tremors; Twitching; Seizures (caused by alkalosis). Notes: Monitor the patient closely for signs and symptoms of fluid overload.",
+    "metadata": {
+      "drug": "SODIUM BICARBONATE",
+      "indication": "hyperkalemia, tricyclic antidepressant overdose",
+      "patient_type": "pediatric",
+      "record_type": "dose_weight_based",
+      "route": "IO, IV",
+      "value_machine": "NaHCO3 per drug chart IV/IO",
+      "value_spoken": "weight-based \u2014 see drug chart",
+      "source": "CoSD-EMS-P-115-2025",
+      "page": "26",
+      "confidence": "0.86"
+    }
+  },
+  {
+    "id": "tranexamic-acid-trauma-associated-hemorrhage-and-postpartum-hemorrhage-adult-0",
+    "text": "TRANEXAMIC ACID, trauma-associated hemorrhage and postpartum hemorrhage, adult: Tranexamic acid 1 gm/10 mL IV/IO, in 50-100 mL NS, over 10 min. Class: Hemostatic agent, antifibrinolytic agent, plasminogen inhibitor. Mechanism: Prevents clot breakdown by inhibiting the activation of plasminogen, which reduces the conversion of plasminogen to plasmin (enzyme that halts the clotting process). Increases fibrin formation, which impedes blood flow for the formation of a clot. Contraindications: Isolated, severe head injury; Thromboembolic event within 24 hours (e.g., stroke, MI, DVT, PE); Potential need for reimplantation; Mechanism of injury or delivery more than 3 hours prior to EMS care. Adverse effects: Headache; Dizziness. Notes: Rapid infusion may cause hypotension; administer over 10 minutes. Slow infusion rate if nausea, vomiting, or near syncope occurs. May increase the risk of thromboembolic disorders.",
+    "metadata": {
+      "drug": "TRANEXAMIC ACID",
+      "indication": "trauma-associated hemorrhage and postpartum hemorrhage",
+      "patient_type": "adult",
+      "record_type": "dose",
+      "route": "IO, IV",
+      "value_machine": "Tranexamic acid 1 gm/10 mL IV/IO, in 50-100 mL NS, over 10 min",
+      "value_spoken": "one gram",
+      "source": "CoSD-EMS-P-115-2025",
+      "page": "27",
+      "confidence": "0.89"
+    }
+  },
+  {
+    "id": "tranexamic-acid-trauma-associated-hemorrhage-and-postpartum-hemorrhage-pediatric-0",
+    "text": "TRANEXAMIC ACID, trauma-associated hemorrhage and postpartum hemorrhage, pediatric: Not indicated for use in pediatrics. Class: Hemostatic agent, antifibrinolytic agent, plasminogen inhibitor. Mechanism: Prevents clot breakdown by inhibiting the activation of plasminogen, which reduces the conversion of plasminogen to plasmin (enzyme that halts the clotting process). Increases fibrin formation, which impedes blood flow for the formation of a clot. Contraindications: Isolated, severe head injury; Thromboembolic event within 24 hours (e.g., stroke, MI, DVT, PE); Potential need for reimplantation; Mechanism of injury or delivery more than 3 hours prior to EMS care. Adverse effects: Headache; Dizziness. Notes: Rapid infusion may cause hypotension; administer over 10 minutes. Slow infusion rate if nausea, vomiting, or near syncope occurs. May increase the risk of thromboembolic disorders.",
+    "metadata": {
+      "drug": "TRANEXAMIC ACID",
+      "indication": "trauma-associated hemorrhage and postpartum hemorrhage",
+      "patient_type": "pediatric",
+      "record_type": "dose",
+      "route": null,
+      "value_machine": "Not indicated for use in pediatrics",
+      "value_spoken": null,
+      "source": "CoSD-EMS-P-115-2025",
+      "page": "27",
+      "confidence": "0.89"
+    }
+  },
+  {
+    "id": "tranexamic-acid-contraindications",
+    "text": "TRANEXAMIC ACID contraindications: Isolated, severe head injury; Thromboembolic event within 24 hours (e.g., stroke, MI, DVT, PE); Potential need for reimplantation; Mechanism of injury or delivery more than 3 hours prior to EMS care. Class: Hemostatic agent, antifibrinolytic agent, plasminogen inhibitor.",
+    "metadata": {
+      "drug": "TRANEXAMIC ACID",
+      "indication": "contraindication",
+      "patient_type": "all",
+      "record_type": "contraindication",
+      "route": null,
+      "value_machine": "Isolated, severe head injury; Thromboembolic event within 24 hours (e.g., stroke, MI, DVT, PE); Potential need for reimplantation; Mechanism of injury or delivery more than 3 hours prior to EMS care",
+      "value_spoken": null,
+      "source": "CoSD-EMS-P-115-2025",
+      "page": "27",
+      "confidence": "0.89"
+    }
+  }
+]

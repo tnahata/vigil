@@ -60,6 +60,16 @@ class FakeIndex:
         data = json.loads(Path(path).read_text())
         return cls([Doc.from_dict(d) for d in data])
 
+    @classmethod
+    def from_chunks_json(cls, path) -> "FakeIndex":
+        """Load real ingestion chunks ({id, text, metadata}) via Doc.from_chunk,
+        so the FakeIndex speaks the SAME schema as the live Moss index. NOTE: the
+        keyword scorer below does not replicate Moss BM25 ranking -- the hermetic
+        gate proves routing/alias/schema/verbatim plumbing, not Moss's ordering
+        (that's the opt-in live parity test)."""
+        data = json.loads(Path(path).read_text())
+        return cls([Doc.from_chunk(c) for c in data])
+
     @property
     def docs(self) -> "list[Doc]":
         return list(self._docs)

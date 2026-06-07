@@ -79,16 +79,18 @@ from vigil.adapters.livekit_speaker import LiveKitSpeaker
 from vigil.adapters.logging_setup import configure_logging
 from vigil.adapters.moss_index import MossIndex
 from vigil.config import Config, load_config
-from vigil.core.pipeline import handle_transcript
+from vigil.core import wake
+from vigil.core.pipeline import handle_transcript, resolve_clarification
 
 log = logging.getLogger("vigil.agent")
 
 
 def build_index(cfg: Config):
-    """FakeIndex by default; MossIndex when RETRIEVAL_BACKEND=moss (not wired yet)."""
+    """MossIndex (real `vigil-protocol`) when RETRIEVAL_BACKEND=moss; else a
+    FakeIndex seeded from the SAME real chunks.json (hermetic, no network)."""
     if cfg.retrieval_backend == "moss":
-        return MossIndex(cfg.moss_index_name)
-    return FakeIndex.from_json(cfg.gold_data_path)
+        return MossIndex(cfg.moss_index_name, cfg.moss_project_id, cfg.moss_project_key)
+    return FakeIndex.from_chunks_json(cfg.chunks_data_path)
 
 
 def build_tts(cfg: Config):
@@ -170,6 +172,16 @@ class VigilAgent(Agent):
         self._index = index
         self._synthesizer = synthesizer
         self._channel = channel
+        # Pending one-shot Tier-1 clarification (set when we asked a question,
+        # consumed on the next turn). Cross-turn state lives here, not in core.
+        self._pending = None
+
+    async def _speak(self, answer) -> None:  # noqa: ANN001
+        await LiveKitSpeaker(self.session).say(answer.spoken_form)
+        try:
+            await self._channel.publish_card(answer.card)
+        except Exception as exc:  # noqa: BLE001 - a card failure must never block the dose
+            log.warning("card_publish_failed", extra={"vigil": {"error": repr(exc)}})
 
     async def on_user_turn_completed(self, turn_ctx, new_message) -> None:  # noqa: ANN001
         transcript = (new_message.text_content or "").strip()
@@ -177,6 +189,25 @@ class VigilAgent(Agent):
             raise StopResponse()
 
         loop = asyncio.get_running_loop()
+
+        # Mid-clarification: this turn is the medic's reply (no wake word needed).
+        # If they re-trigger with the wake word instead, drop the pending question
+        # and treat it as a fresh query.
+        pending = self._pending
+        if pending is not None and not wake.detect_wake(transcript):
+            self._pending = None  # one-shot: never re-ask
+            work = functools.partial(
+                resolve_clarification,
+                transcript,
+                clarification=pending,
+                provider_role=self._cfg.provider_role,
+                logger=log,
+            )
+            answer = await loop.run_in_executor(None, work)
+            await self._speak(answer)
+            raise StopResponse()
+        self._pending = None
+
         work = functools.partial(
             handle_transcript,
             transcript,
@@ -185,15 +216,14 @@ class VigilAgent(Agent):
             logger=log,
             tier2_alpha=self._cfg.tier2_alpha,
             tier2_top_k=self._cfg.tier2_top_k,
+            provider_role=self._cfg.provider_role,
         )
         answer = await loop.run_in_executor(None, work)
 
         if answer is not None:
-            await LiveKitSpeaker(self.session).say(answer.spoken_form)
-            try:
-                await self._channel.publish_card(answer.card)
-            except Exception as exc:  # noqa: BLE001 - a card failure must never block the dose
-                log.warning("card_publish_failed", extra={"vigil": {"error": repr(exc)}})
+            if answer.clarification is not None:
+                self._pending = answer.clarification  # remember; await the reply
+            await self._speak(answer)
 
         # No LLM is configured; stop here so the session doesn't attempt a reply.
         raise StopResponse()

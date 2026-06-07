@@ -16,6 +16,7 @@ except Exception:  # pragma: no cover
 
 _PKG_DIR = os.path.dirname(os.path.abspath(__file__))
 _DEFAULT_GOLD = os.path.join(os.path.dirname(_PKG_DIR), "data", "protocols_gold.json")
+_DEFAULT_CHUNKS = os.path.join(os.path.dirname(_PKG_DIR), "data", "chunks.json")
 
 
 @dataclass(frozen=True)
@@ -60,11 +61,17 @@ class Config:
 
     # Retrieval backend
     retrieval_backend: str = "fake"        # "fake" | "moss"
-    moss_index_name: str = "vigil_protocols"
+    moss_index_name: str = "vigil-protocol"
     moss_project_id: str = ""
     moss_project_key: str = ""
 
+    # Provider role for Tier-1 authorization gating. Sourced from the user's auth
+    # profile in production; defaults to PARAMEDIC for the demo (no hands-free
+    # role declaration). One of EMT | AEMT | PARAMEDIC.
+    provider_role: str = "PARAMEDIC"
+
     gold_data_path: str = _DEFAULT_GOLD
+    chunks_data_path: str = _DEFAULT_CHUNKS  # real protocol chunks (FakeIndex seed)
     run_integration: bool = False
 
 
@@ -105,9 +112,11 @@ def load_config() -> Config:
         tier2_top_k=_i("TIER2_TOP_K", 4),
         turn_max_delay=_f("TURN_MAX_DELAY", 6.0),
         retrieval_backend=os.getenv("RETRIEVAL_BACKEND", "fake"),
-        moss_index_name=os.getenv("MOSS_INDEX_NAME", "vigil_protocols"),
+        moss_index_name=os.getenv("MOSS_INDEX_NAME", "vigil-protocol"),
         moss_project_id=os.getenv("MOSS_PROJECT_ID", ""),
         moss_project_key=os.getenv("MOSS_PROJECT_KEY", ""),
+        provider_role=os.getenv("PROVIDER_ROLE", "PARAMEDIC"),
         gold_data_path=os.getenv("VIGIL_GOLD_PATH", _DEFAULT_GOLD),
+        chunks_data_path=os.getenv("VIGIL_CHUNKS_PATH", _DEFAULT_CHUNKS),
         run_integration=os.getenv("RUN_INTEGRATION", "") == "1",
     )

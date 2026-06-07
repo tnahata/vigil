@@ -15,4 +15,7 @@ livekit-plugins-silero
 livekit-plugins-turn-detector
 livekit-plugins-noise-cancellation
 
-# inferedge-moss   # real retrieval -- not wired this round; FakeIndex is the default
+# --- real retrieval: in-process Moss index `vigil-protocol` (RETRIEVAL_BACKEND=moss) ---
+# Pulls the inferedge-moss-core native wheel. FakeIndex (chunks-seeded) remains the
+# hermetic-test default; the agent uses MossIndex when RETRIEVAL_BACKEND=moss.
+moss>=1.4
