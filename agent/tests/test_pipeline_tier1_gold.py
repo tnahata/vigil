@@ -43,3 +43,12 @@ def test_aliases_still_hit_gold(run):
     ans = run("Vigil, narcan dose for an adult opioid overdose")
     assert ans is not None and ans.found
     assert ans.doc_id == "naloxone_adult_opioid"
+
+
+def test_stt_glued_words_still_hit_tier1(run):
+    # Real transcript observed live: STT rendered "epi dose" as "epidose" and the
+    # query fell through to UNKNOWN. split_glued_terms must repair it pre-routing.
+    ans = run("It's Vigil, what's the adult epidose for anaphylaxis?")
+    assert ans is not None and ans.found, "glued 'epidose' must still route to Tier-1"
+    assert ans.doc_id == "epi_adult_anaphylaxis"
+    assert ans.card["dose"] == "0.3 mg"

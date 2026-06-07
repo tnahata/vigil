@@ -31,6 +31,30 @@ CANONICAL_DRUGS: set[str] = set(_CANONICAL_TO_ALIASES)
 
 _WORD_RE = re.compile(r"[a-z0-9\-]+")
 
+# STT often glues a drug name to a following intent word ("epi dose" -> "epidose",
+# "epi drip" -> "epidrip"). These compounds whiff on whole-word alias + dose-intent
+# matching, so a real query routes to UNKNOWN on phrasing, not retrieval. We split
+# them back apart, but ONLY when BOTH halves are recognized tokens -- so "epidural"
+# / "episode" (a drug-alias prefix + an UNknown suffix) are never touched.
+_DOSE_SUFFIXES = ("dose", "dosage", "dosing", "drip", "bolus", "push")
+# Longest aliases first so "epinephrine" wins over "epi" when both could match.
+_ALIAS_ALT = "|".join(sorted(map(re.escape, ALIASES), key=len, reverse=True))
+_GLUED_RE = re.compile(
+    r"\b(" + _ALIAS_ALT + r")(" + "|".join(_DOSE_SUFFIXES) + r")\b",
+    re.IGNORECASE,
+)
+
+
+def split_glued_terms(query: str) -> str:
+    """Insert a space in glued <drug-alias><dose-word> compounds from STT.
+
+    Safe by construction: only fires when the prefix is a known alias AND the
+    suffix is a known dose-intent word, so non-drug words are left untouched.
+    """
+    if not query:
+        return query
+    return _GLUED_RE.sub(lambda m: f"{m.group(1)} {m.group(2)}", query)
+
 
 def normalize_drug(token: str | None) -> str | None:
     """Map a single drug token to its canonical name, or None if unknown."""

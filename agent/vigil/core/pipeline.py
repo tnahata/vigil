@@ -76,7 +76,9 @@ def handle_transcript(
     if not triggered:
         return None
 
-    query = wake.strip_wake(transcript)
+    # Repair STT word-gluing ("epidose" -> "epi dose") before routing so a real
+    # query isn't lost to UNKNOWN on phrasing alone (see aliases.split_glued_terms).
+    query = aliases.split_glued_terms(wake.strip_wake(transcript))
 
     with StageTimer("route", log, clock, timings) as st:
         tier = router.classify(query)
