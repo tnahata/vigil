@@ -9,3 +9,7 @@ livekit-agents[silero,turn-detector]==1.5.16
 livekit-plugins-minimax-ai>=1.5.16
 livekit-plugins-ai-coustics~=0.2
 openai>=1.0
+
+# Offline/dev only (NOT a runtime dep): extract_role_auth.py regenerates
+# roles._VERIFIED_PAGE_AUTH from the protocol PDF. Install on demand with:
+#   pip install pymupdf>=1.24

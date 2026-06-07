@@ -10,9 +10,14 @@ For each query it:
      so you can cross-check the answer against the same page of the PDF
      (unsiloed-test/sd_ems_p115.pdf).
 
+Add a provider role to any query to gate the answer by who may administer the
+drug ("I'm an EMT, how much atropine" -> withheld + redirect; see roles.py).
+
 Usage:
     python3 query.py                       # interactive REPL
     python3 query.py "how much epi for a kid with anaphylaxis"
+    python3 query.py "I'm an EMT, what's the atropine dose"   # role-gated
+    python3 query.py --roles               # print the role authorization matrix (offline)
     python3 query.py --demo                # run a preset colloquial set
     python3 query.py --bench               # 100x per demo query: min/med/p95/mean
     python3 query.py --bench --iters=500   # custom iteration count
@@ -42,6 +47,7 @@ from moss import MossClient, QueryOptions
 import re
 
 from aliases import extract_drug_from_query, find_drug_span
+import roles as roles_mod
 
 BASE_DIR = Path(__file__).resolve().parent
 ENV_PATH = BASE_DIR / ".env"
@@ -145,22 +151,67 @@ async def _timed_query(client: MossClient, text: str, opts: QueryOptions) -> tup
     return (getattr(res, "docs", None) or []), elapsed_ms
 
 
-async def run_query(client: MossClient, source: dict[int, dict], query: str) -> None:
+_STATE_BADGE = {
+    roles_mod.AUTHORIZED: "🟢 AUTHORIZED",
+    roles_mod.CONDITIONAL: "🟡 CONDITIONAL (LEMSA-limited)",
+    roles_mod.NOT_AUTHORIZED: "🔴 NOT AUTHORIZED",
+    roles_mod.UNKNOWN: "⬜ UNKNOWN",
+}
+
+
+def _print_authorization(
+    role: str | None, drug: str, meta: dict, role_table: dict[int, dict]
+) -> None:
+    """Role-gate the dose: speak it, caveat it, or refuse + redirect."""
+    dose_spoken = meta.get("value_spoken") or meta.get("value_machine") or "(see chart)"
+    if role is None:
+        print("\n  🔐 AUTHORIZATION: no provider role stated — dose shown ungated.")
+        print("     (say e.g. \"I'm an EMT\" to role-gate the answer)")
+        return
+
+    try:
+        page = int(str(meta.get("page", "")))
+    except (TypeError, ValueError):
+        page = None
+    page_auth = role_table.get(page) if page is not None else None
+    if not page_auth:
+        print(f"\n  🔐 AUTHORIZATION ({role}): no role-color data for this drug in the "
+              "parse — dose shown ungated.")
+        return
+
+    state, caveat, allowed = roles_mod.decide(page_auth, role)
+    spoken = roles_mod.spoken_answer(drug, dose_spoken, role, state, caveat, allowed)
+    print(f"\n  🔐 AUTHORIZATION ({role}): {_STATE_BADGE.get(state, state)}")
+    cols = "  ".join(f"{r}={page_auth['roles'].get(r, '?')}" for r in roles_mod.ROLES)
+    print(f"     header: {cols}")
+    if state == roles_mod.NOT_AUTHORIZED:
+        print(f"     ⛔ dose withheld — seek {roles_mod._join_roles(allowed)}")
+    print(f"  🔊 SPOKEN ANSWER: {spoken}")
+
+
+async def run_query(
+    client: MossClient,
+    source: dict[int, dict],
+    query: str,
+    role_table: dict[int, dict] | None = None,
+) -> None:
     print("\n" + "=" * 72)
     print(f"QUERY: {query!r}")
     print("=" * 72)
 
-    # Routing (alias extraction + population classification) is pure local regex
-    # and is NOT retrieval — time it separately so the retrieval metric below is
-    # strictly the Moss query call, never routing/formatting overhead.
+    # Routing (alias extraction + population + role) is pure local regex and is
+    # NOT retrieval — time it separately so the retrieval metric below is strictly
+    # the Moss query call, never routing/formatting overhead.
     t0 = time.perf_counter()
     span = find_drug_span(query)
     drug = span[0] if span else None
     population = _classify_population(query, span[1] if span else None)
+    role = roles_mod.extract_role_from_query(query)
     route_ms = (time.perf_counter() - t0) * 1000.0
 
     if drug:
-        print(f"routing -> TIER 1 (drug detected: {drug} | population guess: {population})")
+        role_note = f" | role: {role}" if role else ""
+        print(f"routing -> TIER 1 (drug detected: {drug} | population guess: {population}{role_note})")
         filters = [
             {"$and": [
                 {"field": "drug", "condition": {"$eq": drug}},
@@ -190,7 +241,9 @@ async def run_query(client: MossClient, source: dict[int, dict], query: str) -> 
             print(f"      (+ {miss_ms:.3f} ms on the population-filter attempt that missed, then fell back)")
         print("  MOSS RESULT (top-1, alpha=0, keyword + metadata filter):")
         print(_fmt_doc(chosen))
-        page = getattr(chosen, "metadata", {}).get("page", "")
+        meta = getattr(chosen, "metadata", {}) or {}
+        page = meta.get("page", "")
+        _print_authorization(role, drug, meta, role_table or {})
     else:
         print("routing -> TIER 2 (no drug alias detected -> hybrid semantic, alpha=0.6)")
         docs, retrieval_ms = await _timed_query(client, query, QueryOptions(top_k=3, alpha=0.6))
@@ -269,6 +322,34 @@ async def bench(client: MossClient, queries: list[str], iters: int) -> None:
     print("\n  All times in milliseconds. Moss advertises <10 ms in-process retrieval.")
 
 
+_ROLE_CELL = {
+    roles_mod.AUTHORIZED: "🟢 GREEN ",
+    roles_mod.CONDITIONAL: "🟡 YELLOW",
+    roles_mod.NOT_AUTHORIZED: "🔴 RED   ",
+    roles_mod.UNKNOWN: "⬜ ?     ",
+}
+
+
+def print_role_matrix() -> None:
+    """Offline: print who may administer each drug (no Moss/credentials needed)."""
+    source = _load_source_by_page()
+    role_table = roles_mod.load_role_table(PARSED_PATH)
+    print("\n" + "=" * 72)
+    print("ROLE AUTHORIZATION MATRIX — who may administer each drug")
+    print("  source: header fills in sd_ems_p115.pdf (roles._VERIFIED_PAGE_AUTH)")
+    print("=" * 72)
+    print(f"  {'pg':>3}  {'drug':30} {'EMT':9} {'AEMT':9} {'PARAMEDIC':9}")
+    print(f"  {'-' * 68}")
+    for page in sorted(role_table):
+        drug = (source.get(page, {}).get("drug") or "").replace("\n", " ")[:30]
+        r = role_table[page]["roles"]
+        cells = "  ".join(_ROLE_CELL[r[role]] for role in roles_mod.ROLES)
+        print(f"  {page:>3}  {drug:30} {cells}")
+    print(f"  {'-' * 68}")
+    print(f"  {len(role_table)} drugs covered. 🟡 = LEMSA-conditional (limited scope; "
+          "see Notes caveat).")
+
+
 async def main() -> None:
     flags = [a for a in sys.argv[1:] if a.startswith("--")]
     args = [a for a in sys.argv[1:] if not a.startswith("--")]
@@ -276,6 +357,10 @@ async def main() -> None:
     do_bench = "--bench" in flags
     pause = "--pause" in flags
     iters = next((int(f.split("=", 1)[1]) for f in flags if f.startswith("--iters=")), 100)
+
+    if "--roles" in flags:
+        print_role_matrix()
+        return
 
     project_id = os.getenv("MOSS_PROJECT_ID")
     project_key = os.getenv("MOSS_PROJECT_KEY")
@@ -337,6 +422,8 @@ async def main() -> None:
         print("  Continuing offline.\n")
 
     source = _load_source_by_page()
+    role_table = roles_mod.load_role_table(PARSED_PATH)
+    print(f"Role authorization: loaded for {len(role_table)} drug page(s).")
 
     if do_bench:
         await bench(client, DEMO_QUERIES if not args else [" ".join(args)], iters)
@@ -344,10 +431,11 @@ async def main() -> None:
 
     queries = DEMO_QUERIES if demo else ([" ".join(args)] if args else [])
     for q in queries:
-        await run_query(client, source, q)
+        await run_query(client, source, q, role_table)
 
     if not queries:
-        print("\nInteractive mode — type a colloquial query, or 'q' to quit.")
+        print("\nInteractive mode — type a colloquial query (add \"I'm an EMT\" to "
+              "role-gate), or 'q' to quit.")
         while True:
             try:
                 q = input("\nvigil> ").strip()
@@ -356,7 +444,7 @@ async def main() -> None:
             if q.lower() in {"q", "quit", "exit"}:
                 break
             if q:
-                await run_query(client, source, q)
+                await run_query(client, source, q, role_table)
 
 
 if __name__ == "__main__":

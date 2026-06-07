@@ -18,7 +18,7 @@ dist/
 *.pdf
 
 # Generated pipeline outputs — run the scripts to produce these locally
-unsiloed-test/parsed_output.json
+unsiloed-test/parsed_output*.json
 unsiloed-test/chunks.json
 
 # The starter kit is a vendored reference repo, not our code
