@@ -1,6 +1,10 @@
 # Dependencies
 node_modules/
 
+# Python build artifacts
+__pycache__/
+*.pyc
+
 # Environment — never commit real credentials
 .env
 .env.local

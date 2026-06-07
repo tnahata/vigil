@@ -1,0 +1,11 @@
+# Python deps for the Vigil indexing + agent code (moved here from agent/pyproject.toml).
+#
+# Indexing only (create_index.py) needs just the first two:
+moss>=1.4
+python-dotenv
+
+# The LiveKit voice agent (agent.py) additionally needs:
+livekit-agents[silero,turn-detector]==1.5.16
+livekit-plugins-minimax-ai>=1.5.16
+livekit-plugins-ai-coustics~=0.2
+openai>=1.0
