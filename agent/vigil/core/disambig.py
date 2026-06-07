@@ -47,60 +47,18 @@ def _drug_tokens(drug: str) -> set[str]:
     return toks
 
 
-def _content_tokens(text: str, exclude: "set[str] | frozenset[str]" = frozenset()) -> set[str]:
-    """Symptom-bearing tokens: drop stopwords, `exclude` (drug name + tokens
-    shared by every candidate), and pure numbers (BP thresholds / embedded doses
-    in indication text are noise, not symptoms)."""
+def _content_tokens(text: str, drug_toks: "set[str] | frozenset[str]" = frozenset()) -> set[str]:
+    """Symptom-bearing tokens: drop stopwords, the drug name, and pure numbers
+    (BP thresholds / embedded doses in indication text are noise, not symptoms)."""
     return {
         t for t in _WORD_RE.findall((text or "").lower())
-        if t not in _STOP and t not in exclude and not t.isdigit()
+        if t not in _STOP and t not in drug_toks and not t.isdigit()
     }
 
 
-def _shared_tokens(candidates: "list[Doc] | tuple[Doc, ...]", drug_toks: set[str]) -> frozenset[str]:
-    """Content tokens common to EVERY candidate's indication.
-
-    These carry no disambiguation signal (e.g. amiodarone "stable VT" vs "VF or
-    pulseless VT" both contain "vt"), so they're excluded from scoring -- without
-    this, a reply mentioning only the shared word ("VT") ties across candidates
-    and resolves to nothing. The distinguishing words ("stable" vs "vf"/
-    "pulseless") are what remain."""
-    sets = [_content_tokens(c.indication, drug_toks) for c in candidates]
-    if not sets:
-        return frozenset()
-    shared = set(sets[0])
-    for s in sets[1:]:
-        shared &= s
-    return frozenset(shared)
-
-
-def _score(query_tokens: set[str], doc: Doc, exclude: set[str]) -> int:
-    """How strongly the query points at this candidate's DISTINGUISHING symptom
-    words (drug-name and all-candidate-shared tokens already excluded)."""
-    return len(query_tokens & _content_tokens(doc.indication, exclude))
-
-
-# Ordinal / cardinal position words -> candidate index. A robust last-resort when
-# STT mangles the distinguishing symptom word ("stable VT" -> "Abel VT"): the
-# medic can instead say "the first one" / "second" / "number two".
-_POSITION = {
-    "first": 0, "1st": 0, "one": 0, "1": 0,
-    "second": 1, "2nd": 1, "two": 1, "2": 1,
-    "third": 2, "3rd": 2, "three": 2, "3": 2,
-}
-
-
-def _positional(reply: str, candidates: "tuple[Doc, ...] | list[Doc]") -> Doc | None:
-    """Map a position word in the reply to a candidate. Only reached AFTER symptom
-    scoring fails, so a natural reply that resolved on its words never lands here."""
-    toks = _WORD_RE.findall((reply or "").lower())
-    if "last" in toks and candidates:
-        return candidates[-1]
-    for t in toks:
-        idx = _POSITION.get(t)
-        if idx is not None and idx < len(candidates):
-            return candidates[idx]
-    return None
+def _score(query_tokens: set[str], doc: Doc, drug_toks: set[str]) -> int:
+    """How strongly the query points at this candidate's indication (symptom words)."""
+    return len(query_tokens & _content_tokens(doc.indication, drug_toks))
 
 
 def _drug_short(drug: str) -> str:
@@ -168,9 +126,8 @@ def choose_or_clarify(
 
     drug = speakable[0].drug
     drug_toks = _drug_tokens(drug)
-    exclude = drug_toks | _shared_tokens(speakable, drug_toks)
-    q = _content_tokens(query, exclude)
-    winner = _best([(_score(q, c, exclude), c) for c in speakable])
+    q = _content_tokens(query, drug_toks)
+    winner = _best([(_score(q, c, drug_toks), c) for c in speakable])
     if winner is not None:
         return (winner, None)
 
@@ -187,15 +144,9 @@ def choose_or_clarify(
 def resolve_reply(reply: str, clarification: Clarification) -> Doc | None:
     """Turn 2: pick the candidate whose indication best matches the reply.
 
-    First by DISTINGUISHING symptom words (shared/drug tokens excluded), then -- if
-    that ties or whiffs (e.g. STT mangled the key word) -- by an ordinal/cardinal
-    position word. Returns None only if BOTH miss, so the caller safe-falls-back;
-    never guesses a dose. Called once; the agent never asks a second question.
+    Returns None if the reply matches nothing (or ties) -> caller safe-falls-back.
+    Called once; the agent never asks a second question.
     """
     drug_toks = _drug_tokens(clarification.drug)
-    exclude = drug_toks | _shared_tokens(clarification.candidates, drug_toks)
-    r = _content_tokens(reply, exclude)
-    winner = _best([(_score(r, c, exclude), c) for c in clarification.candidates])
-    if winner is not None:
-        return winner
-    return _positional(reply, clarification.candidates)
+    r = _content_tokens(reply, drug_toks)
+    return _best([(_score(r, c, drug_toks), c) for c in clarification.candidates])

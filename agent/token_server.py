@@ -21,6 +21,7 @@ Then the app fetches:
 """
 from __future__ import annotations
 
+import asyncio
 import datetime
 import logging
 import os
@@ -64,7 +65,7 @@ async def cors_middleware(request: web.Request, handler):
     return resp
 
 
-def _mint(identity: str) -> str:
+def _mint(identity: str, room: str = ROOM) -> str:
     cfg = load_config()
     if not (cfg.livekit_api_key and cfg.livekit_api_secret and cfg.livekit_url):
         raise web.HTTPInternalServerError(
@@ -72,7 +73,7 @@ def _mint(identity: str) -> str:
         )
     grant = api.VideoGrants(
         room_join=True,
-        room=ROOM,
+        room=room,
         can_publish=True,       # always-on mic
         can_subscribe=True,     # hear the agent
         can_publish_data=True,  # (client doesn't need it, but harmless)
@@ -90,13 +91,30 @@ def _mint(identity: str) -> str:
 async def token(request: web.Request) -> web.Response:
     identity = request.query.get("identity", "medic")
     cfg = load_config()
+
+    # Delete ALL existing vigil rooms so LiveKit dispatches a fresh agent.
+    try:
+        lk = api.LiveKitAPI(cfg.livekit_url, cfg.livekit_api_key, cfg.livekit_api_secret)
+        try:
+            rooms = await lk.room.list_rooms(api.ListRoomsRequest())
+            for r in rooms.rooms:
+                if r.name.startswith("vigil-"):
+                    await lk.room.delete_room(api.DeleteRoomRequest(room=r.name))
+        finally:
+            await lk.aclose()
+    except Exception:
+        pass
+
+    import uuid
+    room_name = f"vigil-{uuid.uuid4().hex[:8]}"
+
     body = {
         "serverUrl": cfg.livekit_url,
-        "roomName": ROOM,
+        "roomName": room_name,
         "participantName": identity,
-        "participantToken": _mint(identity),
+        "participantToken": _mint(identity, room_name),
     }
-    log.info("issued token", extra={"vigil": {"room": ROOM, "identity": identity}})
+    log.info("issued token", extra={"vigil": {"room": room_name, "identity": identity}})
     return web.json_response(body)
 
 

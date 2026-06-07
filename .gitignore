@@ -23,6 +23,11 @@ __pycache__/
 dist/
 .next/
 
+# Expo / React Native generated
+app/ios/
+app/android/
+app/.expo/
+
 # Generated pipeline outputs — run scripts to reproduce locally
 unsiloed-test/parsed_output*.json
 unsiloed-test/chunks.json
