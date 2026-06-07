@@ -44,8 +44,9 @@ const styles = StyleSheet.create({
     backgroundColor: colors.background,
   },
   cardSection: {
+    flex: 3,
     justifyContent: 'center',
-    minHeight: 200,
+    alignItems: 'stretch',
   },
   placeholder: {
     alignItems: 'center',

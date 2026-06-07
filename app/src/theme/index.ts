@@ -24,10 +24,11 @@ export const spacing = {
 
 export const typography = StyleSheet.create({
   drugName: {
-    fontSize: 48,
+    fontSize: 38,
     fontWeight: '800' as const,
     color: colors.textPrimary,
     letterSpacing: 1,
+    textAlign: 'center' as const,
     ...Platform.select({
       ios: { fontFamily: 'System' },
     }),
@@ -36,6 +37,7 @@ export const typography = StyleSheet.create({
     fontSize: 36,
     fontWeight: '600' as const,
     color: colors.textPrimary,
+    textAlign: 'center' as const,
     ...Platform.select({
       ios: { fontFamily: 'System' },
     }),
@@ -46,6 +48,7 @@ export const typography = StyleSheet.create({
     color: colors.textSecondary,
     textTransform: 'uppercase' as const,
     letterSpacing: 2,
+    textAlign: 'center' as const,
     ...Platform.select({
       ios: { fontFamily: 'System' },
     }),
@@ -54,6 +57,7 @@ export const typography = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600' as const,
     color: colors.danger,
+    textAlign: 'center' as const,
     ...Platform.select({
       ios: { fontFamily: 'System' },
     }),
@@ -62,6 +66,7 @@ export const typography = StyleSheet.create({
     fontSize: 12,
     fontWeight: '400' as const,
     color: colors.textDim,
+    textAlign: 'center' as const,
     ...Platform.select({
       ios: { fontFamily: 'System' },
     }),

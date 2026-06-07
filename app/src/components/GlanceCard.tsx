@@ -9,7 +9,7 @@ interface GlanceCardProps {
 function Tier1Card({ data }: { readonly data: Extract<AgentCard, { tier: 'tier1_dose' }> }): React.JSX.Element {
   return (
     <View style={styles.card}>
-      <Text style={typography.drugName}>{data.drug.toUpperCase()}</Text>
+      <Text style={typography.drugName} adjustsFontSizeToFit numberOfLines={1}>{data.drug.toUpperCase()}</Text>
       <Text style={typography.dose}>{data.dose}</Text>
       <Text style={typography.route}>{data.population.toUpperCase()}</Text>
       {data.indication ? (
@@ -62,9 +62,11 @@ const styles = StyleSheet.create({
     marginVertical: spacing.sm,
     borderWidth: 1,
     borderColor: colors.border,
+    alignItems: 'center',
   },
   notFoundCard: {
     borderColor: colors.danger,
+    alignItems: 'center',
   },
   indication: {
     marginTop: spacing.sm,
