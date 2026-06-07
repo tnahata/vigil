@@ -34,9 +34,9 @@ class MinimaxSynthesizer:
         *,
         api_key: str,
         base_url: str = "https://api.minimax.io/v1",
-        model: str = "MiniMax-M3",
+        model: str = "MiniMax-Text-01",  # non-reasoning: fast + concise (see config)
         timeout: float = 30.0,
-        max_tokens: int = 512,  # room for the model's reasoning AND a complete answer
+        max_tokens: int = 256,  # a one-sentence answer needs little; caps rambling
         temperature: float = 0.2,
     ) -> None:
         from openai import OpenAI  # lazy import

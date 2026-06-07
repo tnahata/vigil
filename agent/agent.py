@@ -140,14 +140,27 @@ def _build_vad():
         return None
 
 
-def _build_turn_detection():
-    if _MultilingualModel is None:
-        return None
-    try:
-        return _MultilingualModel()
-    except Exception as exc:  # noqa: BLE001
-        log.warning("turn_detector_unavailable", extra={"vigil": {"error": repr(exc)}})
-        return None
+def _build_turn_detection(cfg: Config):
+    """Turn-end detection mode.
+
+    Default "stt": end the turn on the STT provider's (Deepgram) final transcript
+    -- deterministic and prompt, which is what we want. The "multilingual" EOU
+    model waits through mid-sentence pauses but runs against a remote endpoint that
+    can hang (observed: turns never closing, so on_user_turn_completed never fired,
+    so nothing was spoken) AND it adds latency before a Tier-2 answer even starts.
+    Opt into it with TURN_DETECTION=multilingual once that path is reliable.
+    """
+    mode = (cfg.turn_detection or "stt").lower()
+    if mode == "multilingual":
+        if _MultilingualModel is None:
+            log.warning("turn_detector_unavailable", extra={"vigil": {"fallback": "stt"}})
+            return "stt"
+        try:
+            return _MultilingualModel()
+        except Exception as exc:  # noqa: BLE001
+            log.warning("turn_detector_unavailable", extra={"vigil": {"error": repr(exc), "fallback": "stt"}})
+            return "stt"
+    return mode if mode in ("stt", "vad", "manual") else "stt"
 
 
 class VigilAgent(Agent):
@@ -239,21 +252,26 @@ async def entrypoint(ctx: JobContext) -> None:
         "stt": inference.STT(cfg.stt_model, language=cfg.stt_language),
         "tts": build_tts(cfg),
         # No llm= on purpose: the session never auto-replies; we drive all speech.
+        # Direct kwargs (1.5.x): which detector ends a turn + the wait bounds before
+        # the turn closes. min keeps a quick finish snappy; max caps a mid-query
+        # pause so it isn't cut into fragments.
+        "turn_detection": _build_turn_detection(cfg),
+        "min_endpointing_delay": cfg.min_endpointing_delay,
+        "max_endpointing_delay": cfg.turn_max_delay,
     }
     if (vad := _build_vad()) is not None:
         session_kwargs["vad"] = vad
-    # turn_handling={"turn_detection": <model>, ...} is the current API; the bare
-    # turn_detection= kwarg is deprecated (removed in v2.0). max_delay raises the
-    # hard cap on waiting for more speech so a mid-query pause isn't cut into
-    # fragments. turn_detection is added only when the model loaded (else auto-select).
-    turn_handling = {"endpointing": {"max_delay": cfg.turn_max_delay}}
-    if (td := _build_turn_detection()) is not None:
-        turn_handling["turn_detection"] = td
-    session_kwargs["turn_handling"] = turn_handling
 
     session = AgentSession(**session_kwargs)
     channel = LiveKitChannel(ctx.room)
     agent = VigilAgent(cfg=cfg, index=index, synthesizer=synthesizer, channel=channel)
+
+    # Clean Moss shutdown: unload + stop the loop thread before the worker tears
+    # down, else the native core can abort ("mutex lock failed") at process exit.
+    if hasattr(index, "close"):
+        async def _close_index():
+            index.close()
+        ctx.add_shutdown_callback(_close_index)
 
     await session.start(
         agent=agent,
@@ -261,6 +279,11 @@ async def entrypoint(ctx: JobContext) -> None:
         # TODO: add noise_cancellation + RoomInputOptions tuning after the live run
         # confirms the installed plugin's API shape.
     )
+
+    # Greet on start so the medic hears the agent is live and the TTS path is
+    # confirmed working (set STARTUP_GREETING="" to disable).
+    if cfg.startup_greeting:
+        await session.say(cfg.startup_greeting)
 
 
 if __name__ == "__main__":

@@ -24,6 +24,36 @@ def test_ambiguous_drug_asks_one_question(run):
         assert token not in f" {q} "
 
 
+# Every indication-dependent drug must ask, and no clarifying question may speak a
+# number (some indication strings embed thresholds/doses, e.g. nitroglycerin's
+# "...NTG 0.4 mg SL" -- which must never be read aloud).
+AMBIGUOUS_DRUGS = {
+    "amiodarone": "Vigil, how much amiodarone for an adult",
+    "atropine": "Vigil, how much atropine for an adult",
+    "glucagon": "Vigil, how much glucagon for an adult",
+    "lidocaine": "Vigil, how much lidocaine for an adult",
+    "nitroglycerin": "Vigil, how much nitroglycerin for an adult",
+    "buprenorphine": "Vigil, how much buprenorphine for an adult",
+}
+
+
+def test_all_indication_dependent_drugs_ask_with_number_free_questions(run):
+    for name, query in AMBIGUOUS_DRUGS.items():
+        ans = run(query)
+        assert ans is not None and ans.clarification is not None, f"{name}: must ask, not guess"
+        assert not any(ch.isdigit() for ch in ans.spoken_form), f"{name}: question spoke a number: {ans.spoken_form!r}"
+
+
+def test_nitroglycerin_resolves_both_indications(run):
+    # Regression: "ntg" appears inside one indication string and used to spuriously
+    # auto-resolve to 0.8 mg instead of asking.
+    clar = run("Vigil, how much nitroglycerin for an adult").clarification
+    chf = resolve_clarification("CHF", clarification=clar)
+    assert chf.found and chf.spoken_form == "zero point eight milligrams"
+    pain = resolve_clarification("cardiac chest pain", clarification=clar)
+    assert pain.found and pain.spoken_form == "zero point four milligrams"
+
+
 def test_clarification_reply_resolves_to_correct_dose(run):
     clar = _ask(run).clarification
     r1 = resolve_clarification("for unstable bradycardia", clarification=clar)

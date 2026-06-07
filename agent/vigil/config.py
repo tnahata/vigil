@@ -47,17 +47,31 @@ class Config:
     # Minimax LLM (Tier 2)
     minimax_api_key: str = ""
     minimax_base_url: str = "https://api.minimax.io/v1"
-    minimax_llm_model: str = "MiniMax-M3"
+    # Tier-2 LLM. A NON-reasoning model on purpose: MiniMax-M3 (reasoning) spends
+    # its whole budget "thinking" -- 5-25s and sometimes no answer at all. Text-01
+    # answers the same constrained-RAG query in ~1.5s, concise and reliable.
+    minimax_llm_model: str = "MiniMax-Text-01"
 
-    # Tier-2 retrieval tuning
+    # Tier-2 retrieval tuning. top_k=3 keeps the LLM context tight (fewer chunks ->
+    # less to ramble over + faster); raise it only if recall is the bottleneck.
     tier2_alpha: float = 0.6
-    tier2_top_k: int = 4
+    tier2_top_k: int = 3
 
-    # Turn-taking: how long to wait for more speech before forcing the turn closed.
-    # The EOU model decides end-of-turn; this is the hard cap when it keeps saying
-    # "not done". Bumped above the 3.0s default so a medic's mid-query pause
-    # ("Vigil, what's the... uh... peds epi dose") isn't cut into fragments.
-    turn_max_delay: float = 6.0
+    # Turn-taking. `turn_detection` decides when a user turn ends:
+    #   "stt"  -> end on the STT provider's (Deepgram) final -- deterministic and
+    #            reliable; the default. "vad" -> end on VAD silence. "multilingual"
+    #            -> the EOU model (waits through mid-sentence pauses but depends on a
+    #            remote endpoint and can hang -- opt in only). "manual".
+    # min/max endpointing delay bound how long to wait for more speech before
+    # closing the turn (max bumped above 3.0s so a mid-query pause isn't cut into
+    # fragments; the EOU/STT logic still ends fast on a confident finish).
+    turn_detection: str = "stt"
+    min_endpointing_delay: float = 0.5
+    turn_max_delay: float = 6.0  # == max_endpointing_delay
+
+    # Spoken on session start so the medic hears the agent is live (also confirms
+    # the TTS audio path). Set STARTUP_GREETING="" to disable.
+    startup_greeting: str = "Vigil online. Say Vigil, then your question."
 
     # Retrieval backend
     retrieval_backend: str = "fake"        # "fake" | "moss"
@@ -109,8 +123,11 @@ def load_config() -> Config:
         minimax_base_url=os.getenv("MINIMAX_BASE_URL", "https://api.minimax.io/v1"),
         minimax_llm_model=os.getenv("MINIMAX_LLM_MODEL", "MiniMax-M3"),
         tier2_alpha=_f("TIER2_ALPHA", 0.6),
-        tier2_top_k=_i("TIER2_TOP_K", 4),
+        tier2_top_k=_i("TIER2_TOP_K", 3),
+        turn_detection=os.getenv("TURN_DETECTION", "stt"),
+        min_endpointing_delay=_f("MIN_ENDPOINTING_DELAY", 0.5),
         turn_max_delay=_f("TURN_MAX_DELAY", 6.0),
+        startup_greeting=os.getenv("STARTUP_GREETING", "Vigil online. Say Vigil, then your question."),
         retrieval_backend=os.getenv("RETRIEVAL_BACKEND", "fake"),
         moss_index_name=os.getenv("MOSS_INDEX_NAME", "vigil-protocol"),
         moss_project_id=os.getenv("MOSS_PROJECT_ID", ""),

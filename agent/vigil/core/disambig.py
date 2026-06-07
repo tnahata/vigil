@@ -19,6 +19,7 @@ from __future__ import annotations
 
 import re
 
+from . import aliases
 from .models import Clarification, Doc
 
 _WORD_RE = re.compile(r"[a-z0-9]+")
@@ -34,27 +35,62 @@ _STOP = frozenset({
 })
 
 
-def _tokens(text: str) -> set[str]:
-    return {t for t in _WORD_RE.findall((text or "").lower()) if t not in _STOP}
+def _drug_tokens(drug: str) -> set[str]:
+    """Every word of the canonical drug name AND its aliases. Excluded from
+    indication matching: the drug name is common to all candidates and sometimes
+    appears INSIDE an indication string (e.g. nitroglycerin's "...NTG 0.4 mg SL"),
+    so the user's drug word must not spuriously disambiguate."""
+    toks = set(_WORD_RE.findall(drug.lower()))
+    for alias, canon in aliases.DRUG_ALIASES.items():
+        if canon == drug:
+            toks |= set(_WORD_RE.findall(alias.lower()))
+    return toks
 
 
-def _score(query_tokens: set[str], doc: Doc) -> int:
-    """How strongly the query points at this candidate's indication."""
-    return len(query_tokens & _tokens(doc.indication))
+def _content_tokens(text: str, drug_toks: "set[str] | frozenset[str]" = frozenset()) -> set[str]:
+    """Symptom-bearing tokens: drop stopwords, the drug name, and pure numbers
+    (BP thresholds / embedded doses in indication text are noise, not symptoms)."""
+    return {
+        t for t in _WORD_RE.findall((text or "").lower())
+        if t not in _STOP and t not in drug_toks and not t.isdigit()
+    }
+
+
+def _score(query_tokens: set[str], doc: Doc, drug_toks: set[str]) -> int:
+    """How strongly the query points at this candidate's indication (symptom words)."""
+    return len(query_tokens & _content_tokens(doc.indication, drug_toks))
 
 
 def _drug_short(drug: str) -> str:
     return drug.split("(")[0].strip().lower() or drug.lower()
 
 
+# Indication strings carry trailing thresholds/doses ("...if SBP >=100 mmHg",
+# "CHF If systolic BP >=100 but <150: NTG 0.4 mg SL"). Cut at the first clause
+# break and stop at the first number-bearing token, so the SPOKEN question is a
+# short symptom label with NO numbers (the whole point: never speak a dose in the
+# question).
+_CLAUSE_BREAK = re.compile(r"(?i)\b(?:if|after|when|with continued|for continued)\b|[:;(]")
+
+
+def _short_indication(ind: str) -> str:
+    s = _CLAUSE_BREAK.split((ind or "").strip())[0].strip()
+    words: list[str] = []
+    for w in s.split():
+        if any(ch.isdigit() for ch in w):
+            break
+        words.append(w)
+    return (" ".join(words).strip(" ,;:/-") or s or (ind or "")).strip()
+
+
 def _question(drug: str, candidates: "list[Doc]") -> str:
-    """A spoken clarifying question listing the distinct indications -- NO dose
-    numbers (we only ever read `indication`, never value_spoken/value_machine)."""
+    """A spoken clarifying question listing the distinct indications as short,
+    number-free symptom labels."""
     seen: list[str] = []
     for c in candidates:
-        ind = (c.indication or "").strip()
-        if ind and ind.lower() not in {s.lower() for s in seen}:
-            seen.append(ind)
+        label = _short_indication(c.indication)
+        if label and label.lower() not in {s.lower() for s in seen}:
+            seen.append(label)
     if len(seen) >= 2:
         opts = ", ".join(seen[:-1]) + f", or {seen[-1]}"
     else:
@@ -88,12 +124,13 @@ def choose_or_clarify(
     if len({c.spoken_form.strip() for c in speakable}) == 1:
         return (speakable[0], None)
 
-    q = _tokens(query)
-    winner = _best([(_score(q, c), c) for c in speakable])
+    drug = speakable[0].drug
+    drug_toks = _drug_tokens(drug)
+    q = _content_tokens(query, drug_toks)
+    winner = _best([(_score(q, c, drug_toks), c) for c in speakable])
     if winner is not None:
         return (winner, None)
 
-    drug = speakable[0].drug
     population = speakable[0].population
     clar = Clarification(
         drug=drug,
@@ -110,5 +147,6 @@ def resolve_reply(reply: str, clarification: Clarification) -> Doc | None:
     Returns None if the reply matches nothing (or ties) -> caller safe-falls-back.
     Called once; the agent never asks a second question.
     """
-    r = _tokens(reply)
-    return _best([(_score(r, c), c) for c in clarification.candidates])
+    drug_toks = _drug_tokens(clarification.drug)
+    r = _content_tokens(reply, drug_toks)
+    return _best([(_score(r, c, drug_toks), c) for c in clarification.candidates])
