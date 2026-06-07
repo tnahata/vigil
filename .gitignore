@@ -1,0 +1,29 @@
+# Dependencies
+node_modules/
+
+# Environment — never commit real credentials
+.env
+.env.local
+.env.*.local
+
+# Build output
+dist/
+.next/
+
+# PDFs — source documents stay local
+*.pdf
+
+# Generated pipeline outputs — run the scripts to produce these locally
+unsiloed-test/parsed_output.json
+unsiloed-test/chunks.json
+
+# The starter kit is a vendored reference repo, not our code
+moss-hacker-starter/
+
+# Editor / tool settings
+.claude/
+.DS_Store
+
+# Root-level lockfile (each subproject manages its own)
+/package-lock.json
+/package.json
