@@ -1,0 +1,27 @@
+# Dependencies
+node_modules/
+
+# Expo
+app/.expo/
+app/ios/
+app/android/
+
+# Build artifacts
+*.jsbundle
+*.hbc
+
+# macOS
+.DS_Store
+
+# IDE
+.vscode/
+.idea/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# npm
+npm-debug.log*
+package-lock.json

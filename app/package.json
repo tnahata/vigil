@@ -1,0 +1,36 @@
+{
+  "name": "vigil-app",
+  "version": "0.1.0",
+  "main": "index.ts",
+  "dependencies": {
+    "@livekit/react-native": "^2.11.0",
+    "@livekit/react-native-webrtc": "^144.1.0",
+    "expo": "~56.0.9",
+    "expo-dev-client": "~56.0.19",
+    "expo-haptics": "~15.0.0",
+    "expo-speech": "~14.0.0",
+    "expo-status-bar": "~56.0.4",
+    "livekit-client": "^2.19.0",
+    "react": "19.2.3",
+    "react-native": "0.85.3"
+  },
+  "devDependencies": {
+    "@types/react": "~19.2.2",
+    "typescript": "~6.0.3",
+    "@livekit/react-native-expo-plugin": "^1.0.0",
+    "@config-plugins/react-native-webrtc": "^15.0.0",
+    "eslint": "^9.0.0",
+    "@eslint/js": "^9.0.0",
+    "typescript-eslint": "^8.0.0",
+    "eslint-plugin-react": "^7.37.0",
+    "eslint-plugin-react-hooks": "^5.0.0"
+  },
+  "scripts": {
+    "start": "expo start",
+    "ios": "expo run:ios",
+    "dev-build": "expo prebuild && expo run:ios",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit"
+  },
+  "private": true
+}
