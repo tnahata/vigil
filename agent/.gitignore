@@ -1,0 +1,15 @@
+# Secrets / local env — never commit
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+*.secret
+.moss/
+
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/

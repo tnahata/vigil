@@ -1,0 +1,21 @@
+# --- headless + Tier-2 hermetic tests need only these (no network/creds) ---
+pytest==9.0.2
+pytest-asyncio==1.3.0
+python-dotenv==1.2.2
+
+# --- Tier-2 LLM (Minimax via OpenAI-compatible API) + opt-in integration tests ---
+openai>=1.40
+
+# --- worker only: needed for `python agent.py console`, NOT for headless tests ---
+# Treat ~=1.5 as a floor; verify exact versions/model IDs in the venv before relying on them.
+livekit-agents[deepgram]~=1.5
+livekit-plugins-minimax-ai
+livekit-plugins-openai
+livekit-plugins-silero
+livekit-plugins-turn-detector
+livekit-plugins-noise-cancellation
+
+# --- real retrieval: in-process Moss index `vigil-protocol` (RETRIEVAL_BACKEND=moss) ---
+# Pulls the inferedge-moss-core native wheel. FakeIndex (chunks-seeded) remains the
+# hermetic-test default; the agent uses MossIndex when RETRIEVAL_BACKEND=moss.
+moss>=1.4

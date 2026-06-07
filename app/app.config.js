@@ -1,0 +1,41 @@
+/* global process */
+export default {
+  expo: {
+    name: "Vigil",
+    slug: "vigil",
+    scheme: "vigil",
+    version: "0.1.0",
+    orientation: "portrait",
+    icon: "./assets/icon.png",
+    userInterfaceStyle: "dark",
+    ios: {
+      supportsTablet: false,
+      infoPlist: {
+        NSMicrophoneUsageDescription: "Vigil needs microphone access for voice commands",
+        UIBackgroundModes: ["audio"],
+      },
+      bitcode: false,
+      bundleIdentifier: "com.tnahata.vigil",
+    },
+    plugins: [
+      "@livekit/react-native-expo-plugin",
+      "@config-plugins/react-native-webrtc",
+    ],
+    android: {
+      package: "com.anonymous.vigil",
+      permissions: [
+        "android.permission.ACCESS_NETWORK_STATE",
+        "android.permission.CAMERA",
+        "android.permission.INTERNET",
+        "android.permission.MODIFY_AUDIO_SETTINGS",
+        "android.permission.RECORD_AUDIO",
+        "android.permission.SYSTEM_ALERT_WINDOW",
+        "android.permission.WAKE_LOCK",
+        "android.permission.BLUETOOTH",
+      ],
+    },
+    extra: {
+      tokenEndpointUrl: process.env.EXPO_PUBLIC_TOKEN_ENDPOINT_URL ?? "",
+    },
+  },
+};
