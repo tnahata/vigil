@@ -1,14 +1,14 @@
-import { useState, useCallback, useRef, useEffect } from 'react';
-import * as Speech from 'expo-speech';
+import { useState, useCallback, useEffect, useRef } from 'react';
 import * as Haptics from 'expo-haptics';
-import type { AppState, TranscriptEntry, GlanceCardData } from '../types';
-import { connectToRoom, detectWakeWord, simulateAgentResponse, getNextMockTranscript } from '../services/mockRoom';
+import { ConnectionState } from 'livekit-client';
+import type { AppState, TranscriptEntry, AgentCard } from '../types';
+import { useLiveKitRoom } from './useLiveKitRoom';
 
 interface UseAgentSessionReturn {
   readonly appState: AppState;
   readonly transcript: readonly TranscriptEntry[];
-  readonly currentCard: GlanceCardData | null;
-  readonly triggerMockQuery: () => void;
+  readonly currentCard: AgentCard | null;
+  readonly connect: () => Promise<void>;
 }
 
 let entryId = 0;
@@ -17,56 +17,53 @@ function nextId(): string {
   return `entry-${entryId}`;
 }
 
+function connectionToAppState(state: ConnectionState): AppState {
+  switch (state) {
+    case ConnectionState.Connected: return 'idle';
+    case ConnectionState.Connecting: return 'connecting';
+    case ConnectionState.Reconnecting: return 'connecting';
+    default: return 'disconnected';
+  }
+}
+
 export function useAgentSession(): UseAgentSessionReturn {
+  const { connectionState, connect: connectRoom, lastCard, lastTranscript } = useLiveKitRoom();
   const [appState, setAppState] = useState<AppState>('disconnected');
   const [transcript, setTranscript] = useState<readonly TranscriptEntry[]>([]);
-  const [currentCard, setCurrentCard] = useState<GlanceCardData | null>(null);
-  const busyRef = useRef(false);
+  const [currentCard, setCurrentCard] = useState<AgentCard | null>(null);
+  const prevCardRef = useRef<AgentCard | null>(null);
+  const prevTranscriptRef = useRef<{ role: 'user' | 'agent'; text: string } | null>(null);
 
   useEffect(() => {
-    connectToRoom().then(() => setAppState('idle'));
-  }, []);
+    setAppState(connectionToAppState(connectionState));
+  }, [connectionState]);
 
-  const triggerMockQuery = useCallback((): void => {
-    if (busyRef.current) return;
-    busyRef.current = true;
-    Speech.stop();
-
-    const rawTranscript = getNextMockTranscript();
-    const query = detectWakeWord(rawTranscript);
-    if (!query) {
-      busyRef.current = false;
-      return;
+  useEffect(() => {
+    if (lastCard && lastCard !== prevCardRef.current) {
+      prevCardRef.current = lastCard;
+      setCurrentCard(lastCard);
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
     }
+  }, [lastCard]);
 
-    setAppState('processing');
-    setTranscript((prev) => [
-      ...prev,
-      { id: nextId(), role: 'user', text: rawTranscript, timestamp: Date.now() },
-    ]);
-
-    simulateAgentResponse(query).then((response) => {
-      setCurrentCard(response.card ?? null);
-
+  useEffect(() => {
+    if (lastTranscript && lastTranscript !== prevTranscriptRef.current) {
+      prevTranscriptRef.current = lastTranscript;
       setTranscript((prev) => [
         ...prev,
-        { id: nextId(), role: 'agent', text: response.agentText, timestamp: Date.now(), card: response.card },
+        {
+          id: nextId(),
+          role: lastTranscript.role,
+          text: lastTranscript.text,
+          timestamp: Date.now(),
+        },
       ]);
+    }
+  }, [lastTranscript]);
 
-      setAppState('idle');
-      busyRef.current = false;
+  const connect = useCallback(async (): Promise<void> => {
+    await connectRoom();
+  }, [connectRoom]);
 
-      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-
-      Speech.speak(response.spokenForm, {
-        language: 'en-US',
-        rate: 0.95,
-      });
-    }).catch(() => {
-      setAppState('idle');
-      busyRef.current = false;
-    });
-  }, []);
-
-  return { appState, transcript, currentCard, triggerMockQuery };
+  return { appState, transcript, currentCard, connect };
 }

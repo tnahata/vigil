@@ -45,6 +45,27 @@ Speak "Vigil, what's the adult epi dose for anaphylaxis" (Tier-1, verbatim) or "
 should I consider before giving epinephrine?" (Tier-2, grounded synthesis). First run downloads
 the silero VAD + turn-detector models (a few hundred MB).
 
+## Serve a real room for the app
+
+`console` is a local-only mic loop and does **not** serve real LiveKit rooms. To let the app
+(or the Agents Playground) join, run the worker in `dev` mode — it registers with LiveKit Cloud
+and, with automatic dispatch (no `agent_name`), auto-joins whatever room the client creates:
+
+```bash
+.venv/bin/python agent.py dev        # agent worker -> joins the client's room on demand
+```
+
+The app joins via a **token**, not by connecting to this agent. Run the tiny token endpoint
+(no extra deps — aiohttp + livekit.api ship with livekit-agents); it mints a JWT for room
+`vigil-demo` from the same `LIVEKIT_*` creds:
+
+```bash
+.venv/bin/python token_server.py     # GET :8080/token?identity=medic -> { serverUrl, ... }
+```
+
+The agent dials out (no inbound port); the token endpoint is the only thing the app must reach
+(laptop LAN IP / `ngrok http 8080` / LiveKit Sandbox). Full client contract: see `INTEGRATION.md`.
+
 ## Credentials (in `agent/.env`)
 
 | Key | Purpose | Status |

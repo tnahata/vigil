@@ -1,7 +1,11 @@
 """Opt-in live smoke test for Minimax TTS (voice out).
 
-Guards the base_url regression: the plugin appends /v1/t2a_v2, so MINIMAX_TTS_BASE_URL
-must be the bare host (https://api.minimax.io), NOT the LLM's .../v1 base. Run with:
+Guards two regressions:
+ - base_url: the plugin appends /v1/t2a_v2, so MINIMAX_TTS_BASE_URL must be the bare
+   host (https://api.minimax.io), NOT the LLM's .../v1 base.
+ - audio_format: PCM (the prod default) routes through LiveKit's raw-sample path and
+   skips the PyAV decoder. MP3 streaming over the Minimax WS intermittently raised
+   av.error.InvalidDataError live, so we synthesize with the configured format here.
 
     RUN_INTEGRATION=1 .venv/bin/python -m pytest tests/integration/test_minimax_tts.py -v
 """
@@ -29,6 +33,7 @@ async def test_minimax_tts_synthesizes_audio():
             base_url=os.getenv("MINIMAX_TTS_BASE_URL", "https://api.minimax.io"),
             model=os.getenv("MINIMAX_TTS_MODEL", "speech-2.8-hd"),
             voice=os.getenv("MINIMAX_TTS_VOICE", "English_expressive_narrator"),
+            audio_format=os.getenv("MINIMAX_TTS_FORMAT", "pcm"),
         )
         async for ev in tts.synthesize("Epinephrine, zero point three milligrams."):
             frame = getattr(ev, "frame", None)

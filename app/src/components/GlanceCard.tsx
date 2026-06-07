@@ -1,31 +1,56 @@
 import { View, Text, StyleSheet } from 'react-native';
-import type { GlanceCardData } from '../types';
+import type { AgentCard } from '../types';
 import { colors, spacing, typography } from '../theme';
 
 interface GlanceCardProps {
-  readonly data: GlanceCardData;
+  readonly data: AgentCard;
+}
+
+function Tier1Card({ data }: { readonly data: Extract<AgentCard, { tier: 'tier1_dose' }> }): React.JSX.Element {
+  return (
+    <View style={styles.card}>
+      <Text style={typography.drugName}>{data.drug.toUpperCase()}</Text>
+      <Text style={typography.dose}>{data.dose}</Text>
+      <Text style={typography.route}>{data.population.toUpperCase()}</Text>
+      {data.indication ? (
+        <Text style={[typography.protocolId, styles.indication]}>{data.indication}</Text>
+      ) : null}
+      <Text style={[typography.protocolId, styles.protocol]}>{data.citation}</Text>
+    </View>
+  );
+}
+
+function Tier2Card({ data }: { readonly data: Extract<AgentCard, { tier: 'tier2_synthesis' }> }): React.JSX.Element {
+  return (
+    <View style={styles.card}>
+      <Text style={typography.transcriptAgent}>{data.text}</Text>
+      <Text style={[typography.protocolId, styles.protocol]}>
+        {data.citations.join(', ')}
+      </Text>
+    </View>
+  );
+}
+
+function NotFoundCardView(): React.JSX.Element {
+  return (
+    <View style={[styles.card, styles.notFoundCard]}>
+      <Text style={typography.contraindication}>Not in protocol</Text>
+      <Text style={[typography.transcript, styles.protocol]}>Contact medical control</Text>
+    </View>
+  );
 }
 
 export function GlanceCard({ data }: GlanceCardProps): React.JSX.Element {
-  return (
-    <View style={styles.card}>
-      <Text style={typography.drugName}>{data.drugName}</Text>
-      <Text style={typography.dose}>{data.dose}</Text>
-      <Text style={typography.route}>{data.route}</Text>
-
-      {data.contraindications && data.contraindications.length > 0 && (
-        <View style={styles.contraindications}>
-          {data.contraindications.map((c) => (
-            <Text key={c} style={typography.contraindication}>
-              {'⚠'} {c}
-            </Text>
-          ))}
-        </View>
-      )}
-
-      <Text style={[typography.protocolId, styles.protocol]}>{data.protocolId}</Text>
-    </View>
-  );
+  if (!data.found) {
+    return <NotFoundCardView />;
+  }
+  if (data.tier === 'tier1_dose') {
+    return <Tier1Card data={data as Extract<AgentCard, { tier: 'tier1_dose' }>} />;
+  }
+  if (data.tier === 'tier2_synthesis') {
+    return <Tier2Card data={data as Extract<AgentCard, { tier: 'tier2_synthesis' }>} />;
+  }
+  return <NotFoundCardView />;
 }
 
 const styles = StyleSheet.create({
@@ -38,11 +63,11 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: colors.border,
   },
-  contraindications: {
-    marginTop: spacing.md,
-    paddingTop: spacing.md,
-    borderTopWidth: StyleSheet.hairlineWidth,
-    borderTopColor: colors.border,
+  notFoundCard: {
+    borderColor: colors.danger,
+  },
+  indication: {
+    marginTop: spacing.sm,
   },
   protocol: {
     marginTop: spacing.md,

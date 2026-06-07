@@ -27,6 +27,7 @@ vigil/ports/     interfaces: RetrievalIndex, Speaker, CardChannel, Synthesizer
 vigil/adapters/  FakeIndex, MossIndex (stub), LiveKitSpeaker/Channel, MinimaxSynthesizer, logging
 vigil/config.py  env + model IDs (kept out of core)
 agent.py         LiveKit worker — the only place real LiveKit/Minimax-TTS are wired
+token_server.py  tiny aiohttp /token endpoint (signs room JWTs; NOT on the dose path)
 data/            protocols_gold.json (FakeIndex seed AND the gold test set)
 tests/           hermetic E2E + unit (the gate) ; tests/integration/ (opt-in, live)
 ```
@@ -87,6 +88,15 @@ RUN_INTEGRATION=1 .venv/bin/python -m pytest tests/integration -v
 
 # 3) Live mic<->speaker loop (no phone). Creds are in .env; run from agent/:
 .venv/bin/python agent.py console
+
+# 4) Serve a REAL room for the app (console does NOT). `dev` registers the worker and,
+#    with automatic dispatch (no agent_name), auto-joins the client's room:
+.venv/bin/python agent.py dev
+#    The app joins via a token, not by reaching this agent. token_server.py mints a JWT
+#    for room `vigil-demo` (aiohttp + livekit.api, both already installed). Client contract
+#    is in INTEGRATION.md. The agent dials out (no inbound port); the token endpoint is the
+#    only thing the app must reach (laptop LAN IP / ngrok / LiveKit Sandbox).
+.venv/bin/python token_server.py     # GET :8080/token?identity=medic
 ```
 
 Credit hygiene: hermetic tests hit nothing external and are the default gate. Integration tests
@@ -105,6 +115,14 @@ only run when you opt in, and are intentionally tiny. Don't add live calls to th
 - **TTS gotcha (fixed in code):** `MINIMAX_TTS_BASE_URL` must be the bare host
   (`https://api.minimax.io`) — the plugin appends `/v1/t2a_v2`. Do NOT reuse `MINIMAX_BASE_URL`
   (which is `.../v1` for the LLM) or TTS 404s with a doubled `/v1`.
+- **TTS PCM gotcha (fixed in code):** Minimax TTS runs with `audio_format="pcm"` (`MINIMAX_TTS_FORMAT`).
+  PCM hits LiveKit's raw-sample path and skips the PyAV decoder; the default **MP3** is streamed as
+  hex over the Minimax WebSocket and intermittently dies with `av.error.InvalidDataError` / "I/O
+  operation on closed file". Don't switch TTS back to mp3 without re-testing the live audio path.
+- **Turn endpointing:** `TURN_MAX_DELAY` (default 6.0s, via `turn_handling.endpointing.max_delay`) is
+  the hard cap on waiting for more speech. Raised above the 3.0s default so a mid-query pause isn't
+  forced closed into fragments ("Vigil, what's the adult" → UNKNOWN). The EOU model still ends fast
+  on a confident finish; this only extends the ceiling when it keeps predicting "not done".
 - **dotenv-timing gotcha (fixed in code):** `agent.py` calls `load_dotenv()` at **import time**
   (anchored to its own dir), not just inside `load_config()`. In `console`/`dev` mode the LiveKit
   CLI checks `LIVEKIT_URL` at worker startup *before* `entrypoint()` runs, so a late load raised
