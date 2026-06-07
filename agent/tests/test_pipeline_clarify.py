@@ -71,6 +71,28 @@ def test_unmatched_reply_safe_fallbacks_and_never_reasks(run):
     assert r.clarification is None  # one-shot: never asks a second question
 
 
+def test_positional_reply_resolves_when_symptom_word_mangled(run):
+    # Live failure: STT mangles "stable VT" -> "Abel VT"/"Double VT", so symptom
+    # scoring whiffs and the shared "VT" ties across candidates. The medic can
+    # instead say "the first one" / "number two" and still resolve deterministically.
+    clar = run("Vigil, how much amiodarone for an adult").clarification
+    assert clar is not None and len(clar.candidates) >= 2
+    first = resolve_clarification("the first one", clarification=clar)
+    assert first.found and first.doc_id == clar.candidates[0].doc_id
+    second = resolve_clarification("number two", clarification=clar)
+    assert second.found and second.doc_id == clar.candidates[1].doc_id
+
+
+def test_shared_word_reply_never_guesses_a_dose(run):
+    # A reply of only the word the candidates SHARE ("VT", common to the stable-VT
+    # and VF/pulseless-VT indications) does not uniquely distinguish -> safe
+    # fallback, never a guessed dose. This is the safety side of the live bug.
+    clar = run("Vigil, how much amiodarone for an adult").clarification
+    assert clar is not None
+    r = resolve_clarification("VT", clarification=clar)
+    assert r.found is False and r.spoken_form == SAFE_FALLBACK_SPOKEN
+
+
 def test_indication_in_query_resolves_without_asking(run):
     # If the query already names the indication, answer directly -- no question.
     ans = run("Vigil, how much atropine for an adult with organophosphate poisoning")

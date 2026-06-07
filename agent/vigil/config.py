@@ -66,8 +66,23 @@ class Config:
     # closing the turn (max bumped above 3.0s so a mid-query pause isn't cut into
     # fragments; the EOU/STT logic still ends fast on a confident finish).
     turn_detection: str = "stt"
-    min_endpointing_delay: float = 0.5
+    # Bumped 0.5 -> 0.8: with STT endpointing, the wake word + question were
+    # splitting into separate turns on a brief pause ("Vigil" <pause> "how much
+    # epi"). A slightly longer wait keeps them in one turn more often. The wake
+    # window (below) backstops any split that still happens.
+    min_endpointing_delay: float = 0.8
     turn_max_delay: float = 6.0  # == max_endpointing_delay
+    # Deepgram silence (ms) before it declares utterance-final. Default is ~25ms,
+    # which closes turns very eagerly (and spams the "flushing vad" warning).
+    # Raising it lets STT wait a beat for the medic to keep talking.
+    stt_endpointing_ms: int = 200
+
+    # Sticky listening window (seconds) after the wake word "Vigil". Within it,
+    # turns are treated as the continuing query even WITHOUT repeating the wake
+    # word -- so a wake/question split across turns is stitched back together, and
+    # a clarification reply doesn't need (but may include) the wake word. Reactive
+    # only: nothing is retrieved/spoken on untriggered speech outside the window.
+    wake_window_seconds: float = 8.0
 
     # Spoken on session start so the medic hears the agent is live (also confirms
     # the TTS audio path). Set STARTUP_GREETING="" to disable.
@@ -125,8 +140,10 @@ def load_config() -> Config:
         tier2_alpha=_f("TIER2_ALPHA", 0.6),
         tier2_top_k=_i("TIER2_TOP_K", 3),
         turn_detection=os.getenv("TURN_DETECTION", "stt"),
-        min_endpointing_delay=_f("MIN_ENDPOINTING_DELAY", 0.5),
+        min_endpointing_delay=_f("MIN_ENDPOINTING_DELAY", 0.8),
         turn_max_delay=_f("TURN_MAX_DELAY", 6.0),
+        stt_endpointing_ms=_i("STT_ENDPOINTING_MS", 200),
+        wake_window_seconds=_f("WAKE_WINDOW_SECONDS", 8.0),
         startup_greeting=os.getenv("STARTUP_GREETING", "Vigil online. Say Vigil, then your question."),
         retrieval_backend=os.getenv("RETRIEVAL_BACKEND", "fake"),
         moss_index_name=os.getenv("MOSS_INDEX_NAME", "vigil-protocol"),

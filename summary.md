@@ -8,19 +8,7 @@
 
 ---
 
-## What Vigil is
-
-Hands-free voice dosage copilot for EMTs. A medic says **"Vigil, what's the epi dose?"** and hears
-the exact protocol answer spoken back — no screen, no hands, no hallucinated numbers.
-
-**The one claim we defend:** *"It is structurally impossible for Vigil to hallucinate a dose,
-because the LLM is architecturally removed from the dose path."* Tier-1 (dose/contraindication) goes
-straight from Moss retrieval → TTS (speak `value_spoken` verbatim). The LLM only touches Tier-2
-soft-synthesis, constrained to retrieved chunks.
-
----
-
-## Repo layout (actual)
+## Repo layout for the Unsiloed aspect
 
 ```
 vigil/

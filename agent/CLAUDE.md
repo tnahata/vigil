@@ -126,6 +126,38 @@ only run when you opt in, and are intentionally tiny. Don't add live calls to th
   bounds are passed as the direct `min_endpointing_delay`/`max_endpointing_delay` kwargs (NOT the
   `turn_handling` dict); `TURN_MAX_DELAY` (now 3.0s) is the hard cap. A startup greeting
   (`STARTUP_GREETING`) is spoken on `session.start()` to confirm the TTS path live.
+- **Wake state machine (live-fixed — the "time it perfectly" flakiness):** STT endpointing splits
+  the wake word from the question into separate turns ("Vigil" <pause> "how much epi"), so the wake
+  turn was empty (→ spurious "Not in protocol") and the query turn missed the wake word (→ dropped).
+  Fix: `VigilAgent` keeps a **sticky listening window** (`WAKE_WINDOW_SECONDS`, default 8s) opened by
+  "Vigil"; turns within it CONTINUE the buffered query without repeating the wake word, and the
+  stitched buffer is re-routed each turn. The pure gate `core/dialog.query_has_substance` (intent OR a
+  known drug) decides *answer now vs. keep listening*, so bare "Vigil"/half-formed turns stay silent
+  instead of blurting a miss — while "how much rocuronium" still reports "not in protocol" (intent
+  present). STT is also relaxed (`MIN_ENDPOINTING_DELAY=0.8`, Deepgram `STT_ENDPOINTING_MS=200`) so
+  fewer turns split at the source and the cosmetic `flushing vad` warning quiets down. VAD stays on
+  (interruption handling); the warning never dropped audio/text.
+- **Clarification reply robustness (live-fixed):** a pending clarification **persists until answered**
+  — it is NOT tied to the wake-window timer (a 3-option question can take longer to speak + hear back
+  than the window; tying them dropped the reply). The next turn is the REPLY iff it names no drug
+  (`dialog.turn_is_fresh_query`): a bare indication ("stable VT", with or without the wake word) is
+  the reply; a turn that NAMES a drug ("what dosage of atropine") is a fresh question that abandons the
+  clarification and routes anew — so a stale clarification can't swallow the next query. `core/disambig`
+  scores only the indications' DISTINGUISHING tokens (tokens shared by every candidate, e.g. "VT", are
+  excluded) and falls back to an ordinal/cardinal position word ("the first one" / "number two") when
+  STT mangles the symptom word ("stable VT" → "Abel VT"). An ambiguous/whiffed reply still
+  safe-falls-back — never guesses a dose.
+- **Tier-2 routing precedence + breadth (live-fixed):** two routing bugs seen live. (1) "what dosage
+  of atropine **should I give**" was hijacked to Tier-2 because `should i give` was a Tier-2 cue matched
+  FIRST → the LLM answered "Based on unstable bradycardia…". (2) "**should I use** atropine **if** the
+  patient has an MI" (a judgment question) fell through to Tier-1 and asked a pointless dose
+  clarification. Fix in `router.classify`: an explicit dose **noun** (`dose(s)`/`dosage(s)`/`how much`/
+  `mg`/… — note the plurals) + a drug is checked BEFORE Tier-2 and wins outright, so a dose question is
+  never diverted to the LLM regardless of phrasing; dose **verbs** (`give/push/administer`) are weaker
+  and do NOT outrank a judgment cue. Tier-2 cues broadened (consider / precaution / side effect /
+  adverse / risk / `should i (give|use|administer|push)` / "what should I know" / "tell me about") so
+  judgment questions reach synthesis. Guarded by `test_dose_question_with_should_i_give_stays_tier1`,
+  `test_should_i_use_judgment_routes_tier2`, and `test_dose_queries_never_diverted_to_tier2`.
 - **Tier-2 model (live-fixed):** `MINIMAX_LLM_MODEL=MiniMax-Text-01` (non-reasoning). MiniMax-M3 is a
   reasoning model: 5–25s and sometimes returns nothing (whole token budget spent inside `<think>`).
   Text-01 answers the same constrained-RAG query in ~1.5s. The prompt forces ONE ≤25-word sentence,
