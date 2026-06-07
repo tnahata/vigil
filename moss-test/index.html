@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vigil — Offline Dosage Spike</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #0f1117;
+      color: #e2e8f0;
+      min-height: 100vh;
+      padding: 2rem;
+    }
+
+    h1 { font-size: 1.25rem; font-weight: 700; color: #f8fafc; margin-bottom: 0.25rem; }
+    .subtitle { font-size: 0.8rem; color: #64748b; margin-bottom: 1.5rem; }
+
+    /* ── Status pill ─────────────────────────────────── */
+    #status-bar {
+      display: flex; align-items: center; gap: 0.75rem;
+      background: #1e2433; border-radius: 8px;
+      padding: 0.75rem 1rem; margin-bottom: 1rem;
+    }
+    #status-dot {
+      width: 10px; height: 10px; border-radius: 50%;
+      background: #64748b; flex-shrink: 0;
+      transition: background 0.3s;
+    }
+    #status-dot.warming { background: #f59e0b; animation: pulse 1s infinite; }
+    #status-dot.ready   { background: #22c55e; }
+    #status-dot.error   { background: #ef4444; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+    #status-text { font-size: 0.85rem; font-weight: 500; }
+
+    /* ── Log panel ───────────────────────────────────── */
+    #log-panel {
+      background: #0d1117; border: 1px solid #1e2433;
+      border-radius: 6px; padding: 0.75rem;
+      font-family: "SF Mono", Menlo, monospace;
+      font-size: 0.75rem; color: #7dd3fc;
+      max-height: 160px; overflow-y: auto;
+      margin-bottom: 1.25rem;
+      white-space: pre-wrap; word-break: break-word;
+    }
+
+    /* ── Offline notice ──────────────────────────────── */
+    #offline-notice {
+      display: none;
+      background: #1c1917; border: 1px solid #78350f;
+      border-radius: 8px; padding: 0.75rem 1rem;
+      font-size: 0.8rem; color: #fcd34d;
+      margin-bottom: 1.25rem; line-height: 1.5;
+    }
+    #offline-notice.visible { display: block; }
+
+    /* ── Query buttons ───────────────────────────────── */
+    #query-section { margin-bottom: 1.25rem; }
+    #query-section h2 { font-size: 0.75rem; font-weight: 600; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.6rem; }
+    #query-buttons { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+
+    .query-btn {
+      padding: 0.5rem 1rem; border-radius: 6px; border: 1px solid #334155;
+      background: #1e293b; color: #e2e8f0;
+      font-size: 0.8rem; font-weight: 500; cursor: pointer;
+      transition: all 0.15s;
+    }
+    .query-btn:hover:not(:disabled) { background: #334155; border-color: #475569; }
+    .query-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+    .query-btn.active { background: #1e3a5f; border-color: #3b82f6; color: #93c5fd; }
+
+    /* ── Network badge ───────────────────────────────── */
+    #network-section { margin-bottom: 1.25rem; }
+    #network-section h2 { font-size: 0.75rem; font-weight: 600; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.6rem; }
+    #network-badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: #1e2433; border-radius: 6px; padding: 0.5rem 0.9rem;
+      font-size: 0.85rem; font-weight: 600;
+    }
+    #network-badge .dot { width: 8px; height: 8px; border-radius: 50%; background: #64748b; }
+    #network-badge.clean .dot  { background: #22c55e; }
+    #network-badge.dirty .dot  { background: #ef4444; }
+    #network-count { font-variant-numeric: tabular-nums; }
+
+    #net-log {
+      margin-top: 0.5rem;
+      font-family: "SF Mono", Menlo, monospace;
+      font-size: 0.7rem; color: #ef4444;
+      min-height: 1em;
+    }
+
+    /* ── Result card ─────────────────────────────────── */
+    #result-card {
+      display: none;
+      background: #0f2a1e; border: 1px solid #166534;
+      border-radius: 10px; padding: 1.25rem;
+    }
+    #result-card.visible { display: block; }
+    #result-card .label {
+      font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.08em; color: #4ade80; margin-bottom: 0.2rem;
+    }
+    #result-card .spoken {
+      font-size: 1.35rem; font-weight: 700; color: #f0fdf4;
+      margin: 0.4rem 0 1rem;
+    }
+    #result-card .meta-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 0.5rem; margin-bottom: 0.75rem;
+    }
+    #result-card .meta-item { background: #052e16; border-radius: 6px; padding: 0.4rem 0.6rem; }
+    #result-card .meta-item .k { font-size: 0.6rem; color: #4ade80; text-transform: uppercase; letter-spacing: 0.06em; }
+    #result-card .meta-item .v { font-size: 0.8rem; font-weight: 600; color: #dcfce7; margin-top: 0.1rem; }
+    #result-card .dose-text {
+      font-size: 0.8rem; color: #86efac; line-height: 1.5;
+      border-top: 1px solid #166534; padding-top: 0.6rem; margin-top: 0.25rem;
+    }
+    #result-score { font-size: 0.7rem; color: #4ade80; margin-top: 0.5rem; }
+  </style>
+</head>
+<body>
+  <h1>Vigil · Offline Dosage Spike</h1>
+  <p class="subtitle">Phase-0 proof: Tier-1 EMT lookup runs fully offline in-browser — ONNX embedder + Moss WASM index</p>
+
+  <!-- Status -->
+  <div id="status-bar">
+    <div id="status-dot"></div>
+    <span id="status-text">Initializing…</span>
+  </div>
+
+  <!-- Warm-up log -->
+  <div id="log-panel"></div>
+
+  <!-- Offline instruction (shown once ready) -->
+  <div id="offline-notice">
+    ✈️  <strong>READY — safe to go offline.</strong><br>
+    Enable airplane mode (or DevTools → Network → Offline), then click a query below.<br>
+    The network counter must read <strong>0</strong> to confirm full offline operation.
+  </div>
+
+  <!-- Query buttons -->
+  <div id="query-section">
+    <h2>Tier-1 Queries</h2>
+    <div id="query-buttons">
+      <button class="query-btn" disabled data-idx="0">Epi · anaphylaxis</button>
+      <button class="query-btn" disabled data-idx="1">Atropine · bradycardia</button>
+      <button class="query-btn" disabled data-idx="2">Naloxone · OD</button>
+      <button class="query-btn" disabled data-idx="3">Aspirin · ACS</button>
+    </div>
+  </div>
+
+  <!-- Network proof -->
+  <div id="network-section">
+    <h2>Network proof</h2>
+    <div id="network-badge">
+      <div class="dot"></div>
+      <span>Network calls during last query: <span id="network-count">—</span></span>
+    </div>
+    <div id="net-log"></div>
+  </div>
+
+  <!-- Result card -->
+  <div id="result-card">
+    <div class="label">Dose — value spoken</div>
+    <div id="card-spoken" class="spoken"></div>
+    <div class="meta-grid">
+      <div class="meta-item"><div class="k">Drug</div><div id="card-drug" class="v"></div></div>
+      <div class="meta-item"><div class="k">Indication</div><div id="card-indication" class="v"></div></div>
+      <div class="meta-item"><div class="k">Patient</div><div id="card-patient" class="v"></div></div>
+      <div class="meta-item"><div class="k">Route</div><div id="card-route" class="v"></div></div>
+    </div>
+    <div id="card-text" class="dose-text"></div>
+    <div id="result-score"></div>
+  </div>
+
+  <script type="module" src="/src/main.ts"></script>
+</body>
+</html>
